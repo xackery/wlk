@@ -8,7 +8,7 @@
 package walk
 
 import (
-	"github.com/xackery/wlk/common/idalloc"
+	"github.com/xackery/wlk/cpl/idalloc"
 	"github.com/xackery/wlk/win"
 )
 

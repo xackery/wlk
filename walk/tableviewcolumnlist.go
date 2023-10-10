@@ -42,7 +42,7 @@ func (l *TableViewColumnList) ByName(name string) *TableViewColumn {
 
 // Clear removes all TableViewColumns from the list.
 func (l *TableViewColumnList) Clear() error {
-	for _ = range l.items {
+	for range l.items {
 		if err := l.RemoveAt(0); err != nil {
 			return err
 		}

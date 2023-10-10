@@ -17,7 +17,7 @@ import (
 	"syscall"
 	"unsafe"
 
-	"github.com/xackery/wlk/common/dpicache"
+	"github.com/xackery/wlk/cpl/dpicache"
 	"github.com/xackery/wlk/win"
 )
 

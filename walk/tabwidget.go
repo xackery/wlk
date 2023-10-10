@@ -403,7 +403,7 @@ func tabWidgetTabWndProc(hwnd win.HWND, msg uint32, wParam, lParam uintptr) uint
 			adjustment := SizeFrom96DPI(Size{1, 1}, dpi).toSIZE()
 			count := tw.pages.Len()
 			for i := 0; i < count; i++ {
-				if 0 == win.SendMessage(hwnd, win.TCM_GETITEMRECT, uintptr(i), uintptr(unsafe.Pointer(&rc))) {
+				if win.SendMessage(hwnd, win.TCM_GETITEMRECT, uintptr(i), uintptr(unsafe.Pointer(&rc))) == 0 {
 					break
 				}
 
@@ -442,7 +442,7 @@ func tabWidgetTabWndProc(hwnd win.HWND, msg uint32, wParam, lParam uintptr) uint
 				tw.prepareDCForBackground(canvas.hdc, hwnd, wnd)
 
 				var rc win.RECT
-				if 0 == win.SendMessage(hwnd, win.TCM_GETITEMRECT, uintptr(tw.currentIndex), uintptr(unsafe.Pointer(&rc))) {
+				if win.SendMessage(hwnd, win.TCM_GETITEMRECT, uintptr(tw.currentIndex), uintptr(unsafe.Pointer(&rc))) == 0 {
 					break
 				}
 
@@ -490,7 +490,7 @@ func tabWidgetTabWndProc(hwnd win.HWND, msg uint32, wParam, lParam uintptr) uint
 						break
 					}
 				} else {
-					if 0 == win.DrawTextEx(canvas.hdc, &title[0], int32(len(title)), &rc, 0, nil) {
+					if win.DrawTextEx(canvas.hdc, &title[0], int32(len(title)), &rc, 0, nil) == 0 {
 						break
 					}
 				}
@@ -511,7 +511,7 @@ func (tw *TabWidget) onPageChanged(page *TabPage) (err error) {
 	index := tw.pages.Index(page)
 	item := tw.tcitemFromPage(page)
 
-	if 0 == win.SendMessage(tw.hWndTab, win.TCM_SETITEM, uintptr(index), uintptr(unsafe.Pointer(item))) {
+	if win.SendMessage(tw.hWndTab, win.TCM_SETITEM, uintptr(index), uintptr(unsafe.Pointer(item))) == 0 {
 		return newError("SendMessage(TCM_SETITEM) failed")
 	}
 
@@ -624,11 +624,11 @@ func (tw *TabWidget) onRemovedPage(index int, page *TabPage) (err error) {
 		}
 	}*/
 
-	tw.SetCurrentIndex(index)
+	//tw.SetCurrentIndex(index)
 
-	tw.Invalidate()
+	//tw.Invalidate()
 
-	return
+	//return
 }
 
 func (tw *TabWidget) onClearingPages(pages []*TabPage) (err error) {

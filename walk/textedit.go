@@ -251,7 +251,7 @@ func (te *TextEdit) ReadOnly() bool {
 }
 
 func (te *TextEdit) SetReadOnly(readOnly bool) error {
-	if 0 == te.SendMessage(win.EM_SETREADONLY, uintptr(win.BoolToBOOL(readOnly)), 0) {
+	if te.SendMessage(win.EM_SETREADONLY, uintptr(win.BoolToBOOL(readOnly)), 0) == 0 {
 		return newError("SendMessage(EM_SETREADONLY)")
 	}
 

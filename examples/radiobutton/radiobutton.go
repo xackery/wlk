@@ -7,7 +7,7 @@ package main
 import (
 	"fmt"
 
-	. "github.com/xackery/wlk/common"
+	. "github.com/xackery/wlk/cpl"
 )
 
 type Foo struct {

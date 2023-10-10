@@ -155,7 +155,7 @@ func (tb *ToolBar) applyDefaultButtonWidth() error {
 	width := IntFrom96DPI(tb.defaultButtonWidth, dpi)
 
 	lParam := uintptr(win.MAKELONG(uint16(width), uint16(width)))
-	if 0 == tb.SendMessage(win.TB_SETBUTTONWIDTH, 0, lParam) {
+	if tb.SendMessage(win.TB_SETBUTTONWIDTH, 0, lParam) == 0 {
 		return newError("SendMessage(TB_SETBUTTONWIDTH)")
 	}
 
@@ -212,7 +212,7 @@ func (tb *ToolBar) MaxTextRows() int {
 }
 
 func (tb *ToolBar) SetMaxTextRows(maxTextRows int) error {
-	if 0 == tb.SendMessage(win.TB_SETMAXTEXTROWS, uintptr(maxTextRows), 0) {
+	if tb.SendMessage(win.TB_SETMAXTEXTROWS, uintptr(maxTextRows), 0) == 0 {
 		return newError("SendMessage(TB_SETMAXTEXTROWS)")
 	}
 
@@ -286,7 +286,7 @@ func (tb *ToolBar) WndProc(hwnd win.HWND, msg uint32, wParam, lParam uintptr) ui
 			actionId := uint16(nmtb.IItem)
 			if action := actionsById[actionId]; action != nil {
 				var r win.RECT
-				if 0 == tb.SendMessage(win.TB_GETRECT, uintptr(actionId), uintptr(unsafe.Pointer(&r))) {
+				if tb.SendMessage(win.TB_GETRECT, uintptr(actionId), uintptr(unsafe.Pointer(&r))) == 0 {
 					break
 				}
 
@@ -481,7 +481,7 @@ func (tb *ToolBar) removeAction(action *Action, visibleChanged bool) error {
 		action.removeChangedHandler(tb)
 	}
 
-	if 0 == tb.SendMessage(win.TB_DELETEBUTTON, uintptr(index), 0) {
+	if tb.SendMessage(win.TB_DELETEBUTTON, uintptr(index), 0) == 0 {
 		return newError("SendMessage(TB_DELETEBUTTON) failed")
 	}
 

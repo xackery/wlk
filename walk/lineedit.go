@@ -228,7 +228,7 @@ func (le *LineEdit) ReadOnly() bool {
 }
 
 func (le *LineEdit) SetReadOnly(readOnly bool) error {
-	if 0 == le.SendMessage(win.EM_SETREADONLY, uintptr(win.BoolToBOOL(readOnly)), 0) {
+	if le.SendMessage(win.EM_SETREADONLY, uintptr(win.BoolToBOOL(readOnly)), 0) == 0 {
 		return newError("SendMessage(EM_SETREADONLY)")
 	}
 

@@ -13,7 +13,7 @@ import (
 
 	"github.com/xackery/wlk/walk"
 
-	. "github.com/xackery/wlk/common"
+	. "github.com/xackery/wlk/cpl"
 )
 
 type Foo struct {

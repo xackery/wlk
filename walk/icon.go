@@ -404,7 +404,7 @@ func sizeFromHICON(hIcon win.HICON) (Size, error) {
 		hBmp = ii.HbmMask
 	}
 
-	if 0 == win.GetObject(win.HGDIOBJ(hBmp), unsafe.Sizeof(bi), unsafe.Pointer(&bi)) {
+	if win.GetObject(win.HGDIOBJ(hBmp), unsafe.Sizeof(bi), unsafe.Pointer(&bi)) == 0 {
 		return Size{}, newError("GetObject")
 	}
 

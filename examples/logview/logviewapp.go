@@ -8,20 +8,19 @@ import (
 	"log"
 	"time"
 
+	"github.com/xackery/wlk/cpl"
 	"github.com/xackery/wlk/walk"
-
-	. "github.com/xackery/wlk/common"
 )
 
 func main() {
 	var mw *walk.MainWindow
 
-	if err := (MainWindow{
+	if err := (cpl.MainWindow{
 		AssignTo: &mw,
 		Title:    "Walk LogView Example",
-		MinSize:  Size{320, 240},
-		Size:     Size{400, 600},
-		Layout:   VBox{MarginsZero: true},
+		MinSize:  cpl.Size{Width: 320, Height: 240},
+		Size:     cpl.Size{Width: 400, Height: 600},
+		Layout:   cpl.VBox{MarginsZero: true},
 	}.Create()); err != nil {
 		log.Fatal(err)
 	}
@@ -37,7 +36,7 @@ func main() {
 	go func() {
 		for i := 0; i < 10000; i++ {
 			time.Sleep(100 * time.Millisecond)
-			log.Println("Text" + "\r\n")
+			log.Println("Text")
 		}
 	}()
 

@@ -221,7 +221,7 @@ func (tv *TreeView) SetCurrentItem(item TreeItem) error {
 		return err
 	}
 
-	if 0 == tv.SendMessage(win.TVM_SELECTITEM, win.TVGN_CARET, uintptr(handle)) {
+	if tv.SendMessage(win.TVM_SELECTITEM, win.TVGN_CARET, uintptr(handle)) == 0 {
 		return newError("SendMessage(TVM_SELECTITEM) failed")
 	}
 
@@ -296,7 +296,7 @@ func (tv *TreeView) resetItems() error {
 }
 
 func (tv *TreeView) clearItems() error {
-	if 0 == tv.SendMessage(win.TVM_DELETEITEM, 0, 0) {
+	if tv.SendMessage(win.TVM_DELETEITEM, 0, 0) == 0 {
 		return newError("SendMessage(TVM_DELETEITEM) failed")
 	}
 
@@ -432,7 +432,7 @@ func (tv *TreeView) updateItem(item TreeItem) error {
 
 	tv.setTVITEMImageInfo(tvi, item)
 
-	if 0 == tv.SendMessage(win.TVM_SETITEM, 0, uintptr(unsafe.Pointer(tvi))) {
+	if tv.SendMessage(win.TVM_SETITEM, 0, uintptr(unsafe.Pointer(tvi))) == 0 {
 		return newError("SendMessage(TVM_SETITEM) failed")
 	}
 
@@ -449,7 +449,7 @@ func (tv *TreeView) removeItem(item TreeItem) error {
 		return newError("invalid item")
 	}
 
-	if 0 == tv.SendMessage(win.TVM_DELETEITEM, 0, uintptr(info.handle)) {
+	if tv.SendMessage(win.TVM_DELETEITEM, 0, uintptr(info.handle)) == 0 {
 		return newError("SendMessage(TVM_DELETEITEM) failed")
 	}
 
@@ -512,7 +512,7 @@ func (tv *TreeView) Expanded(item TreeItem) bool {
 		StateMask: win.TVIS_EXPANDED,
 	}
 
-	if 0 == tv.SendMessage(win.TVM_GETITEM, 0, uintptr(unsafe.Pointer(tvi))) {
+	if tv.SendMessage(win.TVM_GETITEM, 0, uintptr(unsafe.Pointer(tvi))) == 0 {
 		newError("SendMessage(TVM_GETITEM) failed")
 	}
 
@@ -538,7 +538,7 @@ func (tv *TreeView) SetExpanded(item TreeItem, expanded bool) error {
 		action = win.TVE_COLLAPSE
 	}
 
-	if 0 == tv.SendMessage(win.TVM_EXPAND, action, uintptr(info.handle)) {
+	if tv.SendMessage(win.TVM_EXPAND, action, uintptr(info.handle)) == 0 {
 		return newError("SendMessage(TVM_EXPAND) failed")
 	}
 

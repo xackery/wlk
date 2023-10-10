@@ -9,7 +9,7 @@ import (
 	"log"
 	"strings"
 
-	. "github.com/xackery/wlk/common"
+	. "github.com/xackery/wlk/cpl"
 	"github.com/xackery/wlk/walk"
 )
 

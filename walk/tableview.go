@@ -521,7 +521,7 @@ func (tv *TableView) SetColumnsSizable(b bool) error {
 			style |= win.HDS_NOSIZING
 		}
 
-		if 0 == win.SetWindowLong(headerHWnd, win.GWL_STYLE, style) {
+		if win.SetWindowLong(headerHWnd, win.GWL_STYLE, style) == 0 {
 			return lastError("SetWindowLong(GWL_STYLE)")
 		}
 
@@ -934,10 +934,10 @@ func (tv *TableView) setItemCount() error {
 		count = tv.model.RowCount()
 	}
 
-	if 0 == win.SendMessage(tv.hwndFrozenLV, win.LVM_SETITEMCOUNT, uintptr(count), win.LVSICF_NOINVALIDATEALL|win.LVSICF_NOSCROLL) {
+	if win.SendMessage(tv.hwndFrozenLV, win.LVM_SETITEMCOUNT, uintptr(count), win.LVSICF_NOINVALIDATEALL|win.LVSICF_NOSCROLL) == 0 {
 		return newError("SendMessage(LVM_SETITEMCOUNT)")
 	}
-	if 0 == win.SendMessage(tv.hwndNormalLV, win.LVM_SETITEMCOUNT, uintptr(count), win.LVSICF_NOINVALIDATEALL|win.LVSICF_NOSCROLL) {
+	if win.SendMessage(tv.hwndNormalLV, win.LVM_SETITEMCOUNT, uintptr(count), win.LVSICF_NOINVALIDATEALL|win.LVSICF_NOSCROLL) == 0 {
 		return newError("SendMessage(LVM_SETITEMCOUNT)")
 	}
 
@@ -1275,7 +1275,7 @@ func (tv *TableView) IndexAt(x, y int) int {
 
 // ItemVisible returns whether the item at position index is visible.
 func (tv *TableView) ItemVisible(index int) bool {
-	return 0 != win.SendMessage(tv.hwndNormalLV, win.LVM_ISITEMVISIBLE, uintptr(index), 0)
+	return win.SendMessage(tv.hwndNormalLV, win.LVM_ISITEMVISIBLE, uintptr(index), 0) != 0
 }
 
 // EnsureItemVisible ensures the item at position index is visible, scrolling if necessary.
@@ -1560,7 +1560,7 @@ func (tv *TableView) StretchLastColumn() error {
 	}
 
 	if lp > 0 {
-		if 0 == win.SendMessage(hwnd, win.LVM_SETCOLUMNWIDTH, uintptr(colCount-1), lp) {
+		if win.SendMessage(hwnd, win.LVM_SETCOLUMNWIDTH, uintptr(colCount-1), lp) == 0 {
 			return newError("LVM_SETCOLUMNWIDTH failed")
 		}
 
@@ -1665,14 +1665,14 @@ func (tv *TableView) SaveState() error {
 	if frozenCount > 0 {
 		lp = uintptr(unsafe.Pointer(&indices[0]))
 
-		if 0 == win.SendMessage(tv.hwndFrozenLV, win.LVM_GETCOLUMNORDERARRAY, uintptr(frozenCount), lp) {
+		if win.SendMessage(tv.hwndFrozenLV, win.LVM_GETCOLUMNORDERARRAY, uintptr(frozenCount), lp) == 0 {
 			return newError("LVM_GETCOLUMNORDERARRAY")
 		}
 	}
 	if normalCount > 0 {
 		lp = uintptr(unsafe.Pointer(&indices[frozenCount]))
 
-		if 0 == win.SendMessage(tv.hwndNormalLV, win.LVM_GETCOLUMNORDERARRAY, uintptr(normalCount), lp) {
+		if win.SendMessage(tv.hwndNormalLV, win.LVM_GETCOLUMNORDERARRAY, uintptr(normalCount), lp) == 0 {
 			return newError("LVM_GETCOLUMNORDERARRAY")
 		}
 	}
@@ -1727,7 +1727,7 @@ func (tv *TableView) RestoreState() error {
 	tvcsRetained := make([]*tableViewColumnState, 0, len(tvs.Columns))
 	for _, tvcs := range tvs.Columns {
 		if tvcs.LastSeenDate != "" {
-			if lastSeen, err := time.Parse("2006-02-01", tvcs.LastSeenDate); err != nil {
+			if lastSeen, err := time.Parse("2006-01-02", tvcs.LastSeenDate); err != nil {
 				tvcs.LastSeenDate = ""
 			} else if name2tvc[tvcs.Name] == nil && lastSeen.Add(time.Hour*24*90).Before(time.Now()) {
 				continue
@@ -1799,14 +1799,14 @@ func (tv *TableView) RestoreState() error {
 	if frozenCount > 0 {
 		lp = uintptr(unsafe.Pointer(&indices[0]))
 
-		if 0 == win.SendMessage(tv.hwndFrozenLV, win.LVM_SETCOLUMNORDERARRAY, uintptr(frozenCount), lp) {
+		if win.SendMessage(tv.hwndFrozenLV, win.LVM_SETCOLUMNORDERARRAY, uintptr(frozenCount), lp) == 0 {
 			return newError("LVM_SETCOLUMNORDERARRAY")
 		}
 	}
 	if normalCount > 0 {
 		lp = uintptr(unsafe.Pointer(&indices[frozenCount]))
 
-		if 0 == win.SendMessage(tv.hwndNormalLV, win.LVM_SETCOLUMNORDERARRAY, uintptr(normalCount), lp) {
+		if win.SendMessage(tv.hwndNormalLV, win.LVM_SETCOLUMNORDERARRAY, uintptr(normalCount), lp) == 0 {
 			return newError("LVM_SETCOLUMNORDERARRAY")
 		}
 	}
@@ -2568,7 +2568,7 @@ func tableViewHdrWndProc(hwnd win.HWND, msg uint32, wp, lp uintptr) uintptr {
 		text := tv.columns.At(col).TitleEffective()
 
 		var rc win.RECT
-		if 0 == win.SendMessage(hwnd, win.HDM_GETITEMRECT, uintptr(hti.IItem), uintptr(unsafe.Pointer(&rc))) {
+		if win.SendMessage(hwnd, win.HDM_GETITEMRECT, uintptr(hti.IItem), uintptr(unsafe.Pointer(&rc))) == 0 {
 			tv.group.toolTip.setText(hwnd, "")
 			break
 		}
@@ -2638,11 +2638,11 @@ func (tv *TableView) WndProc(hwnd win.HWND, msg uint32, wp, lp uintptr) uintptr 
 		var rc win.RECT
 
 		vsbWidth := win.GetSystemMetricsForDpi(win.SM_CXVSCROLL, dpi)
-		rc = win.RECT{wp.Cx - vsbWidth - 1, 0, wp.Cx, wp.Cy}
+		rc = win.RECT{Left: wp.Cx - vsbWidth - 1, Top: 0, Right: wp.Cx, Bottom: wp.Cy}
 		win.InvalidateRect(tv.hWnd, &rc, true)
 
 		hsbHeight := win.GetSystemMetricsForDpi(win.SM_CYHSCROLL, dpi)
-		rc = win.RECT{0, wp.Cy - hsbHeight - 1, wp.Cx, wp.Cy}
+		rc = win.RECT{Left: 0, Top: wp.Cy - hsbHeight - 1, Right: wp.Cx, Bottom: wp.Cy}
 		win.InvalidateRect(tv.hWnd, &rc, true)
 
 		tv.redrawItems()
