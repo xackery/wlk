@@ -12,7 +12,7 @@ import (
 
 	"github.com/xackery/wlk/walk"
 
-	. "github.com/xackery/wlk/cpl"
+	"github.com/xackery/wlk/cpl"
 )
 
 func main() {
@@ -30,11 +30,11 @@ func run() error {
 
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
-	if err := (MainWindow{
+	if err := (cpl.MainWindow{
 		AssignTo: &mw,
 		Title:    "Window Closing Test",
-		Layout:   VBox{Spacing: 2},
-		Size:     Size{800, 600},
+		Layout:   cpl.VBox{Spacing: 2},
+		Size:     cpl.Size{Width: 800, Height: 600},
 	}.Create()); err != nil {
 		walk.MsgBox(nil, "Error", fmt.Sprintf("%v", err), walk.MsgBoxIconError)
 		return fmt.Errorf("creating main window: %w", err)

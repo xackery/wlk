@@ -11,7 +11,7 @@ import (
 
 	"github.com/xackery/wlk/walk"
 
-	. "github.com/xackery/wlk/cpl"
+	"github.com/xackery/wlk/cpl"
 )
 
 func main() {
@@ -26,13 +26,13 @@ func main() {
 
 	animal := new(Animal)
 
-	if _, err := (MainWindow{
+	if _, err := (cpl.MainWindow{
 		AssignTo: &mw,
 		Title:    "Walk Data Binding Example",
-		MinSize:  Size{300, 200},
-		Layout:   VBox{},
-		Children: []Widget{
-			PushButton{
+		MinSize:  cpl.Size{Width: 300, Height: 200},
+		Layout:   cpl.VBox{},
+		Children: []cpl.Widget{
+			cpl.PushButton{
 				Text: "Edit Animal",
 				OnClicked: func() {
 					if cmd, err := RunAnimalDialog(mw, animal); err != nil {
@@ -42,10 +42,10 @@ func main() {
 					}
 				},
 			},
-			Label{
+			cpl.Label{
 				Text: "animal:",
 			},
-			TextEdit{
+			cpl.TextEdit{
 				AssignTo: &outTE,
 				ReadOnly: true,
 				Text:     fmt.Sprintf("%+v", animal),
@@ -116,121 +116,121 @@ func RunAnimalDialog(owner walk.Form, animal *Animal) (int, error) {
 	var db *walk.DataBinder
 	var acceptPB, cancelPB *walk.PushButton
 
-	return Dialog{
+	return cpl.Dialog{
 		AssignTo:      &dlg,
-		Title:         Bind("'Animal Details' + (animal.Name == '' ? '' : ' - ' + animal.Name)"),
+		Title:         cpl.Bind("'Animal Details' + (animal.Name == '' ? '' : ' - ' + animal.Name)"),
 		DefaultButton: &acceptPB,
 		CancelButton:  &cancelPB,
-		DataBinder: DataBinder{
+		DataBinder: cpl.DataBinder{
 			AssignTo:       &db,
 			Name:           "animal",
 			DataSource:     animal,
-			ErrorPresenter: ToolTipErrorPresenter{},
+			ErrorPresenter: cpl.ToolTipErrorPresenter{},
 		},
-		MinSize: Size{300, 300},
-		Layout:  VBox{},
-		Children: []Widget{
-			Composite{
-				Layout: Grid{Columns: 2},
-				Children: []Widget{
-					Label{
+		MinSize: cpl.Size{300, 300},
+		Layout:  cpl.VBox{},
+		Children: []cpl.Widget{
+			cpl.Composite{
+				Layout: cpl.Grid{Columns: 2},
+				Children: []cpl.Widget{
+					cpl.Label{
 						Text: "Name:",
 					},
-					LineEdit{
-						Text: Bind("Name"),
+					cpl.LineEdit{
+						Text: cpl.Bind("Name"),
 					},
 
-					Label{
+					cpl.Label{
 						Text: "Arrival Date:",
 					},
-					DateEdit{
-						Date: Bind("ArrivalDate"),
+					cpl.DateEdit{
+						Date: cpl.Bind("ArrivalDate"),
 					},
 
-					Label{
+					cpl.Label{
 						Text: "Species:",
 					},
-					ComboBox{
-						Value:         Bind("SpeciesId", SelRequired{}),
+					cpl.ComboBox{
+						Value:         cpl.Bind("SpeciesId", cpl.SelRequired{}),
 						BindingMember: "Id",
 						DisplayMember: "Name",
 						Model:         KnownSpecies(),
 					},
 
-					Label{
+					cpl.Label{
 						Text: "Speed:",
 					},
-					Slider{
-						Value: Bind("Speed"),
+					cpl.Slider{
+						Value: cpl.Bind("Speed"),
 					},
 
-					RadioButtonGroupBox{
+					cpl.RadioButtonGroupBox{
 						ColumnSpan: 2,
 						Title:      "Sex",
-						Layout:     HBox{},
+						Layout:     cpl.HBox{},
 						DataMember: "Sex",
-						Buttons: []RadioButton{
+						Buttons: []cpl.RadioButton{
 							{Text: "Male", Value: SexMale},
 							{Text: "Female", Value: SexFemale},
 							{Text: "Hermaphrodite", Value: SexHermaphrodite},
 						},
 					},
 
-					Label{
+					cpl.Label{
 						Text: "Weight:",
 					},
-					NumberEdit{
-						Value:    Bind("Weight", Range{0.01, 9999.99}),
+					cpl.NumberEdit{
+						Value:    cpl.Bind("Weight", cpl.Range{0.01, 9999.99}),
 						Suffix:   " kg",
 						Decimals: 2,
 					},
 
-					Label{
+					cpl.Label{
 						Text: "Preferred Food:",
 					},
-					ComboBox{
+					cpl.ComboBox{
 						Editable: true,
-						Value:    Bind("PreferredFood"),
+						Value:    cpl.Bind("PreferredFood"),
 						Model:    []string{"Fruit", "Grass", "Fish", "Meat"},
 					},
 
-					Label{
+					cpl.Label{
 						Text: "Domesticated:",
 					},
-					CheckBox{
-						Checked: Bind("Domesticated"),
+					cpl.CheckBox{
+						Checked: cpl.Bind("Domesticated"),
 					},
 
-					VSpacer{
+					cpl.VSpacer{
 						ColumnSpan: 2,
 						Size:       8,
 					},
 
-					Label{
+					cpl.Label{
 						ColumnSpan: 2,
 						Text:       "Remarks:",
 					},
-					TextEdit{
+					cpl.TextEdit{
 						ColumnSpan: 2,
-						MinSize:    Size{100, 50},
-						Text:       Bind("Remarks"),
+						MinSize:    cpl.Size{100, 50},
+						Text:       cpl.Bind("Remarks"),
 					},
 
-					Label{
+					cpl.Label{
 						ColumnSpan: 2,
 						Text:       "Patience:",
 					},
-					LineEdit{
+					cpl.LineEdit{
 						ColumnSpan: 2,
-						Text:       Bind("PatienceField"),
+						Text:       cpl.Bind("PatienceField"),
 					},
 				},
 			},
-			Composite{
-				Layout: HBox{},
-				Children: []Widget{
-					HSpacer{},
-					PushButton{
+			cpl.Composite{
+				Layout: cpl.HBox{},
+				Children: []cpl.Widget{
+					cpl.HSpacer{},
+					cpl.PushButton{
 						AssignTo: &acceptPB,
 						Text:     "OK",
 						OnClicked: func() {
@@ -242,7 +242,7 @@ func RunAnimalDialog(owner walk.Form, animal *Animal) (int, error) {
 							dlg.Accept()
 						},
 					},
-					PushButton{
+					cpl.PushButton{
 						AssignTo:  &cancelPB,
 						Text:      "Cancel",
 						OnClicked: func() { dlg.Cancel() },

@@ -7,19 +7,19 @@ package main
 import (
 	"log"
 
-	. "github.com/xackery/wlk/cpl"
+	"github.com/xackery/wlk/cpl"
 	"github.com/xackery/wlk/walk"
 )
 
 func main() {
 	var te *walk.TextEdit
 
-	if _, err := (MainWindow{
+	if _, err := (cpl.MainWindow{
 		Title:   "Walk Clipboard Example",
-		MinSize: Size{300, 200},
-		Layout:  VBox{},
-		Children: []Widget{
-			PushButton{
+		MinSize: cpl.Size{Width: 300, Height: 200},
+		Layout:  cpl.VBox{},
+		Children: []cpl.Widget{
+			cpl.PushButton{
 				Text: "Copy",
 				OnClicked: func() {
 					if err := walk.Clipboard().SetText(te.Text()); err != nil {
@@ -27,7 +27,7 @@ func main() {
 					}
 				},
 			},
-			PushButton{
+			cpl.PushButton{
 				Text: "Paste",
 				OnClicked: func() {
 					if text, err := walk.Clipboard().Text(); err != nil {
@@ -37,7 +37,7 @@ func main() {
 					}
 				},
 			},
-			TextEdit{
+			cpl.TextEdit{
 				AssignTo: &te,
 			},
 		},

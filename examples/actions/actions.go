@@ -7,7 +7,7 @@ package main
 import (
 	"log"
 
-	. "github.com/xackery/wlk/cpl"
+	"github.com/xackery/wlk/cpl"
 	"github.com/xackery/wlk/walk"
 )
 
@@ -18,7 +18,7 @@ type MyMainWindow struct {
 }
 
 func main() {
-	MustRegisterCondition("isSpecialMode", isSpecialMode)
+	cpl.MustRegisterCondition("isSpecialMode", isSpecialMode)
 
 	mw := new(MyMainWindow)
 
@@ -26,50 +26,50 @@ func main() {
 	var recentMenu *walk.Menu
 	var toggleSpecialModePB *walk.PushButton
 
-	if err := (MainWindow{
+	if err := (cpl.MainWindow{
 		AssignTo: &mw.MainWindow,
 		Title:    "Walk Actions Example",
-		MenuItems: []MenuItem{
-			Menu{
+		MenuItems: []cpl.MenuItem{
+			cpl.Menu{
 				Text: "&File",
-				Items: []MenuItem{
-					Action{
+				Items: []cpl.MenuItem{
+					cpl.Action{
 						AssignTo:    &openAction,
 						Text:        "&Open",
 						Image:       "../img/open.png",
-						Enabled:     Bind("enabledCB.Checked"),
-						Visible:     Bind("!openHiddenCB.Checked"),
-						Shortcut:    Shortcut{walk.ModControl, walk.KeyO},
+						Enabled:     cpl.Bind("enabledCB.Checked"),
+						Visible:     cpl.Bind("!openHiddenCB.Checked"),
+						Shortcut:    cpl.Shortcut{Modifiers: walk.ModControl, Key: walk.KeyO},
 						OnTriggered: mw.openAction_Triggered,
 					},
-					Menu{
+					cpl.Menu{
 						AssignTo: &recentMenu,
 						Text:     "Recent",
 					},
-					Separator{},
-					Action{
+					cpl.Separator{},
+					cpl.Action{
 						Text:        "E&xit",
 						OnTriggered: func() { mw.Close() },
 					},
 				},
 			},
-			Menu{
+			cpl.Menu{
 				Text: "&View",
-				Items: []MenuItem{
-					Action{
+				Items: []cpl.MenuItem{
+					cpl.Action{
 						Text:    "Open / Special Enabled",
-						Checked: Bind("enabledCB.Visible"),
+						Checked: cpl.Bind("enabledCB.Visible"),
 					},
-					Action{
+					cpl.Action{
 						Text:    "Open Hidden",
-						Checked: Bind("openHiddenCB.Visible"),
+						Checked: cpl.Bind("openHiddenCB.Visible"),
 					},
 				},
 			},
-			Menu{
+			cpl.Menu{
 				Text: "&Help",
-				Items: []MenuItem{
-					Action{
+				Items: []cpl.MenuItem{
+					cpl.Action{
 						AssignTo:    &showAboutBoxAction,
 						Text:        "About",
 						OnTriggered: mw.showAboutBoxAction_Triggered,
@@ -77,77 +77,77 @@ func main() {
 				},
 			},
 		},
-		ToolBar: ToolBar{
-			ButtonStyle: ToolBarButtonImageBeforeText,
-			Items: []MenuItem{
-				ActionRef{&openAction},
-				Menu{
+		ToolBar: cpl.ToolBar{
+			ButtonStyle: cpl.ToolBarButtonImageBeforeText,
+			Items: []cpl.MenuItem{
+				cpl.ActionRef{Action: &openAction},
+				cpl.Menu{
 					Text:  "New A",
 					Image: "../img/document-new.png",
-					Items: []MenuItem{
-						Action{
+					Items: []cpl.MenuItem{
+						cpl.Action{
 							Text:        "A",
 							OnTriggered: mw.newAction_Triggered,
 						},
-						Action{
+						cpl.Action{
 							Text:        "B",
 							OnTriggered: mw.newAction_Triggered,
 						},
-						Action{
+						cpl.Action{
 							Text:        "C",
 							OnTriggered: mw.newAction_Triggered,
 						},
 					},
 					OnTriggered: mw.newAction_Triggered,
 				},
-				Separator{},
-				Menu{
+				cpl.Separator{},
+				cpl.Menu{
 					Text:  "View",
 					Image: "../img/document-properties.png",
-					Items: []MenuItem{
-						Action{
+					Items: []cpl.MenuItem{
+						cpl.Action{
 							Text:        "X",
 							OnTriggered: mw.changeViewAction_Triggered,
 						},
-						Action{
+						cpl.Action{
 							Text:        "Y",
 							OnTriggered: mw.changeViewAction_Triggered,
 						},
-						Action{
+						cpl.Action{
 							Text:        "Z",
 							OnTriggered: mw.changeViewAction_Triggered,
 						},
 					},
 				},
-				Separator{},
-				Action{
+				cpl.Separator{},
+				cpl.Action{
 					Text:        "Special",
 					Image:       "../img/system-shutdown.png",
-					Enabled:     Bind("isSpecialMode && enabledCB.Checked"),
+					Enabled:     cpl.Bind("isSpecialMode && enabledCB.Checked"),
 					OnTriggered: mw.specialAction_Triggered,
 				},
 			},
 		},
-		ContextMenuItems: []MenuItem{
-			ActionRef{&showAboutBoxAction},
+		ContextMenuItems: []cpl.MenuItem{
+			cpl.ActionRef{Action: &showAboutBoxAction},
 		},
-		MinSize: Size{300, 200},
-		Layout:  VBox{},
-		Children: []Widget{
-			CheckBox{
+		MinSize: cpl.Size{Width: 300, Height: 200},
+		Layout:  cpl.VBox{},
+		Children: []cpl.Widget{
+			cpl.CheckBox{
 				Name:    "enabledCB",
 				Text:    "Open / Special Enabled",
 				Checked: true,
-				Accessibility: Accessibility{
+				Accessibility: cpl.Accessibility{
 					Help: "Enables Open and Special",
 				},
 			},
-			CheckBox{
+			cpl.CheckBox{
 				Name:    "openHiddenCB",
 				Text:    "Open Hidden",
 				Checked: true,
 			},
-			PushButton{
+			cpl.PushButton{
 				AssignTo: &toggleSpecialModePB,
 				Text:     "Enable Special Mode",
 				OnClicked: func() {
@@ -159,7 +159,7 @@ func main() {
 						toggleSpecialModePB.SetText("Enable Special Mode")
 					}
 				},
-				Accessibility: Accessibility{
+				Accessibility: cpl.Accessibility{
 					Help: "Toggles special mode",
 				},
 			},
