@@ -15,3 +15,5 @@ Windows users love the GUI. OSX and linux users tend to prefer cli, especially i
 ## Examples
 
 Check out # [examples](examples) to check out how the library looks.
+
+There are *many, many* warnings for how old walk is. I'm slowly going through and cleaning them up.
