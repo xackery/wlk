@@ -75,7 +75,7 @@ func comboBoxEditWndProc(hwnd win.HWND, msg uint32, wParam, lParam uintptr) uint
 		}
 
 	case win.WM_KEYDOWN:
-		if wParam != win.VK_RETURN || 0 == cb.SendMessage(win.CB_GETDROPPEDSTATE, 0, 0) {
+		if wParam != win.VK_RETURN || cb.SendMessage(win.CB_GETDROPPEDSTATE, 0, 0) == 0 {
 			cb.handleKeyDown(wParam, lParam)
 		}
 
@@ -85,7 +85,7 @@ func comboBoxEditWndProc(hwnd win.HWND, msg uint32, wParam, lParam uintptr) uint
 		}
 
 	case win.WM_KEYUP:
-		if wParam != win.VK_RETURN || 0 == cb.SendMessage(win.CB_GETDROPPEDSTATE, 0, 0) {
+		if wParam != win.VK_RETURN || cb.SendMessage(win.CB_GETDROPPEDSTATE, 0, 0) == 0 {
 			cb.handleKeyUp(wParam, lParam)
 		}
 
@@ -263,8 +263,6 @@ func (cb *ComboBox) itemString(index int) string {
 	default:
 		return fmt.Sprintf(cb.format, val)
 	}
-
-	panic("unreachable")
 }
 
 func (cb *ComboBox) insertItemAt(index int) error {

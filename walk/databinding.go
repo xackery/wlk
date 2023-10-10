@@ -264,11 +264,11 @@ func (db *DataBinder) Reset() error {
 	}()
 
 	if err := db.forEach(func(prop Property, field DataField) error {
-		if f64, ok := prop.Get().(float64); ok {
+		if _, ok := prop.Get().(float64); ok {
+			var f64 float64
 			switch v := field.Get().(type) {
 			case float32:
 				f64 = float64(v)
-
 			case float64:
 				f64 = v
 

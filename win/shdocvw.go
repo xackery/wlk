@@ -269,6 +269,8 @@ type IDocHostUIHandlerVtbl struct {
 	GetExternal           uintptr
 	TranslateUrl          uintptr
 	FilterDataObject      uintptr
+	//GetOverrideKeyPath       uintptr
+	//GetDropTargetContextMenu uintptr
 }
 
 type IDocHostUIHandler struct {

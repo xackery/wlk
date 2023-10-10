@@ -57,7 +57,7 @@ func (lv *LogView) AppendText(value string) {
 }
 
 func (lv *LogView) setReadOnly(readOnly bool) error {
-	if 0 == lv.SendMessage(win.EM_SETREADONLY, uintptr(win.BoolToBOOL(readOnly)), 0) {
+	if lv.SendMessage(win.EM_SETREADONLY, uintptr(win.BoolToBOOL(readOnly)), 0) == 0 {
 		return errors.New("fail to call EM_SETREADONLY")
 	}
 

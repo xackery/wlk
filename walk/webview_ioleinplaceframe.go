@@ -18,21 +18,21 @@ var webViewIOleInPlaceFrameVtbl *win.IOleInPlaceFrameVtbl
 func init() {
 	AppendToWalkInit(func() {
 		webViewIOleInPlaceFrameVtbl = &win.IOleInPlaceFrameVtbl{
-			syscall.NewCallback(webView_IOleInPlaceFrame_QueryInterface),
-			syscall.NewCallback(webView_IOleInPlaceFrame_AddRef),
-			syscall.NewCallback(webView_IOleInPlaceFrame_Release),
-			syscall.NewCallback(webView_IOleInPlaceFrame_GetWindow),
-			syscall.NewCallback(webView_IOleInPlaceFrame_ContextSensitiveHelp),
-			syscall.NewCallback(webView_IOleInPlaceFrame_GetBorder),
-			syscall.NewCallback(webView_IOleInPlaceFrame_RequestBorderSpace),
-			syscall.NewCallback(webView_IOleInPlaceFrame_SetBorderSpace),
-			syscall.NewCallback(webView_IOleInPlaceFrame_SetActiveObject),
-			syscall.NewCallback(webView_IOleInPlaceFrame_InsertMenus),
-			syscall.NewCallback(webView_IOleInPlaceFrame_SetMenu),
-			syscall.NewCallback(webView_IOleInPlaceFrame_RemoveMenus),
-			syscall.NewCallback(webView_IOleInPlaceFrame_SetStatusText),
-			syscall.NewCallback(webView_IOleInPlaceFrame_EnableModeless),
-			syscall.NewCallback(webView_IOleInPlaceFrame_TranslateAccelerator),
+			QueryInterface:       syscall.NewCallback(webView_IOleInPlaceFrame_QueryInterface),
+			AddRef:               syscall.NewCallback(webView_IOleInPlaceFrame_AddRef),
+			Release:              syscall.NewCallback(webView_IOleInPlaceFrame_Release),
+			GetWindow:            syscall.NewCallback(webView_IOleInPlaceFrame_GetWindow),
+			ContextSensitiveHelp: syscall.NewCallback(webView_IOleInPlaceFrame_ContextSensitiveHelp),
+			GetBorder:            syscall.NewCallback(webView_IOleInPlaceFrame_GetBorder),
+			RequestBorderSpace:   syscall.NewCallback(webView_IOleInPlaceFrame_RequestBorderSpace),
+			SetBorderSpace:       syscall.NewCallback(webView_IOleInPlaceFrame_SetBorderSpace),
+			SetActiveObject:      syscall.NewCallback(webView_IOleInPlaceFrame_SetActiveObject),
+			InsertMenus:          syscall.NewCallback(webView_IOleInPlaceFrame_InsertMenus),
+			SetMenu:              syscall.NewCallback(webView_IOleInPlaceFrame_SetMenu),
+			RemoveMenus:          syscall.NewCallback(webView_IOleInPlaceFrame_RemoveMenus),
+			SetStatusText:        syscall.NewCallback(webView_IOleInPlaceFrame_SetStatusText),
+			EnableModeless:       syscall.NewCallback(webView_IOleInPlaceFrame_EnableModeless),
+			TranslateAccelerator: syscall.NewCallback(webView_IOleInPlaceFrame_TranslateAccelerator),
 		}
 	})
 }

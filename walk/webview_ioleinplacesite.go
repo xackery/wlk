@@ -19,21 +19,21 @@ var webViewIOleInPlaceSiteVtbl *win.IOleInPlaceSiteVtbl
 func init() {
 	AppendToWalkInit(func() {
 		webViewIOleInPlaceSiteVtbl = &win.IOleInPlaceSiteVtbl{
-			syscall.NewCallback(webView_IOleInPlaceSite_QueryInterface),
-			syscall.NewCallback(webView_IOleInPlaceSite_AddRef),
-			syscall.NewCallback(webView_IOleInPlaceSite_Release),
-			syscall.NewCallback(webView_IOleInPlaceSite_GetWindow),
-			syscall.NewCallback(webView_IOleInPlaceSite_ContextSensitiveHelp),
-			syscall.NewCallback(webView_IOleInPlaceSite_CanInPlaceActivate),
-			syscall.NewCallback(webView_IOleInPlaceSite_OnInPlaceActivate),
-			syscall.NewCallback(webView_IOleInPlaceSite_OnUIActivate),
-			syscall.NewCallback(webView_IOleInPlaceSite_GetWindowContext),
-			syscall.NewCallback(webView_IOleInPlaceSite_Scroll),
-			syscall.NewCallback(webView_IOleInPlaceSite_OnUIDeactivate),
-			syscall.NewCallback(webView_IOleInPlaceSite_OnInPlaceDeactivate),
-			syscall.NewCallback(webView_IOleInPlaceSite_DiscardUndoState),
-			syscall.NewCallback(webView_IOleInPlaceSite_DeactivateAndUndo),
-			syscall.NewCallback(webView_IOleInPlaceSite_OnPosRectChange),
+			QueryInterface:       syscall.NewCallback(webView_IOleInPlaceSite_QueryInterface),
+			AddRef:               syscall.NewCallback(webView_IOleInPlaceSite_AddRef),
+			Release:              syscall.NewCallback(webView_IOleInPlaceSite_Release),
+			GetWindow:            syscall.NewCallback(webView_IOleInPlaceSite_GetWindow),
+			ContextSensitiveHelp: syscall.NewCallback(webView_IOleInPlaceSite_ContextSensitiveHelp),
+			CanInPlaceActivate:   syscall.NewCallback(webView_IOleInPlaceSite_CanInPlaceActivate),
+			OnInPlaceActivate:    syscall.NewCallback(webView_IOleInPlaceSite_OnInPlaceActivate),
+			OnUIActivate:         syscall.NewCallback(webView_IOleInPlaceSite_OnUIActivate),
+			GetWindowContext:     syscall.NewCallback(webView_IOleInPlaceSite_GetWindowContext),
+			Scroll:               syscall.NewCallback(webView_IOleInPlaceSite_Scroll),
+			OnUIDeactivate:       syscall.NewCallback(webView_IOleInPlaceSite_OnUIDeactivate),
+			OnInPlaceDeactivate:  syscall.NewCallback(webView_IOleInPlaceSite_OnInPlaceDeactivate),
+			DiscardUndoState:     syscall.NewCallback(webView_IOleInPlaceSite_DiscardUndoState),
+			DeactivateAndUndo:    syscall.NewCallback(webView_IOleInPlaceSite_DeactivateAndUndo),
+			OnPosRectChange:      syscall.NewCallback(webView_IOleInPlaceSite_OnPosRectChange),
 		}
 	})
 }

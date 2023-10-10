@@ -359,11 +359,11 @@ func (ml *menuItemLayout) layout(sm *menuSharedMetrics, rect *win.RECT) {
 
 	// Gutter: Background extending from the left of the item, across the checkbox
 	// background (including margins). Full height.
-	ml.gutterRect = win.RECT{x, y, x + sm.gutterSize.CX, y + h}
+	ml.gutterRect = win.RECT{Left: x, Top: y, Right: x + sm.gutterSize.CX, Bottom: y + h}
 
 	// Checkbox background: Leftmost item, centered vertically.
 	offsetVCenter := (h - sm.combinedCheckSize.CY) / 2
-	ml.checkboxBgRect = win.RECT{x, y + offsetVCenter, x + sm.combinedCheckSize.CX, y + sm.combinedCheckSize.CY + offsetVCenter}
+	ml.checkboxBgRect = win.RECT{Left: x, Top: y + offsetVCenter, Right: x + sm.combinedCheckSize.CX, Bottom: y + sm.combinedCheckSize.CY + offsetVCenter}
 
 	// Checkbox: Rendered overtop of checkbox background. Just strip margins
 	// from checkboxBgRect to obtain the checkboxRect.
@@ -375,18 +375,18 @@ func (ml *menuItemLayout) layout(sm *menuSharedMetrics, rect *win.RECT) {
 	// Separator: Starts to the right of gutter, extends all the way to the right.
 	// Centered vertically.
 	offsetVCenter = (h - sm.combinedSeparatorSize.CY) / 2
-	ml.separatorRect = win.RECT{x, y + offsetVCenter, rect.Right, y + sm.combinedSeparatorSize.CY + offsetVCenter}
+	ml.separatorRect = win.RECT{Left: x, Top: y + offsetVCenter, Right: rect.Right, Bottom: y + sm.combinedSeparatorSize.CY + offsetVCenter}
 	stripMargins(&ml.separatorRect, sm.itemMargins)
 
 	// Content: Start to the right of gutter, extend all the way to the right.
 	// Center vertically, then strip margins.
 	offsetVCenter = (h - ml.combinedContentSize.CY) / 2
-	ml.contentRect = win.RECT{x, y + offsetVCenter, rect.Right, y + ml.combinedContentSize.CY + offsetVCenter}
+	ml.contentRect = win.RECT{Left: int32(x), Top: int32(y + offsetVCenter), Right: rect.Right, Bottom: int32(y + ml.combinedContentSize.CY + offsetVCenter)}
 	stripMargins(&ml.contentRect, sm.contentMargins)
 
 	// Chevron: Rightmost item, centered vertically.
 	offsetVCenter = (h - sm.combinedChevronSize.CY) / 2
-	ml.chevronClipRect = win.RECT{rect.Right - sm.combinedChevronSize.CX, y + offsetVCenter, rect.Right, y + sm.combinedChevronSize.CY + offsetVCenter}
+	ml.chevronClipRect = win.RECT{Left: rect.Right - sm.combinedChevronSize.CX, Top: y + offsetVCenter, Right: rect.Right, Bottom: y + sm.combinedChevronSize.CY + offsetVCenter}
 	ml.chevronRect = ml.chevronClipRect
 	stripMargins(&ml.chevronRect, sm.chevronMargins)
 }

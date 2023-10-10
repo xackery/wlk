@@ -314,8 +314,6 @@ func (cb *ContainerBase) WndProc(hwnd win.HWND, msg uint32, wParam, lParam uintp
 					if button != nil && button.Visible() && button.Enabled() {
 						button.raiseClicked()
 					}
-
-					break
 				}
 
 				// Menu

@@ -627,10 +627,10 @@ func (c *Canvas) measureTextForDPI(text string, font *Font, bounds Rectangle, fo
 	defer win.SelectObject(c.hdc, oldHandle)
 
 	rect := &win.RECT{
-		int32(bounds.X),
-		int32(bounds.Y),
-		int32(bounds.X + bounds.Width),
-		int32(bounds.Y + bounds.Height),
+		Left:   int32(bounds.X),
+		Top:    int32(bounds.Y),
+		Right:  int32(bounds.X + bounds.Width),
+		Bottom: int32(bounds.Y + bounds.Height),
 	}
 	var params win.DRAWTEXTPARAMS
 	params.CbSize = uint32(unsafe.Sizeof(params))
@@ -720,10 +720,10 @@ func (c *Canvas) measureAndModifyTextPixels(text string, font *Font, bounds Rect
 	defer win.SelectObject(c.measureTextMetafile.hdc, oldHandle)
 
 	rect := &win.RECT{
-		int32(bounds.X),
-		int32(bounds.Y),
-		int32(bounds.X + bounds.Width),
-		int32(bounds.Y + bounds.Height),
+		Left:   int32(bounds.X),
+		Top:    int32(bounds.Y),
+		Right:  int32(bounds.X + bounds.Width),
+		Bottom: int32(bounds.Y + bounds.Height),
 	}
 	var params win.DRAWTEXTPARAMS
 	params.CbSize = uint32(unsafe.Sizeof(params))

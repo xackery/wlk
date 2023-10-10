@@ -75,9 +75,9 @@ func (r *Rectangle) SetSize(s Size) Rectangle {
 
 func (r Rectangle) toRECT() win.RECT {
 	return win.RECT{
-		int32(r.X),
-		int32(r.Y),
-		int32(r.X + r.Width),
-		int32(r.Y + r.Height),
+		Left:   int32(r.X),
+		Top:    int32(r.Y),
+		Right:  int32(r.X + r.Width),
+		Bottom: int32(r.Y + r.Height),
 	}
 }

@@ -544,7 +544,7 @@ func (tv *TableView) SetColumnsSizable(b bool) error {
 func (tv *TableView) ContextMenuLocation() Point {
 	idx := win.SendMessage(tv.hwndNormalLV, win.LVM_GETSELECTIONMARK, 0, 0)
 	rc := win.RECT{Left: win.LVIR_BOUNDS}
-	if 0 == win.SendMessage(tv.hwndNormalLV, win.LVM_GETITEMRECT, idx, uintptr(unsafe.Pointer(&rc))) {
+	if win.SendMessage(tv.hwndNormalLV, win.LVM_GETITEMRECT, idx, uintptr(unsafe.Pointer(&rc))) == 0 {
 		return tv.WidgetBase.ContextMenuLocation()
 	}
 	var pt win.POINT
@@ -2557,7 +2557,7 @@ func tableViewHdrWndProc(hwnd win.HWND, msg uint32, wp, lp uintptr) uintptr {
 		return result
 
 	case win.WM_MOUSEMOVE, win.WM_LBUTTONDOWN, win.WM_LBUTTONUP, win.WM_MBUTTONDOWN, win.WM_MBUTTONUP, win.WM_RBUTTONDOWN, win.WM_RBUTTONUP:
-		hti := win.HDHITTESTINFO{Pt: win.POINT{int32(win.GET_X_LPARAM(lp)), int32(win.GET_Y_LPARAM(lp))}}
+		hti := win.HDHITTESTINFO{Pt: win.POINT{X: int32(win.GET_X_LPARAM(lp)), Y: int32(win.GET_Y_LPARAM(lp))}}
 		win.SendMessage(hwnd, win.HDM_HITTEST, 0, uintptr(unsafe.Pointer(&hti)))
 		if hti.IItem == -1 {
 			tv.group.toolTip.setText(hwnd, "")
