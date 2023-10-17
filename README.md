@@ -23,6 +23,7 @@ There are *many, many* warnings for how old walk is. I'm slowly going through an
 This is work in progress.
 
 - [x] Dark Mode is opt in via `walk.SetDarkModeAllowed(true)`. This is disabled by default, and should be called before any other walk functions to ensure proper painting.
+- [x] If your program need to detect if Dark Mode is enabled, use `walk.IsDarkModeEnabled()`
 - [x] Dark Mode is detected via registry
 - [ ] Theme changing (Light Mode / Dark Mode) subscription/notification is not implemented
 - [ ] Overhaul all components to default to dark mode if enabled on initialization
