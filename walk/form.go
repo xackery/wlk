@@ -364,6 +364,9 @@ func (fb *FormBase) Run() int {
 
 	fb.SetSuspended(false)
 
+	if IsDarkMode() {
+		win.DwmSetWindowAttribute(fb.hWnd, win.DWMWA_USE_IMMERSIVE_DARK_MODE, 1)
+	}
 	return fb.mainLoop()
 }
 

@@ -7,7 +7,7 @@ for /d %%i in (*) do (
     cd %%i || goto error
     echo Building %%i
     go build || goto error
-    cd ..    
+    cd ..  
 )
 
 exit /b 0

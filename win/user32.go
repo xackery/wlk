@@ -1915,6 +1915,47 @@ var (
 	windowFromPoint             *windows.LazyProc
 )
 
+var (
+	darkModeColors = map[int]uint32{
+		COLOR_3DDKSHADOW:  0x00112233,
+		COLOR_3DFACE:      0x36393F,
+		COLOR_3DHIGHLIGHT: 0x5865F2,
+		//COLOR_3DHILIGHT:               0x5865F2,
+		COLOR_3DLIGHT:       0x36393F,
+		COLOR_3DSHADOW:      0x000000,
+		COLOR_ACTIVEBORDER:  0x36393F,
+		COLOR_ACTIVECAPTION: 0x5865F2,
+		COLOR_APPWORKSPACE:  0x36393F,
+		COLOR_BACKGROUND:    0x36393F,
+		//COLOR_BTNFACE:                 0x5865F2,
+		//COLOR_BTNHIGHLIGHT:            0x5865F2,
+		//COLOR_BTNHILIGHT:              0x5865F2,
+		//COLOR_BTNSHADOW:               0x000000,
+		COLOR_BTNTEXT:     0xFFFFFF,
+		COLOR_CAPTIONTEXT: 0xFFFFFF,
+		//COLOR_DESKTOP:                 0x36393F,
+		COLOR_GRADIENTACTIVECAPTION:   0x5865F2,
+		COLOR_GRADIENTINACTIVECAPTION: 0x36393F,
+		COLOR_GRAYTEXT:                0xFFFFFF,
+		COLOR_HIGHLIGHT:               0x5865F2,
+		COLOR_HIGHLIGHTTEXT:           0x36393F,
+		COLOR_HOTLIGHT:                0x5865F2,
+		COLOR_INACTIVEBORDER:          0x36393F,
+		COLOR_INACTIVECAPTION:         0x36393F,
+		COLOR_INACTIVECAPTIONTEXT:     0xFFFFFF,
+		COLOR_INFOBK:                  0x36393F,
+		COLOR_INFOTEXT:                0xFFFFFF,
+		COLOR_MENU:                    0x36393F,
+		//COLOR_MENUHILIGHT:             0x5865F2,
+		//COLOR_MENUBAR:                 0x36393F,
+		COLOR_MENUTEXT:    0xFFFFFF,
+		COLOR_SCROLLBAR:   0x5865F2,
+		COLOR_WINDOW:      0x36393F,
+		COLOR_WINDOWFRAME: 0x36393F,
+		COLOR_WINDOWTEXT:  0xFFFFFF,
+	}
+)
+
 func init() {
 	is64bit := unsafe.Sizeof(uintptr(0)) == 8
 
@@ -2726,6 +2767,11 @@ func GetSubMenu(hMenu HMENU, nPos int32) HMENU {
 }
 
 func GetSysColor(nIndex int) uint32 {
+	if IsDarkMode() {
+		if color, ok := darkModeColors[nIndex]; ok {
+			return color
+		}
+	}
 	ret, _, _ := syscall.Syscall(getSysColor.Addr(), 1,
 		uintptr(nIndex),
 		0,

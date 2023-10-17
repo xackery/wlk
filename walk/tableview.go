@@ -417,6 +417,17 @@ func (tv *TableView) ApplyDPI(dpi int) {
 func (tv *TableView) ApplySysColors() {
 	tv.WidgetBase.ApplySysColors()
 
+	if IsDarkMode() {
+		tv.themeNormalBGColor = RGB(37, 37, 38)
+		tv.themeNormalTextColor = RGB(255, 255, 255)
+		tv.themeSelectedBGColor = RGB(0, 122, 204)
+		tv.themeSelectedTextColor = RGB(255, 255, 255)
+		tv.themeSelectedNotFocusedBGColor = RGB(37, 37, 38)
+		tv.alternatingRowBGColor = RGB(45, 45, 48)
+		tv.alternatingRowTextColor = RGB(255, 255, 255)
+		return
+	}
+
 	// As some combinations of property and state may be invalid for any theme,
 	// we set some defaults here.
 	tv.themeNormalBGColor = Color(win.GetSysColor(win.COLOR_WINDOW))

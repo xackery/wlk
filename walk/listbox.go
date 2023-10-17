@@ -162,6 +162,15 @@ func (lb *ListBox) SetItemStyler(styler ListItemStyler) {
 func (lb *ListBox) ApplySysColors() {
 	lb.WidgetBase.ApplySysColors()
 
+	if IsDarkMode() {
+		lb.themeNormalBGColor = RGB(0, 0, 0)
+		lb.themeNormalTextColor = RGB(255, 255, 255)
+		lb.themeSelectedBGColor = RGB(0, 120, 215)
+		lb.themeSelectedTextColor = RGB(255, 255, 255)
+		lb.themeSelectedNotFocusedBGColor = RGB(0, 120, 215)
+		return
+	}
+
 	var hc win.HIGHCONTRAST
 	hc.CbSize = uint32(unsafe.Sizeof(hc))
 	if win.SystemParametersInfo(win.SPI_GETHIGHCONTRAST, hc.CbSize, unsafe.Pointer(&hc), 0) {
@@ -173,6 +182,7 @@ func (lb *ListBox) ApplySysColors() {
 	lb.themeSelectedBGColor = Color(win.GetSysColor(win.COLOR_HIGHLIGHT))
 	lb.themeSelectedTextColor = Color(win.GetSysColor(win.COLOR_HIGHLIGHTTEXT))
 	lb.themeSelectedNotFocusedBGColor = Color(win.GetSysColor(win.COLOR_BTNFACE))
+
 }
 
 func (lb *ListBox) ApplyDPI(dpi int) {

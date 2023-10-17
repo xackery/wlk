@@ -19,7 +19,7 @@ func main() {
 
 	MainWindow{
 		Title:   "Walk Slider Example",
-		MinSize: Size{320, 240},
+		MinSize: Size{Width: 320, Height: 240},
 		Layout:  HBox{},
 		Children: []Widget{
 			Slider{
