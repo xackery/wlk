@@ -423,7 +423,7 @@ func (m *Menu) onClearingActions() error {
 
 // onMnemonic is called when m contains owner-drawn items and its parent Window
 // receives a keypress. It enumerates all visible menu items, and if a match is
-// found, it returns an action code telling Windows to execute the item specifed
+// found, it returns an action code telling Windows to execute the item specified
 // by positional index.
 func (m *Menu) onMnemonic(key Key) (index, action uint16) {
 	m.actions.forEachVisible(func(a *Action) bool {
