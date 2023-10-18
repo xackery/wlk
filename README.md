@@ -1,5 +1,9 @@
 # wlk
 
+
+[![GoDoc](https://godoc.org/github.com/xackery/wlk?status.svg)](https://godoc.org/github.com/xackery/wlk) [![Go Report Card](https://goreportcard.com/badge/github.com/xackery/wlk)](https://goreportcard.com/report/github.com/xackery/wlk)
+
+
 Based on lxn/walk which hasn't been updated for 3+ years, as well contributions to the fork tailscale/walk, simplified and modernized
 
 Majority of this code can be sourced to:
@@ -33,3 +37,4 @@ This is work in progress.
 - [x] Dark Mode is detected via registry
 - [ ] Theme changing (Light Mode / Dark Mode) subscription/notification is not yet implemented
 - [ ] Overhaul all components to default to dark mode if enabled on initialization
+- [ ] Allow custom theming.
