@@ -34,17 +34,17 @@ func main() {
 			RadioButtonGroup{
 				DataMember: "Bar",
 				Buttons: []RadioButton{
-					RadioButton{
+					{
 						Name:  "aRB",
 						Text:  "A",
 						Value: "a",
 					},
-					RadioButton{
+					{
 						Name:  "bRB",
 						Text:  "B",
 						Value: "b",
 					},
-					RadioButton{
+					{
 						Name:  "cRB",
 						Text:  "C",
 						Value: "c",
@@ -66,17 +66,17 @@ func main() {
 			RadioButtonGroup{
 				DataMember: "Baz",
 				Buttons: []RadioButton{
-					RadioButton{
+					{
 						Name:  "oneRB",
 						Text:  "1",
 						Value: 1,
 					},
-					RadioButton{
+					{
 						Name:  "twoRB",
 						Text:  "2",
 						Value: 2,
 					},
-					RadioButton{
+					{
 						Name:  "threeRB",
 						Text:  "3",
 						Value: 3,

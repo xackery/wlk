@@ -87,14 +87,14 @@ func main() {
 		Content:         "Here is some content.\n\nNote that there are some line breaks.",
 		ProgressBarMode: walk.TaskDialogProgressBar,
 		RadioButtons: []walk.TaskDialogRadioButton{
-			walk.TaskDialogRadioButton{
+			{
 				Text: "Progress Bar On",
 			},
-			walk.TaskDialogRadioButton{
+			{
 				Text:    "Progress Bar Off",
 				Default: true,
 			},
-			walk.TaskDialogRadioButton{
+			{
 				Text:              "This option is disabled",
 				InitiallyDisabled: true,
 			},
@@ -104,12 +104,12 @@ func main() {
 		CommonButtonsInitiallyDisabled: win.TDCBF_NO_BUTTON,
 		DefaultButton:                  walk.TaskDialogDefaultButtonOK,
 		CustomButtons: []walk.TaskDialogCustomButton{
-			walk.TaskDialogCustomButton{
+			{
 				MainText: "Main Text 1",
 				Note:     "Note 1",
 				UAC:      true,
 			},
-			walk.TaskDialogCustomButton{
+			{
 				MainText:          "Main Text 2",
 				Note:              "Note 2",
 				InitiallyDisabled: true,

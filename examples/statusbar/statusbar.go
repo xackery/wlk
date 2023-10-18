@@ -31,7 +31,7 @@ func main() {
 		MinSize: Size{600, 200},
 		Layout:  VBox{MarginsZero: true},
 		StatusBarItems: []StatusBarItem{
-			StatusBarItem{
+			{
 				AssignTo: &sbi,
 				Icon:     icon1,
 				Text:     "click",
@@ -46,17 +46,17 @@ func main() {
 					}
 				},
 			},
-			StatusBarItem{
+			{
 				Text:        "left",
 				ToolTipText: "no tooltip for me",
 			},
-			StatusBarItem{
+			{
 				Text: "\tcenter",
 			},
-			StatusBarItem{
+			{
 				Text: "\t\tright",
 			},
-			StatusBarItem{
+			{
 				Icon:        icon1,
 				ToolTipText: "An icon with a tooltip",
 			},

@@ -257,17 +257,17 @@ func main() {
 						AssignTo:      &tableView,
 						StretchFactor: 2,
 						Columns: []TableViewColumn{
-							TableViewColumn{
+							{
 								DataMember: "Name",
 								Width:      192,
 							},
-							TableViewColumn{
+							{
 								DataMember: "Size",
 								Format:     "%d",
 								Alignment:  AlignFar,
 								Width:      64,
 							},
-							TableViewColumn{
+							{
 								DataMember: "Modified",
 								Format:     "2006-01-02 15:04:05",
 								Width:      120,
