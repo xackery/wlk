@@ -25,7 +25,7 @@ var (
 
 func init() {
 	walk.AppendToWalkInit(func() {
-		propertyRE = regexp.MustCompile("[A-Za-z]+[0-9A-Za-z]*(\\.[A-Za-z]+[0-9A-Za-z]*)+")
+		propertyRE = regexp.MustCompile(`[A-Za-z]+[0-9A-Za-z]*(\.[A-Za-z]+[0-9A-Za-z]*)+`)
 	})
 }
 
@@ -314,7 +314,7 @@ func (b *Builder) InitWidget(d Widget, w walk.Window, customInit func() error) e
 					b.col += columnSpan
 				}
 
-				r := walk.Rectangle{column, row, columnSpan, rowSpan}
+				r := walk.Rectangle{X: column, Y: row, Width: columnSpan, Height: rowSpan}
 
 				if err := l.SetRange(widget, r); err != nil {
 					return err
@@ -529,16 +529,6 @@ func (b *Builder) eventHandler(fieldName string) walk.EventHandler {
 	}
 
 	return nil
-}
-
-func (b *Builder) float64(fieldName string) float64 {
-	fieldValue := b.widgetValue.FieldByName(fieldName)
-
-	if fieldValue.IsValid() {
-		return fieldValue.Interface().(float64)
-	}
-
-	return 0
 }
 
 func (b *Builder) int(fieldName string) int {

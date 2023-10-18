@@ -8,7 +8,6 @@
 package walk
 
 import (
-	"errors"
 	"fmt"
 	"reflect"
 	"strings"
@@ -16,7 +15,7 @@ import (
 )
 
 var (
-	errValidationFailed = errors.New("validation failed")
+	errValidationFailed = fmt.Errorf("validation failed")
 )
 
 type ErrorPresenter interface {

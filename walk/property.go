@@ -8,13 +8,12 @@
 package walk
 
 import (
-	"errors"
 	"fmt"
 )
 
 var (
-	ErrPropertyReadOnly       = errors.New("read-only property")
-	ErrPropertyNotValidatable = errors.New("property not validatable")
+	ErrPropertyReadOnly       = fmt.Errorf("read-only property")
+	ErrPropertyNotValidatable = fmt.Errorf("property not validatable")
 )
 
 type Property interface {

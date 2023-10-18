@@ -9,7 +9,7 @@ package cpl
 
 import (
 	"bytes"
-	"errors"
+	"fmt"
 
 	"github.com/xackery/wlk/walk"
 )
@@ -91,7 +91,7 @@ func newRadioButtonGroupValidator(group *walk.RadioButtonGroup, parent walk.Cont
 
 	b.WriteString(tr("A selection is required.", "walk"))
 
-	return &radioButtonGroupValidator{group: group, err: errors.New(b.String())}
+	return &radioButtonGroupValidator{group: group, err: fmt.Errorf(b.String())}
 }
 
 func (rbgv *radioButtonGroupValidator) Validate(v interface{}) error {

@@ -8,7 +8,7 @@
 package cpl
 
 import (
-	"errors"
+	"fmt"
 
 	"github.com/xackery/wlk/walk"
 )
@@ -32,7 +32,7 @@ func (m Margins) isZero() bool {
 }
 
 func (m Margins) toW() walk.Margins {
-	return walk.Margins{m.Left, m.Top, m.Right, m.Bottom}
+	return walk.Margins{HNear: m.Left, VNear: m.Top, HFar: m.Right, VFar: m.Bottom}
 }
 
 type Rectangle struct {
@@ -43,7 +43,7 @@ type Rectangle struct {
 }
 
 func (r Rectangle) toW() walk.Rectangle {
-	return walk.Rectangle{r.X, r.Y, r.Width, r.Height}
+	return walk.Rectangle{X: r.X, Y: r.Y, Width: r.Width, Height: r.Height}
 }
 
 type Size struct {
@@ -52,7 +52,7 @@ type Size struct {
 }
 
 func (s Size) toW() walk.Size {
-	return walk.Size{s.Width, s.Height}
+	return walk.Size{Width: s.Width, Height: s.Height}
 }
 
 func setLayoutMargins(layout walk.Layout, margins Margins, marginsZero bool) error {
@@ -135,7 +135,7 @@ type Grid struct {
 
 func (g Grid) Create() (walk.Layout, error) {
 	if g.Rows > 0 && g.Columns > 0 {
-		return nil, errors.New("only one of Rows and Columns may be > 0")
+		return nil, fmt.Errorf("only one of Rows and Columns may be > 0")
 	}
 
 	l := walk.NewGridLayout()

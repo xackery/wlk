@@ -8,7 +8,6 @@
 package walk
 
 import (
-	"errors"
 	"fmt"
 	"math"
 	"regexp"
@@ -46,7 +45,7 @@ type RangeValidator struct {
 
 func NewRangeValidator(min, max float64) (*RangeValidator, error) {
 	if max < min {
-		return nil, errors.New("max < min")
+		return nil, fmt.Errorf("max < min")
 	}
 
 	return &RangeValidator{min: min, max: max}, nil
@@ -62,7 +61,7 @@ func (rv *RangeValidator) Max() float64 {
 
 func (rv *RangeValidator) Reset(min, max float64) error {
 	if max < min {
-		return errors.New("max < min")
+		return fmt.Errorf("max < min")
 	}
 
 	rv.min, rv.max = min, max
@@ -126,7 +125,7 @@ func (rv *RegexpValidator) Validate(v interface{}) error {
 	}
 
 	if !matched {
-		return errors.New(tr("The text does not match the required pattern.", "walk"))
+		return fmt.Errorf(tr("The text does not match the required pattern.", "walk"))
 	}
 
 	return nil

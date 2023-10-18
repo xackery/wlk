@@ -4,7 +4,7 @@
 package main
 
 import (
-	"errors"
+	"fmt"
 	"syscall"
 	"unsafe"
 
@@ -58,7 +58,7 @@ func (lv *LogView) AppendText(value string) {
 
 func (lv *LogView) setReadOnly(readOnly bool) error {
 	if lv.SendMessage(win.EM_SETREADONLY, uintptr(win.BoolToBOOL(readOnly)), 0) == 0 {
-		return errors.New("fail to call EM_SETREADONLY")
+		return fmt.Errorf("fail to call EM_SETREADONLY")
 	}
 
 	return nil

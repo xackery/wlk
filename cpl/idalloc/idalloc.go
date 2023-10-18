@@ -4,7 +4,6 @@
 package idalloc
 
 import (
-	"errors"
 	"fmt"
 	"math"
 	"math/bits"
@@ -16,7 +15,7 @@ const IDMaxLimit = math.MaxUint32
 
 // ErrIDsExhausted is returned when an IDAllocator is unable to fulfill an
 // allocation request.
-var ErrIDsExhausted = errors.New("no more IDs available")
+var ErrIDsExhausted = fmt.Errorf("no more IDs available")
 
 // IDAllocator is an allocator for ID values. It is implemented using a bitmap
 // that is grown as necessary.

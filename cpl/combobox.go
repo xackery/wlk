@@ -8,7 +8,7 @@
 package cpl
 
 import (
-	"errors"
+	"fmt"
 
 	"github.com/xackery/wlk/walk"
 )
@@ -70,7 +70,7 @@ func (cb ComboBox) Create(builder *Builder) error {
 	if _, ok := cb.Model.([]string); ok &&
 		(cb.BindingMember != "" || cb.DisplayMember != "") {
 
-		return errors.New("ComboBox.Create: BindingMember and DisplayMember must be empty for []string models.")
+		return fmt.Errorf("comboBox.Create: BindingMember and DisplayMember must be empty for []string models")
 	}
 
 	var w *walk.ComboBox

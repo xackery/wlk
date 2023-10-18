@@ -7,12 +7,10 @@
 
 package walk
 
-import (
-	"errors"
-)
+import "fmt"
 
 var (
-	ErrInvalidType = errors.New("invalid type")
+	ErrInvalidType = fmt.Errorf("invalid type")
 )
 
 func LogErrors() bool {

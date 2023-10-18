@@ -59,7 +59,7 @@ func (a Action) createAction(builder *Builder, menu *walk.Menu) (*walk.Action, e
 	}
 
 	s := a.Shortcut
-	if err := action.SetShortcut(walk.Shortcut{s.Modifiers, s.Key}); err != nil {
+	if err := action.SetShortcut(walk.Shortcut{Modifiers: s.Modifiers, Key: s.Key}); err != nil {
 		return nil, err
 	}
 

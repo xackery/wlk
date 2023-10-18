@@ -157,12 +157,12 @@ func (mw MainWindow) Create() error {
 		}
 
 		if mw.Size.Width > 0 && mw.Size.Height > 0 {
-			if err := w.SetSize(mw.Size.toW()); err != nil {
+			if err := w.SetSize(walk.Size{Width: mw.Size.Width, Height: mw.Size.Height}); err != nil {
 				return err
 			}
 		}
 
-		imageList, err := walk.NewImageListForDPI(walk.SizeFrom96DPI(walk.Size{16, 16}, builder.dpi), 0, builder.dpi)
+		imageList, err := walk.NewImageListForDPI(walk.SizeFrom96DPI(walk.Size{Width: 16, Height: 16}, builder.dpi), 0, builder.dpi)
 		if err != nil {
 			return err
 		}
