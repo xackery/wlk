@@ -8,6 +8,7 @@
 package cpl
 
 import (
+	"github.com/xackery/wlk/common"
 	"github.com/xackery/wlk/walk"
 	"github.com/xackery/wlk/win"
 )
@@ -63,7 +64,7 @@ type Label struct {
 	NoPrefix      bool
 	Text          Property
 	TextAlignment Alignment1D
-	TextColor     walk.Color
+	TextColor     common.Color
 }
 
 func (l Label) Create(builder *Builder) error {

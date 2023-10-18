@@ -12,6 +12,7 @@ import (
 	"syscall"
 	"unsafe"
 
+	"github.com/xackery/wlk/common"
 	"github.com/xackery/wlk/win"
 )
 
@@ -19,7 +20,7 @@ type TextEdit struct {
 	WidgetBase
 	readOnlyChangedPublisher EventPublisher
 	textChangedPublisher     EventPublisher
-	textColor                Color
+	textColor                common.Color
 	compactHeight            bool
 	margins                  Size // in native pixels
 	lastHeight               int
@@ -264,11 +265,11 @@ func (te *TextEdit) TextChanged() *Event {
 	return te.textChangedPublisher.Event()
 }
 
-func (te *TextEdit) TextColor() Color {
+func (te *TextEdit) TextColor() common.Color {
 	return te.textColor
 }
 
-func (te *TextEdit) SetTextColor(c Color) {
+func (te *TextEdit) SetTextColor(c common.Color) {
 	te.textColor = c
 
 	te.Invalidate()

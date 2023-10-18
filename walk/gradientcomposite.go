@@ -10,14 +10,15 @@ package walk
 import (
 	"unsafe"
 
+	"github.com/xackery/wlk/common"
 	"github.com/xackery/wlk/win"
 )
 
 type GradientComposite struct {
 	*Composite
 	vertical                 bool
-	color1                   Color
-	color2                   Color
+	color1                   common.Color
+	color2                   common.Color
 	verticalChangedPublisher EventPublisher
 	color1ChangedPublisher   EventPublisher
 	color2ChangedPublisher   EventPublisher
@@ -62,17 +63,17 @@ func NewGradientCompositeWithStyle(parent Container, style uint32) (*GradientCom
 			return float64(uint32(gc.Color1()))
 		},
 		func(v interface{}) error {
-			var c Color
+			var c common.Color
 
 			switch v := v.(type) {
-			case Color:
+			case common.Color:
 				c = v
 
 			case uint32:
-				c = Color(v)
+				c = common.Color(v)
 
 			case float64:
-				c = Color(uint32(v))
+				c = common.Color(uint32(v))
 
 			default:
 				return ErrInvalidType
@@ -87,17 +88,17 @@ func NewGradientCompositeWithStyle(parent Container, style uint32) (*GradientCom
 			return float64(uint32(gc.Color2()))
 		},
 		func(v interface{}) error {
-			var c Color
+			var c common.Color
 
 			switch v := v.(type) {
-			case Color:
+			case common.Color:
 				c = v
 
 			case uint32:
-				c = Color(v)
+				c = common.Color(v)
 
 			case float64:
-				c = Color(uint32(v))
+				c = common.Color(uint32(v))
 
 			default:
 				return ErrInvalidType
@@ -140,11 +141,11 @@ func (gc *GradientComposite) SetVertical(vertical bool) (err error) {
 	return
 }
 
-func (gc *GradientComposite) Color1() Color {
+func (gc *GradientComposite) Color1() common.Color {
 	return gc.color1
 }
 
-func (gc *GradientComposite) SetColor1(c Color) (err error) {
+func (gc *GradientComposite) SetColor1(c common.Color) (err error) {
 	if c == gc.color1 {
 		return nil
 	}
@@ -168,11 +169,11 @@ func (gc *GradientComposite) SetColor1(c Color) (err error) {
 	return
 }
 
-func (gc *GradientComposite) Color2() Color {
+func (gc *GradientComposite) Color2() common.Color {
 	return gc.color2
 }
 
-func (gc *GradientComposite) SetColor2(c Color) (err error) {
+func (gc *GradientComposite) SetColor2(c common.Color) (err error) {
 	if c == gc.color2 {
 		return nil
 	}

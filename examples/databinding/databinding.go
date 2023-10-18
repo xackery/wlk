@@ -9,6 +9,7 @@ import (
 	"log"
 	"time"
 
+	"github.com/xackery/wlk/common"
 	"github.com/xackery/wlk/walk"
 
 	"github.com/xackery/wlk/cpl"
@@ -16,9 +17,9 @@ import (
 
 func main() {
 	walk.AppendToWalkInit(func() {
-		walk.FocusEffect, _ = walk.NewBorderGlowEffect(walk.RGB(0, 63, 255))
-		walk.InteractionEffect, _ = walk.NewDropShadowEffect(walk.RGB(63, 63, 63))
-		walk.ValidationErrorEffect, _ = walk.NewBorderGlowEffect(walk.RGB(255, 0, 0))
+		walk.FocusEffect, _ = walk.NewBorderGlowEffect(common.RGB(0, 63, 255))
+		walk.InteractionEffect, _ = walk.NewDropShadowEffect(common.RGB(63, 63, 63))
+		walk.ValidationErrorEffect, _ = walk.NewBorderGlowEffect(common.RGB(255, 0, 0))
 	})
 
 	var mw *walk.MainWindow

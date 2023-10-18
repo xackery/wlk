@@ -11,6 +11,7 @@ import (
 	"syscall"
 	"unsafe"
 
+	"github.com/xackery/wlk/common"
 	"github.com/xackery/wlk/win"
 )
 
@@ -30,7 +31,7 @@ type static struct {
 	hwndStatic           win.HWND
 	origStaticWndProcPtr uintptr
 	textAlignment        Alignment2D
-	textColor            Color
+	textColor            common.Color
 }
 
 func (s *static) init(widget Widget, parent Container, style uint32) error {
@@ -180,11 +181,11 @@ func (s *static) setText(text string) (changed bool, err error) {
 	return true, nil
 }
 
-func (s *static) TextColor() Color {
+func (s *static) TextColor() common.Color {
 	return s.textColor
 }
 
-func (s *static) SetTextColor(c Color) {
+func (s *static) SetTextColor(c common.Color) {
 	s.textColor = c
 
 	s.Invalidate()

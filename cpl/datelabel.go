@@ -8,6 +8,7 @@
 package cpl
 
 import (
+	"github.com/xackery/wlk/common"
 	"github.com/xackery/wlk/walk"
 )
 
@@ -49,7 +50,7 @@ type DateLabel struct {
 
 	// static
 
-	TextColor walk.Color
+	TextColor common.Color
 
 	// DateLabel
 

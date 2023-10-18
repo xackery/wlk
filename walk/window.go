@@ -17,6 +17,7 @@ import (
 	"syscall"
 	"unsafe"
 
+	"github.com/xackery/wlk/common"
 	"github.com/xackery/wlk/cpl/dpicache"
 	"github.com/xackery/wlk/win"
 )
@@ -2313,7 +2314,7 @@ func (wb *WindowBase) handleWMCTLCOLOR(wParam, lParam uintptr) uintptr {
 	hdc := win.HDC(wParam)
 
 	type TextColorer interface {
-		TextColor() Color
+		TextColor() common.Color
 	}
 
 	wnd := windowFromHandle(hwnd)
@@ -2328,7 +2329,7 @@ func (wb *WindowBase) handleWMCTLCOLOR(wParam, lParam uintptr) uintptr {
 	} else if tc, ok := wnd.(TextColorer); ok {
 		color := tc.TextColor()
 		if color == 0 {
-			color = Color(win.GetSysColor(win.COLOR_WINDOWTEXT))
+			color = common.Color(win.GetSysColor(win.COLOR_WINDOWTEXT))
 		}
 		win.SetTextColor(hdc, win.COLORREF(color))
 	}
@@ -2337,7 +2338,7 @@ func (wb *WindowBase) handleWMCTLCOLOR(wParam, lParam uintptr) uintptr {
 		wb.prepareDCForBackground(hdc, hwnd, wnd)
 
 		type Colorer interface {
-			Color() Color
+			Color() common.Color
 		}
 
 		if c, ok := bg.(Colorer); ok {

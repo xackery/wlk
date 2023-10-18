@@ -13,6 +13,7 @@ import (
 	"unicode/utf8"
 	"unsafe"
 
+	"github.com/xackery/wlk/common"
 	"github.com/xackery/wlk/win"
 )
 
@@ -189,7 +190,7 @@ func (c *Canvas) withBrush(brush Brush, f func() error) error {
 	return c.withGdiObj(win.HGDIOBJ(brush.handle()), f)
 }
 
-func (c *Canvas) withFontAndTextColor(font *Font, color Color, f func() error) error {
+func (c *Canvas) withFontAndTextColor(font *Font, color common.Color, f func() error) error {
 	return c.withGdiObj(win.HGDIOBJ(font.handleForDPI(c.DPI())), func() error {
 		oldColor := win.SetTextColor(c.hdc, win.COLORREF(color))
 		if oldColor == win.CLR_INVALID {
@@ -530,12 +531,12 @@ func (c *Canvas) FillRoundedRectanglePixels(brush Brush, bounds Rectangle, ellip
 // GradientFillRectangle draws a gradient filled rectangle in 1/96" units.
 //
 // Deprecated: Newer applications should use GradientFillRectanglePixels.
-func (c *Canvas) GradientFillRectangle(color1, color2 Color, orientation Orientation, bounds Rectangle) error {
+func (c *Canvas) GradientFillRectangle(color1, color2 common.Color, orientation Orientation, bounds Rectangle) error {
 	return c.GradientFillRectanglePixels(color1, color2, orientation, RectangleFrom96DPI(bounds, c.DPI()))
 }
 
 // GradientFillRectanglePixels draws a gradient filled rectangle in native pixels.
-func (c *Canvas) GradientFillRectanglePixels(color1, color2 Color, orientation Orientation, bounds Rectangle) error {
+func (c *Canvas) GradientFillRectanglePixels(color1, color2 common.Color, orientation Orientation, bounds Rectangle) error {
 	vertices := [2]win.TRIVERTEX{
 		{
 			X:     int32(bounds.X),
@@ -574,12 +575,12 @@ func (c *Canvas) GradientFillRectanglePixels(color1, color2 Color, orientation O
 // DrawText draws text at given location in 1/96" units.
 //
 // Deprecated: Newer applications should use DrawTextPixels.
-func (c *Canvas) DrawText(text string, font *Font, color Color, bounds Rectangle, format DrawTextFormat) error {
+func (c *Canvas) DrawText(text string, font *Font, color common.Color, bounds Rectangle, format DrawTextFormat) error {
 	return c.DrawTextPixels(text, font, color, RectangleFrom96DPI(bounds, c.DPI()), format)
 }
 
 // DrawTextPixels draws text at given location in native pixels.
-func (c *Canvas) DrawTextPixels(text string, font *Font, color Color, bounds Rectangle, format DrawTextFormat) error {
+func (c *Canvas) DrawTextPixels(text string, font *Font, color common.Color, bounds Rectangle, format DrawTextFormat) error {
 	return c.withFontAndTextColor(font, color, func() error {
 		rect := bounds.toRECT()
 		ret := win.DrawTextEx(

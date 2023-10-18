@@ -8,6 +8,7 @@
 package cpl
 
 import (
+	"github.com/xackery/wlk/common"
 	"github.com/xackery/wlk/walk"
 )
 
@@ -59,7 +60,7 @@ type NumberEdit struct {
 	ReadOnly           Property
 	SpinButtonsVisible bool
 	Suffix             Property
-	TextColor          walk.Color
+	TextColor          common.Color
 	Value              Property
 }
 

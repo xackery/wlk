@@ -8,8 +8,10 @@
 package walk
 
 import (
+	"fmt"
 	"unsafe"
 
+	"github.com/xackery/wlk/common"
 	"github.com/xackery/wlk/win"
 )
 
@@ -91,6 +93,15 @@ func NewMainWindowWithCfg(cfg *MainWindowCfg) (*MainWindow, error) {
 		mw.SetBoundsPixels(mw.BoundsPixels())
 	})
 
+	if IsDarkMode() {
+		fmt.Println("Dark mode?")
+
+		bgBrush, err := NewSolidColorBrush(common.DarkFormBG)
+		if err != nil {
+			return nil, err
+		}
+		mw.SetBackground(bgBrush)
+	}
 	succeeded = true
 
 	return mw, nil

@@ -8,6 +8,7 @@
 package cpl
 
 import (
+	"github.com/xackery/wlk/common"
 	"github.com/xackery/wlk/walk"
 	"github.com/xackery/wlk/win"
 )
@@ -58,7 +59,7 @@ type TextEdit struct {
 	ReadOnly      Property
 	Text          Property
 	TextAlignment Alignment1D
-	TextColor     walk.Color
+	TextColor     common.Color
 	VScroll       bool
 }
 

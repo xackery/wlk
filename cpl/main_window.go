@@ -105,7 +105,6 @@ func (mw MainWindow) Create() error {
 		Icon:  mw.Icon,
 		Title: mw.Title,
 	}
-
 	builder := NewBuilder(nil)
 
 	w.SetSuspended(true)

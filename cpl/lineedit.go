@@ -8,6 +8,7 @@
 package cpl
 
 import (
+	"github.com/xackery/wlk/common"
 	"github.com/xackery/wlk/walk"
 )
 
@@ -67,7 +68,7 @@ type LineEdit struct {
 	ReadOnly          Property
 	Text              Property
 	TextAlignment     Alignment1D
-	TextColor         walk.Color
+	TextColor         common.Color
 }
 
 func (le LineEdit) Create(builder *Builder) error {

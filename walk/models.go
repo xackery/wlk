@@ -10,6 +10,7 @@ package walk
 import (
 	"syscall"
 
+	"github.com/xackery/wlk/common"
 	"github.com/xackery/wlk/win"
 )
 
@@ -323,8 +324,8 @@ type CellStyle struct {
 	hdc             win.HDC
 	dpi             int
 	canvas          *Canvas
-	BackgroundColor Color
-	TextColor       Color
+	BackgroundColor common.Color
+	TextColor       common.Color
 	Font            *Font
 
 	// Image is the image to display in the cell.
@@ -393,10 +394,10 @@ type ListItemStyler interface {
 // ListItemStyle carries information about the display style of an item in a list widget
 // like ListBox.
 type ListItemStyle struct {
-	BackgroundColor    Color
-	TextColor          Color
-	defaultTextColor   Color
-	LineColor          Color
+	BackgroundColor    common.Color
+	TextColor          common.Color
+	defaultTextColor   common.Color
+	LineColor          common.Color
 	Font               *Font
 	index              int
 	hoverIndex         int

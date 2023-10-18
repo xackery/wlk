@@ -1,5 +1,16 @@
 package common
 
+const (
+	DarkFormBG            = Color(0x202020)
+	DarkFormLighterBG     = Color(0x272727)
+	DarkButtonBG          = Color(0x343434)
+	DarkTextTitleFG       = Color(0xEEEEEE)
+	DarkTextFG            = Color(0xDBDBD1)
+	DarkTextLinkFG        = Color(0x99EBFF)
+	DarkSelectHoverBG     = Color(0x162430)
+	DarkSelectHighlightBG = Color(0x143047)
+)
+
 var (
 	isDarkMode        bool
 	isDarkModeAllowed bool

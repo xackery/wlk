@@ -12,6 +12,7 @@ import (
 	"syscall"
 	"unsafe"
 
+	"github.com/xackery/wlk/common"
 	"github.com/xackery/wlk/win"
 )
 
@@ -100,7 +101,7 @@ func (tb *ToolBar) applyFont(font *Font) {
 func (tb *ToolBar) ApplyDPI(dpi int) {
 	tb.WidgetBase.ApplyDPI(dpi)
 
-	var maskColor Color
+	var maskColor common.Color
 	var size Size
 	if tb.imageList != nil {
 		maskColor = tb.imageList.maskColor

@@ -5,6 +5,7 @@
 package main
 
 import (
+	"github.com/xackery/wlk/common"
 	. "github.com/xackery/wlk/cpl"
 	"github.com/xackery/wlk/walk"
 )
@@ -15,11 +16,11 @@ func main() {
 		MinSize: Size{400, 0},
 		Background: GradientBrush{
 			Vertexes: []walk.GradientVertex{
-				{X: 0, Y: 0, Color: walk.RGB(255, 255, 127)},
-				{X: 1, Y: 0, Color: walk.RGB(127, 191, 255)},
-				{X: 0.5, Y: 0.5, Color: walk.RGB(255, 255, 255)},
-				{X: 1, Y: 1, Color: walk.RGB(127, 255, 127)},
-				{X: 0, Y: 1, Color: walk.RGB(255, 127, 127)},
+				{X: 0, Y: 0, Color: common.RGB(255, 255, 127)},
+				{X: 1, Y: 0, Color: common.RGB(127, 191, 255)},
+				{X: 0.5, Y: 0.5, Color: common.RGB(255, 255, 255)},
+				{X: 1, Y: 1, Color: common.RGB(127, 255, 127)},
+				{X: 0, Y: 1, Color: common.RGB(255, 127, 127)},
 			},
 			Triangles: []walk.GradientTriangle{
 				{0, 1, 2},
@@ -73,7 +74,7 @@ func main() {
 		},
 		Functions: map[string]func(args ...interface{}) (interface{}, error){
 			"rgb": func(args ...interface{}) (interface{}, error) {
-				return walk.RGB(byte(args[0].(float64)), byte(args[1].(float64)), byte(args[2].(float64))), nil
+				return common.RGB(byte(args[0].(float64)), byte(args[1].(float64)), byte(args[2].(float64))), nil
 			},
 		},
 	}.Run()

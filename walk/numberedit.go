@@ -16,6 +16,7 @@ import (
 	"syscall"
 	"unsafe"
 
+	"github.com/xackery/wlk/common"
 	"github.com/xackery/wlk/win"
 )
 
@@ -408,12 +409,12 @@ func (ne *NumberEdit) SetBackground(bg Brush) {
 }
 
 // TextColor returns the Color used to draw the text of the NumberEdit.
-func (ne *NumberEdit) TextColor() Color {
+func (ne *NumberEdit) TextColor() common.Color {
 	return ne.edit.TextColor()
 }
 
 // TextColor sets the Color used to draw the text of the NumberEdit.
-func (ne *NumberEdit) SetTextColor(c Color) {
+func (ne *NumberEdit) SetTextColor(c common.Color) {
 	ne.edit.SetTextColor(c)
 }
 
@@ -533,11 +534,11 @@ func newNumberLineEdit(parent Widget) (*numberLineEdit, error) {
 	return nle, nil
 }
 
-func (nle *numberLineEdit) TextColor() Color {
+func (nle *numberLineEdit) TextColor() common.Color {
 	return nle.LineEdit.TextColor()
 }
 
-func (nle *numberLineEdit) SetTextColor(c Color) {
+func (nle *numberLineEdit) SetTextColor(c common.Color) {
 	nle.LineEdit.SetTextColor(c)
 }
 

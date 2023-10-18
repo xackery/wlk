@@ -11,6 +11,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/xackery/wlk/common"
 	"github.com/xackery/wlk/walk"
 
 	. "github.com/xackery/wlk/cpl"
@@ -152,7 +153,7 @@ func main() {
 	}
 	defer barBitmap.Dispose()
 
-	canvas.GradientFillRectangle(walk.RGB(255, 0, 0), walk.RGB(0, 255, 0), walk.Horizontal, walk.Rectangle{0, 0, 100, 1})
+	canvas.GradientFillRectangle(common.RGB(255, 0, 0), common.RGB(0, 255, 0), walk.Horizontal, walk.Rectangle{0, 0, 100, 1})
 
 	canvas.Dispose()
 
@@ -192,9 +193,9 @@ func main() {
 
 					if item.checked {
 						if style.Row()%2 == 0 {
-							style.BackgroundColor = walk.RGB(159, 215, 255)
+							style.BackgroundColor = common.RGB(159, 215, 255)
 						} else {
-							style.BackgroundColor = walk.RGB(143, 199, 239)
+							style.BackgroundColor = common.RGB(143, 199, 239)
 						}
 					}
 
@@ -215,10 +216,10 @@ func main() {
 
 					case 2:
 						if item.Baz >= 900.0 {
-							style.TextColor = walk.RGB(0, 191, 0)
+							style.TextColor = common.RGB(0, 191, 0)
 							style.Image = goodIcon
 						} else if item.Baz < 100.0 {
-							style.TextColor = walk.RGB(255, 0, 0)
+							style.TextColor = common.RGB(255, 0, 0)
 							style.Image = badIcon
 						}
 
