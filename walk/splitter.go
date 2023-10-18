@@ -14,7 +14,7 @@ import (
 	"strings"
 	"unsafe"
 
-	"github.com/xackery/wlk/common"
+	"github.com/xackery/wlk/wcolor"
 	"github.com/xackery/wlk/win"
 )
 
@@ -26,7 +26,7 @@ func init() {
 	AppendToWalkInit(func() {
 		MustRegisterWindowClass(splitterWindowClass)
 
-		splitterHandleDraggingBrush, _ = NewSolidColorBrush(common.Color(win.GetSysColor(win.COLOR_BTNSHADOW)))
+		splitterHandleDraggingBrush, _ = NewSolidColorBrush(wcolor.Color(win.GetSysColor(win.COLOR_BTNSHADOW)))
 		splitterHandleDraggingBrush.wb2info = map[*WindowBase]*windowBrushInfo{nil: nil}
 	})
 }

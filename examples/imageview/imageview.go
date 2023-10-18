@@ -5,9 +5,9 @@
 package main
 
 import (
-	"github.com/xackery/wlk/common"
 	. "github.com/xackery/wlk/cpl"
 	"github.com/xackery/wlk/walk"
+	"github.com/xackery/wlk/wcolor"
 )
 
 func main() {
@@ -35,7 +35,7 @@ func main() {
 				Text: mode.Name,
 			},
 			ImageView{
-				Background: SolidColorBrush{Color: common.RGB(255, 191, 0)},
+				Background: SolidColorBrush{Color: wcolor.RGB(255, 191, 0)},
 				Image:      "open.png",
 				Margin:     10,
 				Mode:       mode.Value,

@@ -7,8 +7,8 @@ package main
 import (
 	"log"
 
-	"github.com/xackery/wlk/common"
 	"github.com/xackery/wlk/walk"
+	"github.com/xackery/wlk/wcolor"
 
 	. "github.com/xackery/wlk/cpl"
 	"github.com/xackery/wlk/win"
@@ -68,7 +68,7 @@ func NewMyWidget(parent walk.Container) (*MyWidget, error) {
 		return nil, err
 	}
 
-	bg, err := walk.NewSolidColorBrush(common.RGB(0, 255, 0))
+	bg, err := walk.NewSolidColorBrush(wcolor.RGB(0, 255, 0))
 	if err != nil {
 		return nil, err
 	}

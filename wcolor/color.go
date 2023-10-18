@@ -1,4 +1,5 @@
-package common
+// wcolor represents walk RGB color, in uint32 space
+package wcolor
 
 type Color uint32
 

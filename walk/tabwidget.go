@@ -12,7 +12,7 @@ import (
 	"syscall"
 	"unsafe"
 
-	"github.com/xackery/wlk/common"
+	"github.com/xackery/wlk/wcolor"
 	"github.com/xackery/wlk/win"
 )
 
@@ -124,7 +124,7 @@ func (tw *TabWidget) applyFont(font *Font) {
 func (tw *TabWidget) ApplyDPI(dpi int) {
 	tw.WidgetBase.ApplyDPI(dpi)
 
-	var maskColor common.Color
+	var maskColor wcolor.Color
 	var size Size
 	if tw.imageList != nil {
 		maskColor = tw.imageList.maskColor

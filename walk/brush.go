@@ -10,7 +10,7 @@ package walk
 import (
 	"unsafe"
 
-	"github.com/xackery/wlk/common"
+	"github.com/xackery/wlk/wcolor"
 	"github.com/xackery/wlk/win"
 )
 
@@ -183,8 +183,8 @@ func NewSystemColorBrush(sysColor SystemColor) (*SystemColorBrush, error) {
 	return &SystemColorBrush{brushBase: brushBase{hBrush: hBrush}, sysColor: sysColor}, nil
 }
 
-func (b *SystemColorBrush) Color() common.Color {
-	return common.Color(win.GetSysColor(int(b.sysColor)))
+func (b *SystemColorBrush) Color() wcolor.Color {
+	return wcolor.Color(win.GetSysColor(int(b.sysColor)))
 }
 
 func (b *SystemColorBrush) SystemColor() SystemColor {
@@ -208,10 +208,10 @@ func (*SystemColorBrush) simple() bool {
 
 type SolidColorBrush struct {
 	brushBase
-	color common.Color
+	color wcolor.Color
 }
 
-func NewSolidColorBrush(color common.Color) (*SolidColorBrush, error) {
+func NewSolidColorBrush(color wcolor.Color) (*SolidColorBrush, error) {
 	lb := &win.LOGBRUSH{LbStyle: win.BS_SOLID, LbColor: win.COLORREF(color)}
 
 	hBrush := win.CreateBrushIndirect(lb)
@@ -222,7 +222,7 @@ func NewSolidColorBrush(color common.Color) (*SolidColorBrush, error) {
 	return &SolidColorBrush{brushBase: brushBase{hBrush: hBrush}, color: color}, nil
 }
 
-func (b *SolidColorBrush) Color() common.Color {
+func (b *SolidColorBrush) Color() wcolor.Color {
 	return b.color
 }
 
@@ -236,11 +236,11 @@ func (*SolidColorBrush) simple() bool {
 
 type HatchBrush struct {
 	brushBase
-	color common.Color
+	color wcolor.Color
 	style HatchStyle
 }
 
-func NewHatchBrush(color common.Color, style HatchStyle) (*HatchBrush, error) {
+func NewHatchBrush(color wcolor.Color, style HatchStyle) (*HatchBrush, error) {
 	lb := &win.LOGBRUSH{LbStyle: win.BS_HATCHED, LbColor: win.COLORREF(color), LbHatch: uintptr(style)}
 
 	hBrush := win.CreateBrushIndirect(lb)
@@ -251,7 +251,7 @@ func NewHatchBrush(color common.Color, style HatchStyle) (*HatchBrush, error) {
 	return &HatchBrush{brushBase: brushBase{hBrush: hBrush}, color: color, style: style}, nil
 }
 
-func (b *HatchBrush) Color() common.Color {
+func (b *HatchBrush) Color() wcolor.Color {
 	return b.color
 }
 
@@ -299,13 +299,13 @@ func (b *BitmapBrush) simple() bool {
 
 type GradientStop struct {
 	Offset float64
-	Color  common.Color
+	Color  wcolor.Color
 }
 
 type GradientVertex struct {
 	X     float64
 	Y     float64
-	Color common.Color
+	Color wcolor.Color
 }
 
 type GradientTriangle struct {

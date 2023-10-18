@@ -16,14 +16,14 @@ import (
 	"time"
 	"unsafe"
 
-	"github.com/xackery/wlk/common"
+	"github.com/xackery/wlk/wcolor"
 	"github.com/xackery/wlk/win"
 )
 
 const tableViewWindowClass = `\o/ Walk_TableView_Class \o/`
 
 var (
-	white                       = win.COLORREF(common.RGB(255, 255, 255))
+	white                       = win.COLORREF(wcolor.RGB(255, 255, 255))
 	checkmark                   = string([]byte{0xE2, 0x9C, 0x94})
 	tableViewFrozenLVWndProcPtr uintptr
 	tableViewNormalLVWndProcPtr uintptr
@@ -100,15 +100,15 @@ type TableView struct {
 	lastColumnStretched                bool
 	persistent                         bool
 	itemStateChangedEventDelay         int
-	themeNormalBGColor                 common.Color
-	themeNormalTextColor               common.Color
-	themeSelectedBGColor               common.Color
-	themeSelectedTextColor             common.Color
-	themeSelectedNotFocusedBGColor     common.Color
-	itemBGColor                        common.Color
-	itemTextColor                      common.Color
-	alternatingRowBGColor              common.Color
-	alternatingRowTextColor            common.Color
+	themeNormalBGColor                 wcolor.Color
+	themeNormalTextColor               wcolor.Color
+	themeSelectedBGColor               wcolor.Color
+	themeSelectedTextColor             wcolor.Color
+	themeSelectedNotFocusedBGColor     wcolor.Color
+	itemBGColor                        wcolor.Color
+	itemTextColor                      wcolor.Color
+	alternatingRowBGColor              wcolor.Color
+	alternatingRowTextColor            wcolor.Color
 	alternatingRowBG                   bool
 	delayedCurrentIndexChangedCanceled bool
 	sortedColumnIndex                  int
@@ -419,37 +419,37 @@ func (tv *TableView) ApplySysColors() {
 	tv.WidgetBase.ApplySysColors()
 
 	if IsDarkMode() {
-		tv.themeNormalBGColor = common.RGB(37, 37, 38)
-		tv.themeNormalTextColor = common.RGB(255, 255, 255)
-		tv.themeSelectedBGColor = common.RGB(0, 122, 204)
-		tv.themeSelectedTextColor = common.RGB(255, 255, 255)
-		tv.themeSelectedNotFocusedBGColor = common.RGB(37, 37, 38)
-		tv.alternatingRowBGColor = common.RGB(45, 45, 48)
-		tv.alternatingRowTextColor = common.RGB(255, 255, 255)
+		tv.themeNormalBGColor = wcolor.RGB(37, 37, 38)
+		tv.themeNormalTextColor = wcolor.RGB(255, 255, 255)
+		tv.themeSelectedBGColor = wcolor.RGB(0, 122, 204)
+		tv.themeSelectedTextColor = wcolor.RGB(255, 255, 255)
+		tv.themeSelectedNotFocusedBGColor = wcolor.RGB(37, 37, 38)
+		tv.alternatingRowBGColor = wcolor.RGB(45, 45, 48)
+		tv.alternatingRowTextColor = wcolor.RGB(255, 255, 255)
 		return
 	}
 
 	// As some combinations of property and state may be invalid for any theme,
 	// we set some defaults here.
-	tv.themeNormalBGColor = common.Color(win.GetSysColor(win.COLOR_WINDOW))
-	tv.themeNormalTextColor = common.Color(win.GetSysColor(win.COLOR_WINDOWTEXT))
+	tv.themeNormalBGColor = wcolor.Color(win.GetSysColor(win.COLOR_WINDOW))
+	tv.themeNormalTextColor = wcolor.Color(win.GetSysColor(win.COLOR_WINDOWTEXT))
 	tv.themeSelectedBGColor = tv.themeNormalBGColor
 	tv.themeSelectedTextColor = tv.themeNormalTextColor
 	tv.themeSelectedNotFocusedBGColor = tv.themeNormalBGColor
-	tv.alternatingRowBGColor = common.Color(win.GetSysColor(win.COLOR_BTNFACE))
-	tv.alternatingRowTextColor = common.Color(win.GetSysColor(win.COLOR_BTNTEXT))
+	tv.alternatingRowBGColor = wcolor.Color(win.GetSysColor(win.COLOR_BTNFACE))
+	tv.alternatingRowTextColor = wcolor.Color(win.GetSysColor(win.COLOR_BTNTEXT))
 
 	type item struct {
 		stateID    int32
 		propertyID int32
-		color      *common.Color
+		color      *wcolor.Color
 	}
 
 	getThemeColor := func(theme win.HTHEME, partId int32, items []item) {
 		for _, item := range items {
 			var c win.COLORREF
 			if result := win.GetThemeColor(theme, partId, item.stateID, item.propertyID, &c); !win.FAILED(result) {
-				(*item.color) = common.Color(c)
+				(*item.color) = wcolor.Color(c)
 			}
 		}
 	}
@@ -466,9 +466,9 @@ func (tv *TableView) ApplySysColors() {
 		})
 	} else {
 		// The others already have been retrieved above.
-		tv.themeSelectedBGColor = common.Color(win.GetSysColor(win.COLOR_HIGHLIGHT))
-		tv.themeSelectedTextColor = common.Color(win.GetSysColor(win.COLOR_HIGHLIGHTTEXT))
-		tv.themeSelectedNotFocusedBGColor = common.Color(win.GetSysColor(win.COLOR_BTNFACE))
+		tv.themeSelectedBGColor = wcolor.Color(win.GetSysColor(win.COLOR_HIGHLIGHT))
+		tv.themeSelectedTextColor = wcolor.Color(win.GetSysColor(win.COLOR_HIGHLIGHTTEXT))
+		tv.themeSelectedNotFocusedBGColor = wcolor.Color(win.GetSysColor(win.COLOR_BTNFACE))
 	}
 
 	if hThemeButton := win.OpenThemeData(tv.hwndNormalLV, syscall.StringToUTF16Ptr("BUTTON")); hThemeButton != 0 {
@@ -2281,7 +2281,7 @@ func (tv *TableView) lvWndProc(origWndProcPtr uintptr, hwnd win.HWND, msg uint32
 					}
 
 					if tv.style.BackgroundColor != tv.themeNormalBGColor {
-						var color common.Color
+						var color wcolor.Color
 						if selected && !tv.Focused() {
 							color = tv.themeSelectedNotFocusedBGColor
 						} else {

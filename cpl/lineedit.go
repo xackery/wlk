@@ -8,8 +8,8 @@
 package cpl
 
 import (
-	"github.com/xackery/wlk/common"
 	"github.com/xackery/wlk/walk"
+	"github.com/xackery/wlk/wcolor"
 )
 
 type CaseMode uint32
@@ -68,7 +68,7 @@ type LineEdit struct {
 	ReadOnly          Property
 	Text              Property
 	TextAlignment     Alignment1D
-	TextColor         common.Color
+	TextColor         wcolor.Color
 }
 
 func (le LineEdit) Create(builder *Builder) error {

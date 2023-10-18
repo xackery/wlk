@@ -8,7 +8,7 @@
 package walk
 
 import (
-	"github.com/xackery/wlk/common"
+	"github.com/xackery/wlk/wcolor"
 	"github.com/xackery/wlk/win"
 )
 
@@ -100,10 +100,10 @@ func NullPen() Pen {
 type CosmeticPen struct {
 	hPen  win.HPEN
 	style PenStyle
-	color common.Color
+	color wcolor.Color
 }
 
-func NewCosmeticPen(style PenStyle, color common.Color) (*CosmeticPen, error) {
+func NewCosmeticPen(style PenStyle, color wcolor.Color) (*CosmeticPen, error) {
 	lb := &win.LOGBRUSH{LbStyle: win.BS_SOLID, LbColor: win.COLORREF(color)}
 
 	style |= win.PS_COSMETIC
@@ -132,7 +132,7 @@ func (p *CosmeticPen) Style() PenStyle {
 	return p.style
 }
 
-func (p *CosmeticPen) Color() common.Color {
+func (p *CosmeticPen) Color() wcolor.Color {
 	return p.color
 }
 

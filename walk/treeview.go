@@ -7,7 +7,7 @@ import (
 	"syscall"
 	"unsafe"
 
-	"github.com/xackery/wlk/common"
+	"github.com/xackery/wlk/wcolor"
 	"github.com/xackery/wlk/win"
 )
 
@@ -106,11 +106,11 @@ func (tv *TreeView) Dispose() {
 func (tv *TreeView) SetBackground(bg Brush) {
 	tv.WidgetBase.SetBackground(bg)
 
-	color := common.Color(win.GetSysColor(win.COLOR_WINDOW))
+	color := wcolor.Color(win.GetSysColor(win.COLOR_WINDOW))
 
 	if bg != nil {
 		type Colorer interface {
-			Color() common.Color
+			Color() wcolor.Color
 		}
 
 		if c, ok := bg.(Colorer); ok {

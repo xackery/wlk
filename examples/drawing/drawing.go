@@ -8,8 +8,8 @@ import (
 	"log"
 	"math"
 
-	"github.com/xackery/wlk/common"
 	"github.com/xackery/wlk/walk"
+	"github.com/xackery/wlk/wcolor"
 
 	. "github.com/xackery/wlk/cpl"
 )
@@ -50,7 +50,7 @@ func (mw *MyMainWindow) drawStuff(canvas *walk.Canvas, updateBounds walk.Rectang
 
 	bounds := mw.paintWidget.ClientBounds()
 
-	rectPen, err := walk.NewCosmeticPen(walk.PenSolid, common.RGB(255, 0, 0))
+	rectPen, err := walk.NewCosmeticPen(walk.PenSolid, wcolor.RGB(255, 0, 0))
 	if err != nil {
 		return err
 	}
@@ -60,7 +60,7 @@ func (mw *MyMainWindow) drawStuff(canvas *walk.Canvas, updateBounds walk.Rectang
 		return err
 	}
 
-	ellipseBrush, err := walk.NewHatchBrush(common.RGB(0, 255, 0), walk.HatchCross)
+	ellipseBrush, err := walk.NewHatchBrush(wcolor.RGB(0, 255, 0), walk.HatchCross)
 	if err != nil {
 		return err
 	}
@@ -70,7 +70,7 @@ func (mw *MyMainWindow) drawStuff(canvas *walk.Canvas, updateBounds walk.Rectang
 		return err
 	}
 
-	linesBrush, err := walk.NewSolidColorBrush(common.RGB(0, 0, 255))
+	linesBrush, err := walk.NewSolidColorBrush(wcolor.RGB(0, 0, 255))
 	if err != nil {
 		return err
 	}
@@ -150,7 +150,7 @@ func createBitmap() (*walk.Bitmap, error) {
 	}
 	defer font.Dispose()
 
-	if err := canvas.DrawText("Walk Drawing Example", font, common.RGB(0, 0, 0), bounds, walk.TextWordbreak); err != nil {
+	if err := canvas.DrawText("Walk Drawing Example", font, wcolor.RGB(0, 0, 0), bounds, walk.TextWordbreak); err != nil {
 		return nil, err
 	}
 

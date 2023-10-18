@@ -11,7 +11,7 @@ import (
 	"syscall"
 	"unsafe"
 
-	"github.com/xackery/wlk/common"
+	"github.com/xackery/wlk/wcolor"
 	"github.com/xackery/wlk/win"
 )
 
@@ -35,7 +35,7 @@ type LineEdit struct {
 	textChangedPublisher     EventPublisher
 	charWidthFont            *Font
 	charWidth                int // in native pixels
-	textColor                common.Color
+	textColor                wcolor.Color
 }
 
 func newLineEdit(parent Window) (*LineEdit, error) {
@@ -289,11 +289,11 @@ func (le *LineEdit) TextChanged() *Event {
 	return le.textChangedPublisher.Event()
 }
 
-func (le *LineEdit) TextColor() common.Color {
+func (le *LineEdit) TextColor() wcolor.Color {
 	return le.textColor
 }
 
-func (le *LineEdit) SetTextColor(c common.Color) {
+func (le *LineEdit) SetTextColor(c wcolor.Color) {
 	le.textColor = c
 
 	le.Invalidate()

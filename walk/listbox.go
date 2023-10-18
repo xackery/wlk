@@ -15,7 +15,7 @@ import (
 	"time"
 	"unsafe"
 
-	"github.com/xackery/wlk/common"
+	"github.com/xackery/wlk/wcolor"
 	"github.com/xackery/wlk/win"
 )
 
@@ -42,11 +42,11 @@ type ListBox struct {
 	currentIndexChangedPublisher    EventPublisher
 	selectedIndexesChangedPublisher EventPublisher
 	itemActivatedPublisher          EventPublisher
-	themeNormalBGColor              common.Color
-	themeNormalTextColor            common.Color
-	themeSelectedBGColor            common.Color
-	themeSelectedTextColor          common.Color
-	themeSelectedNotFocusedBGColor  common.Color
+	themeNormalBGColor              wcolor.Color
+	themeNormalTextColor            wcolor.Color
+	themeSelectedBGColor            wcolor.Color
+	themeSelectedTextColor          wcolor.Color
+	themeSelectedNotFocusedBGColor  wcolor.Color
 	trackingMouseEvent              bool
 }
 
@@ -164,11 +164,11 @@ func (lb *ListBox) ApplySysColors() {
 	lb.WidgetBase.ApplySysColors()
 
 	if IsDarkMode() {
-		lb.themeNormalBGColor = common.RGB(0, 0, 0)
-		lb.themeNormalTextColor = common.RGB(255, 255, 255)
-		lb.themeSelectedBGColor = common.RGB(0, 120, 215)
-		lb.themeSelectedTextColor = common.RGB(255, 255, 255)
-		lb.themeSelectedNotFocusedBGColor = common.RGB(0, 120, 215)
+		lb.themeNormalBGColor = wcolor.RGB(0, 0, 0)
+		lb.themeNormalTextColor = wcolor.RGB(255, 255, 255)
+		lb.themeSelectedBGColor = wcolor.RGB(0, 120, 215)
+		lb.themeSelectedTextColor = wcolor.RGB(255, 255, 255)
+		lb.themeSelectedNotFocusedBGColor = wcolor.RGB(0, 120, 215)
 		return
 	}
 
@@ -178,11 +178,11 @@ func (lb *ListBox) ApplySysColors() {
 		lb.style.highContrastActive = hc.DwFlags&win.HCF_HIGHCONTRASTON != 0
 	}
 
-	lb.themeNormalBGColor = common.Color(win.GetSysColor(win.COLOR_WINDOW))
-	lb.themeNormalTextColor = common.Color(win.GetSysColor(win.COLOR_WINDOWTEXT))
-	lb.themeSelectedBGColor = common.Color(win.GetSysColor(win.COLOR_HIGHLIGHT))
-	lb.themeSelectedTextColor = common.Color(win.GetSysColor(win.COLOR_HIGHLIGHTTEXT))
-	lb.themeSelectedNotFocusedBGColor = common.Color(win.GetSysColor(win.COLOR_BTNFACE))
+	lb.themeNormalBGColor = wcolor.Color(win.GetSysColor(win.COLOR_WINDOW))
+	lb.themeNormalTextColor = wcolor.Color(win.GetSysColor(win.COLOR_WINDOWTEXT))
+	lb.themeSelectedBGColor = wcolor.Color(win.GetSysColor(win.COLOR_HIGHLIGHT))
+	lb.themeSelectedTextColor = wcolor.Color(win.GetSysColor(win.COLOR_HIGHLIGHTTEXT))
+	lb.themeSelectedNotFocusedBGColor = wcolor.Color(win.GetSysColor(win.COLOR_BTNFACE))
 
 }
 
@@ -711,10 +711,10 @@ func (lb *ListBox) WndProc(hwnd win.HWND, msg uint32, wParam, lParam uintptr) ui
 			lb.style.BackgroundColor = lb.themeNormalBGColor
 			lb.style.TextColor = lb.themeNormalTextColor
 		}
-		if lb.themeNormalTextColor == common.RGB(0, 0, 0) {
-			lb.style.LineColor = common.RGB(0, 0, 0)
+		if lb.themeNormalTextColor == wcolor.RGB(0, 0, 0) {
+			lb.style.LineColor = wcolor.RGB(0, 0, 0)
 		} else {
-			lb.style.LineColor = common.RGB(255, 255, 255)
+			lb.style.LineColor = wcolor.RGB(255, 255, 255)
 		}
 		lb.style.defaultTextColor = lb.style.TextColor
 

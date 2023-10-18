@@ -11,14 +11,14 @@ import (
 	"syscall"
 	"unsafe"
 
-	"github.com/xackery/wlk/common"
+	"github.com/xackery/wlk/wcolor"
 	"github.com/xackery/wlk/win"
 )
 
 type ImageList struct {
 	hIml                     win.HIMAGELIST
 	dpi                      int
-	maskColor                common.Color
+	maskColor                wcolor.Color
 	imageSize96dpi           Size
 	colorMaskedBitmap2Index  map[*Bitmap]int
 	bitmapMaskedBitmap2Index map[bitmapMaskedBitmap]int
@@ -34,13 +34,13 @@ type bitmapMaskedBitmap struct {
 // units.
 //
 // Deprecated: Newer applications should use NewImageListForDPI.
-func NewImageList(imageSize Size, maskColor common.Color) (*ImageList, error) {
+func NewImageList(imageSize Size, maskColor wcolor.Color) (*ImageList, error) {
 	return NewImageListForDPI(SizeFrom96DPI(imageSize, 96), maskColor, 96)
 }
 
 // NewImageListForDPI creates an empty image list for image size at given DPI. imageSize is
 // specified in native pixels.
-func NewImageListForDPI(imageSize Size, maskColor common.Color, dpi int) (*ImageList, error) {
+func NewImageListForDPI(imageSize Size, maskColor wcolor.Color, dpi int) (*ImageList, error) {
 	hIml := win.ImageList_Create(
 		int32(imageSize.Width),
 		int32(imageSize.Height),
@@ -168,7 +168,7 @@ func (il *ImageList) Dispose() {
 	}
 }
 
-func (il *ImageList) MaskColor() common.Color {
+func (il *ImageList) MaskColor() wcolor.Color {
 	return il.maskColor
 }
 

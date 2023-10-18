@@ -10,9 +10,9 @@ import (
 	"strings"
 	"time"
 
-	"github.com/xackery/wlk/common"
 	. "github.com/xackery/wlk/cpl"
 	"github.com/xackery/wlk/walk"
+	"github.com/xackery/wlk/wcolor"
 	"github.com/xackery/wlk/win"
 )
 
@@ -191,8 +191,8 @@ func (s *Styler) ItemHeight(index, width int) int {
 
 func (s *Styler) StyleItem(style *walk.ListItemStyle) {
 	if canvas := style.Canvas(); canvas != nil {
-		if style.Index()%2 == 1 && style.BackgroundColor == common.Color(win.GetSysColor(win.COLOR_WINDOW)) {
-			style.BackgroundColor = common.Color(win.GetSysColor(win.COLOR_BTNFACE))
+		if style.Index()%2 == 1 && style.BackgroundColor == wcolor.Color(win.GetSysColor(win.COLOR_WINDOW)) {
+			style.BackgroundColor = wcolor.Color(win.GetSysColor(win.COLOR_BTNFACE))
 			if err := style.DrawBackground(); err != nil {
 				return
 			}

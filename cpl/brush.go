@@ -10,8 +10,8 @@ package cpl
 import (
 	"strconv"
 
-	"github.com/xackery/wlk/common"
 	"github.com/xackery/wlk/walk"
+	"github.com/xackery/wlk/wcolor"
 )
 
 type TransparentBrush struct {
@@ -22,7 +22,7 @@ func (TransparentBrush) Create() (walk.Brush, error) {
 }
 
 type SolidColorBrush struct {
-	Color common.Color
+	Color wcolor.Color
 }
 
 func (scb SolidColorBrush) Create() (walk.Brush, error) {

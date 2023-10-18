@@ -10,7 +10,7 @@ package walk
 import (
 	"math"
 
-	"github.com/xackery/wlk/common"
+	"github.com/xackery/wlk/wcolor"
 )
 
 var (
@@ -25,11 +25,11 @@ type WidgetGraphicsEffect interface {
 }
 
 type widgetGraphicsEffectBase struct {
-	color      common.Color
+	color      wcolor.Color
 	dpi2Bitmap map[int]*Bitmap
 }
 
-func (wgeb *widgetGraphicsEffectBase) create(color common.Color) error {
+func (wgeb *widgetGraphicsEffectBase) create(color wcolor.Color) error {
 	wgeb.color = color
 	return nil
 }
@@ -82,7 +82,7 @@ func (wgeb *widgetGraphicsEffectBase) bitmapForDPI(dpi int) (*Bitmap, error) {
 		}
 		defer bmpCanvas.Dispose()
 
-		color := common.RGB(
+		color := wcolor.RGB(
 			byte(math.Min(1.0, float64(wgeb.color.R())/255.0-0.1+0.1*float64(i))*255.0),
 			byte(math.Min(1.0, float64(wgeb.color.G())/255.0-0.1+0.1*float64(i))*255.0),
 			byte(math.Min(1.0, float64(wgeb.color.B())/255.0-0.1+0.1*float64(i))*255.0),
@@ -118,7 +118,7 @@ type BorderGlowEffect struct {
 	widgetGraphicsEffectBase
 }
 
-func NewBorderGlowEffect(color common.Color) (*BorderGlowEffect, error) {
+func NewBorderGlowEffect(color wcolor.Color) (*BorderGlowEffect, error) {
 	bge := new(BorderGlowEffect)
 
 	if err := bge.create(color); err != nil {
@@ -157,7 +157,7 @@ type DropShadowEffect struct {
 	widgetGraphicsEffectBase
 }
 
-func NewDropShadowEffect(color common.Color) (*DropShadowEffect, error) {
+func NewDropShadowEffect(color wcolor.Color) (*DropShadowEffect, error) {
 	dse := new(DropShadowEffect)
 
 	if err := dse.create(color); err != nil {
