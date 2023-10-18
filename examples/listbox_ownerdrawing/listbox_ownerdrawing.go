@@ -21,7 +21,7 @@ func main() {
 	var lb *walk.ListBox
 	var items []logEntry
 	for i := 10000; i > 0; i-- {
-		items = append(items, logEntry{time.Now().Add(-time.Second * time.Duration(i)), fmt.Sprintf("Some stuff just happend. %s", strings.TrimSpace(strings.Repeat("blah ", i%100)))})
+		items = append(items, logEntry{time.Now().Add(-time.Second * time.Duration(i)), fmt.Sprintf("Some stuff just happened. %s", strings.TrimSpace(strings.Repeat("blah ", i%100)))})
 	}
 	model := &logModel{items: items}
 	styler := &Styler{

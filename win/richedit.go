@@ -254,7 +254,7 @@ const (
 	EM_GETIMEPROPERTY   = WM_USER + 244
 )
 
-// These messages control what rich edit does when it comes accross
+// These messages control what rich edit does when it comes across
 // OLE objects during RTF stream in.  Normally rich edit queries the client
 // application only after OleLoad has been called.  With these messages it is possible to
 // set the rich edit control to a mode where it will query the client application before

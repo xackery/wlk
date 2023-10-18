@@ -1214,7 +1214,7 @@ const (
 	MOUSE_ATTRIBUTES_CHANGED = 0x04
 )
 
-// Raw input transistion state of mouse buttons
+// Raw input transition state of mouse buttons
 const (
 	RI_MOUSE_LEFT_BUTTON_DOWN   = 0x0001
 	RI_MOUSE_LEFT_BUTTON_UP     = 0x0002

@@ -341,7 +341,7 @@ func PdhGetFormattedCounterValueLong(hCounter PDH_HCOUNTER, lpdwType *uint32, pV
 //
 //	okPath := "\\Process(*)\\% Processor Time" // notice the wildcard * character
 //
-//	// ommitted all necessary stuff ...
+//	// omitted all necessary stuff ...
 //
 //	var bufSize uint32
 //	var bufCount uint32
