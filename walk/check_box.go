@@ -13,6 +13,7 @@ import (
 	"github.com/xackery/wlk/win"
 )
 
+// CheckState specifies the state of a CheckBox.
 type CheckState int
 
 const (
@@ -21,13 +22,13 @@ const (
 	CheckIndeterminate CheckState = win.BST_INDETERMINATE
 )
 
-var checkBoxCheckSize Size // in native pixels
-
+// CheckBox is a button that can be checked and unchecked and can contain text
 type CheckBox struct {
 	Button
 	checkStateChangedPublisher EventPublisher
 }
 
+// NewCheckBox creates and returns a new CheckBox.
 func NewCheckBox(parent Container) (*CheckBox, error) {
 	cb := new(CheckBox)
 

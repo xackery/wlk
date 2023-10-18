@@ -14,10 +14,6 @@ import (
 	"github.com/xackery/wlk/win"
 )
 
-type clickable interface {
-	raiseClicked()
-}
-
 type setCheckeder interface {
 	setChecked(checked bool)
 }
@@ -67,6 +63,29 @@ func (b *Button) init() {
 			return b.SetText(assertStringOr(v, ""))
 		},
 		b.textChangedPublisher.Event()))
+	b.ApplySysColors()
+}
+
+// TODO: https://stackoverflow.com/a/18773514
+// ApplySysColors applies a theme to the widget.
+func (b *Button) ApplySysColors() {
+	b.WidgetBase.ApplySysColors()
+	if !IsDarkMode() {
+		return
+	}
+	// check font color to white
+	/* brush, err := NewSolidColorBrush(common.DarkTextFG)
+	if err != nil {
+		return
+	} */
+
+	//fmt.Println("Dark mode button")
+	//win.SetTextColor(win.GetDC(b.hWnd), win.COLORREF(common.DarkTextFG))
+	/*fmt.Println("applying button theme")
+	brush, err := NewSolidColorBrush(common.DarkButtonBG)
+	if err != nil {
+		return
+	}*/
 }
 
 func (b *Button) ApplyDPI(dpi int) {

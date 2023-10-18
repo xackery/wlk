@@ -11,6 +11,7 @@ import (
 	"syscall"
 	"unsafe"
 
+	"github.com/xackery/wlk/common"
 	"golang.org/x/sys/windows"
 )
 
@@ -1918,7 +1919,7 @@ var (
 var (
 	darkModeColors = map[int]uint32{
 		COLOR_3DDKSHADOW:  0x00112233,
-		COLOR_3DFACE:      0x36393F,
+		COLOR_3DFACE:      uint32(common.DarkButtonBG),
 		COLOR_3DHIGHLIGHT: 0x5865F2,
 		//COLOR_3DHILIGHT:               0x5865F2,
 		COLOR_3DLIGHT:       0x36393F,
@@ -1926,7 +1927,7 @@ var (
 		COLOR_ACTIVEBORDER:  0x36393F,
 		COLOR_ACTIVECAPTION: 0x5865F2,
 		COLOR_APPWORKSPACE:  0x36393F,
-		COLOR_BACKGROUND:    0x36393F,
+		COLOR_BACKGROUND:    uint32(common.DarkFormBG),
 		//COLOR_BTNFACE:                 0x5865F2,
 		//COLOR_BTNHIGHLIGHT:            0x5865F2,
 		//COLOR_BTNHILIGHT:              0x5865F2,
@@ -1950,9 +1951,9 @@ var (
 		//COLOR_MENUBAR:                 0x36393F,
 		COLOR_MENUTEXT:    0xFFFFFF,
 		COLOR_SCROLLBAR:   0x5865F2,
-		COLOR_WINDOW:      0x36393F,
+		COLOR_WINDOW:      uint32(common.DarkFormBG),
 		COLOR_WINDOWFRAME: 0x36393F,
-		COLOR_WINDOWTEXT:  0xFFFFFF,
+		COLOR_WINDOWTEXT:  uint32(common.DarkTextFG),
 	}
 )
 
