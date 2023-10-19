@@ -12,7 +12,7 @@ type closeEventHandlerInfo struct {
 	once    bool
 }
 
-type CloseEventHandler func(canceled *bool, reason CloseReason)
+type CloseEventHandler func(canceled *bool, reason byte)
 
 type CloseEvent struct {
 	handlers []closeEventHandlerInfo
@@ -50,7 +50,7 @@ func (p *CloseEventPublisher) Event() *CloseEvent {
 	return &p.event
 }
 
-func (p *CloseEventPublisher) Publish(canceled *bool, reason CloseReason) {
+func (p *CloseEventPublisher) Publish(canceled *bool, reason byte) {
 	for i, h := range p.event.handlers {
 		if h.handler != nil {
 			h.handler(canceled, reason)

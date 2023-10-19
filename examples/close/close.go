@@ -40,7 +40,7 @@ func run() error {
 		return fmt.Errorf("creating main window: %w", err)
 	}
 
-	mw.Closing().Attach(func(canceled *bool, reason walk.CloseReason) {
+	mw.Closing().Attach(func(canceled *bool, reason byte) {
 		//walk.MsgBox(nil, "Info", fmt.Sprintf("Closing now (reason %d)", reason), walk.MsgBoxIconInformation)
 		//check if context is done
 		if ctx.Err() != nil {
