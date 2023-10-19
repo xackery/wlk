@@ -4,6 +4,7 @@
 package walk
 
 import (
+	"fmt"
 	"syscall"
 	"unsafe"
 
@@ -139,8 +140,12 @@ func (tv *TreeView) SetModel(model TreeModel) error {
 
 	if model != nil {
 		tv.lazyPopulation = model.LazyPopulation()
+		itemsReset := model.ItemsReset()
+		if itemsReset == nil {
+			return fmt.Errorf("model.ItemsReset() must return a valid Event")
+		}
 
-		tv.itemsResetEventHandlerHandle = model.ItemsReset().Attach(func(parent TreeItem) {
+		tv.itemsResetEventHandlerHandle = itemsReset.Attach(func(parent TreeItem) {
 			if parent == nil {
 				tv.resetItems()
 			} else if tv.item2Info[parent] != nil {
