@@ -16,13 +16,6 @@ import (
 	"github.com/xackery/wlk/win"
 )
 
-type CloseReason byte
-
-const (
-	CloseReasonUnknown CloseReason = iota
-	CloseReasonUser
-)
-
 var (
 	syncMsgId                 uint32
 	taskbarButtonCreatedMsgId uint32
@@ -86,7 +79,7 @@ type FormBase struct {
 	icon                        Image
 	prevFocusHWnd               win.HWND
 	proposedSize                Size // in native pixels
-	closeReason                 CloseReason
+	closeReason                 byte
 	inSizingLoop                bool
 	startingLayoutViaSizingLoop bool
 	isInRestoreState            bool
@@ -724,7 +717,7 @@ func (fb *FormBase) WndProc(hwnd win.HWND, msg uint32, wParam, lParam uintptr) u
 		return 0
 
 	case win.WM_CLOSE:
-		fb.closeReason = CloseReasonUnknown
+		fb.closeReason = 0
 		var canceled bool
 		fb.closingPublisher.Publish(&canceled, fb.closeReason)
 		if !canceled {
@@ -852,7 +845,7 @@ func (fb *FormBase) WndProc(hwnd win.HWND, msg uint32, wParam, lParam uintptr) u
 
 	case win.WM_SYSCOMMAND:
 		if wParam == win.SC_CLOSE {
-			fb.closeReason = CloseReasonUser
+			fb.closeReason = 1
 		}
 
 	case taskbarButtonCreatedMsgId:
