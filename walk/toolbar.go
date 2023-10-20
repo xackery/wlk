@@ -292,7 +292,7 @@ func (tb *ToolBar) WndProc(hwnd windows.HWND, msg uint32, wParam, lParam uintptr
 					break
 				}
 
-				p := win.POINT{r.Left, r.Bottom}
+				p := win.POINT{X: r.Left, Y: r.Bottom}
 
 				if !win.ClientToScreen(tb.hWnd, &p) {
 					break

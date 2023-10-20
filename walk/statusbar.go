@@ -300,10 +300,10 @@ func (sbi *StatusBarItem) updateText(index int) error {
 		return err
 	}
 
-	if 0 == sbi.sb.SendMessage(
+	if sbi.sb.SendMessage(
 		win.SB_SETTEXT,
 		uintptr(win.MAKEWORD(byte(index), 0)),
-		uintptr(unsafe.Pointer(utf16))) {
+		uintptr(unsafe.Pointer(utf16))) == 0 {
 
 		return newError("SB_SETTEXT")
 	}

@@ -20,13 +20,13 @@ var webViewDWebBrowserEvents2Vtbl *win.DWebBrowserEvents2Vtbl
 func init() {
 	AppendToWalkInit(func() {
 		webViewDWebBrowserEvents2Vtbl = &win.DWebBrowserEvents2Vtbl{
-			syscall.NewCallback(webView_DWebBrowserEvents2_QueryInterface),
-			syscall.NewCallback(webView_DWebBrowserEvents2_AddRef),
-			syscall.NewCallback(webView_DWebBrowserEvents2_Release),
-			syscall.NewCallback(webView_DWebBrowserEvents2_GetTypeInfoCount),
-			syscall.NewCallback(webView_DWebBrowserEvents2_GetTypeInfo),
-			syscall.NewCallback(webView_DWebBrowserEvents2_GetIDsOfNames),
-			syscall.NewCallback(webView_DWebBrowserEvents2_Invoke),
+			QueryInterface:   syscall.NewCallback(webView_DWebBrowserEvents2_QueryInterface),
+			AddRef:           syscall.NewCallback(webView_DWebBrowserEvents2_AddRef),
+			Release:          syscall.NewCallback(webView_DWebBrowserEvents2_Release),
+			GetTypeInfoCount: syscall.NewCallback(webView_DWebBrowserEvents2_GetTypeInfoCount),
+			GetTypeInfo:      syscall.NewCallback(webView_DWebBrowserEvents2_GetTypeInfo),
+			GetIDsOfNames:    syscall.NewCallback(webView_DWebBrowserEvents2_GetIDsOfNames),
+			Invoke:           syscall.NewCallback(webView_DWebBrowserEvents2_Invoke),
 		}
 	})
 }

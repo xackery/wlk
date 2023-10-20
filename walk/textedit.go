@@ -284,7 +284,7 @@ func (te *TextEdit) ContextMenuLocation() Point {
 		idx = (start + end) / 2
 	}
 	res := uint32(te.SendMessage(win.EM_POSFROMCHAR, uintptr(idx), 0))
-	pt := win.POINT{int32(win.LOWORD(res)), int32(win.HIWORD(res))}
+	pt := win.POINT{X: int32(win.LOWORD(res)), Y: int32(win.HIWORD(res))}
 	windowTrimToClientBounds(te.hWnd, &pt)
 	return pointPixelsFromPOINT(pt)
 }

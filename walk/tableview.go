@@ -24,7 +24,6 @@ import (
 const tableViewWindowClass = `\o/ Walk_TableView_Class \o/`
 
 var (
-	white                       = win.COLORREF(wcolor.RGB(255, 255, 255))
 	checkmark                   = string([]byte{0xE2, 0x9C, 0x94})
 	tableViewFrozenLVWndProcPtr uintptr
 	tableViewNormalLVWndProcPtr uintptr
@@ -1991,7 +1990,7 @@ func (tv *TableView) lvWndProc(origWndProcPtr uintptr, hwnd windows.HWND, msg ui
 
 	case win.WM_LBUTTONDOWN, win.WM_RBUTTONDOWN, win.WM_LBUTTONDBLCLK, win.WM_RBUTTONDBLCLK:
 		var hti win.LVHITTESTINFO
-		hti.Pt = win.POINT{win.GET_X_LPARAM(lp), win.GET_Y_LPARAM(lp)}
+		hti.Pt = win.POINT{X: win.GET_X_LPARAM(lp), Y: win.GET_Y_LPARAM(lp)}
 		win.SendMessage(hwnd, win.LVM_HITTEST, 0, uintptr(unsafe.Pointer(&hti)))
 
 		tv.itemIndexOfLastMouseButtonDown = int(hti.IItem)

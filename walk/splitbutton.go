@@ -84,7 +84,7 @@ func (sb *SplitButton) WndProc(hwnd windows.HWND, msg uint32, wParam, lParam uin
 		case win.BCN_DROPDOWN:
 			dd := (*win.NMBCDROPDOWN)(unsafe.Pointer(lParam))
 
-			p := win.POINT{dd.RcButton.Left, dd.RcButton.Bottom}
+			p := win.POINT{X: dd.RcButton.Left, Y: dd.RcButton.Bottom}
 
 			win.ClientToScreen(sb.hWnd, &p)
 
