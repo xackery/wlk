@@ -11,6 +11,7 @@ import (
 	"unsafe"
 
 	"github.com/xackery/wlk/win"
+	"golang.org/x/sys/windows"
 )
 
 const scrollViewWindowClass = `\o/ Walk_ScrollView_Class \o/`
@@ -166,7 +167,7 @@ func (sv *ScrollView) MouseUp() *MouseEvent {
 	return sv.composite.MouseUp()
 }
 
-func (sv *ScrollView) WndProc(hwnd win.HWND, msg uint32, wParam, lParam uintptr) uintptr {
+func (sv *ScrollView) WndProc(hwnd windows.HWND, msg uint32, wParam, lParam uintptr) uintptr {
 	if sv.composite != nil {
 		avoidBGArtifacts := func() {
 			if sv.hasComplexBackground() {

@@ -9,6 +9,7 @@ package walk
 
 import (
 	"github.com/xackery/wlk/win"
+	"golang.org/x/sys/windows"
 )
 
 type PushButton struct {
@@ -49,7 +50,7 @@ func (pb *PushButton) SetImageAboveText(value bool) error {
 	return pb.SetImage(pb.image)
 }
 
-func (pb *PushButton) ensureProperDialogDefaultButton(hwndFocus win.HWND) {
+func (pb *PushButton) ensureProperDialogDefaultButton(hwndFocus windows.HWND) {
 	widget := windowFromHandle(hwndFocus)
 	if widget == nil {
 		return
@@ -83,7 +84,7 @@ func (pb *PushButton) ensureProperDialogDefaultButton(hwndFocus win.HWND) {
 	}
 }
 
-func (pb *PushButton) WndProc(hwnd win.HWND, msg uint32, wParam, lParam uintptr) uintptr {
+func (pb *PushButton) WndProc(hwnd windows.HWND, msg uint32, wParam, lParam uintptr) uintptr {
 	switch msg {
 	case win.WM_GETDLGCODE:
 		hwndFocus := win.GetFocus()
@@ -110,7 +111,7 @@ func (pb *PushButton) WndProc(hwnd win.HWND, msg uint32, wParam, lParam uintptr)
 		pb.ensureProperDialogDefaultButton(hwndFocus)
 
 	case win.WM_KILLFOCUS:
-		pb.ensureProperDialogDefaultButton(win.HWND(wParam))
+		pb.ensureProperDialogDefaultButton(windows.HWND(wParam))
 	}
 
 	return pb.Button.WndProc(hwnd, msg, wParam, lParam)

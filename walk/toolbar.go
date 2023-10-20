@@ -14,6 +14,7 @@ import (
 
 	"github.com/xackery/wlk/wcolor"
 	"github.com/xackery/wlk/win"
+	"golang.org/x/sys/windows"
 )
 
 type ToolBarButtonStyle int
@@ -263,7 +264,7 @@ func (tb *ToolBar) imageIndex(image Image) (imageIndex int32, err error) {
 	return
 }
 
-func (tb *ToolBar) WndProc(hwnd win.HWND, msg uint32, wParam, lParam uintptr) uintptr {
+func (tb *ToolBar) WndProc(hwnd windows.HWND, msg uint32, wParam, lParam uintptr) uintptr {
 	switch msg {
 	case win.WM_MOUSEMOVE, win.WM_MOUSELEAVE, win.WM_LBUTTONDOWN:
 		tb.Invalidate()

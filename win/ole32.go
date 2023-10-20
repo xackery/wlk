@@ -369,7 +369,7 @@ func (obj *IOleObject) Close(dwSaveOption uint32) HRESULT {
 	return HRESULT(ret)
 }
 
-func (obj *IOleObject) DoVerb(iVerb int32, lpmsg *MSG, pActiveSite *IOleClientSite, lindex int32, hwndParent HWND, lprcPosRect *RECT) HRESULT {
+func (obj *IOleObject) DoVerb(iVerb int32, lpmsg *MSG, pActiveSite *IOleClientSite, lindex int32, hwndParent windows.HWND, lprcPosRect *RECT) HRESULT {
 	ret, _, _ := syscall.Syscall9(obj.LpVtbl.DoVerb, 7,
 		uintptr(unsafe.Pointer(obj)),
 		uintptr(iVerb),
@@ -397,7 +397,7 @@ type IUnknown struct {
 type OLEINPLACEFRAMEINFO struct {
 	Cb            uint32
 	FMDIApp       BOOL
-	HwndFrame     HWND
+	HwndFrame     windows.HWND
 	Haccel        HACCEL
 	CAccelEntries uint32
 }

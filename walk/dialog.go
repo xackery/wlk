@@ -11,6 +11,7 @@ import (
 	"unsafe"
 
 	"github.com/xackery/wlk/win"
+	"golang.org/x/sys/windows"
 )
 
 const (
@@ -195,7 +196,7 @@ func (dlg *Dialog) Show() {
 }
 
 // fitRectToScreen fits rectangle to screen. Input and output rectangles are in native pixels.
-func fitRectToScreen(hWnd win.HWND, r Rectangle) Rectangle {
+func fitRectToScreen(hWnd windows.HWND, r Rectangle) Rectangle {
 	var mi win.MONITORINFO
 	mi.CbSize = uint32(unsafe.Sizeof(mi))
 
@@ -239,7 +240,7 @@ func (dlg *Dialog) Run() int {
 	return dlg.result
 }
 
-func (dlg *Dialog) WndProc(hwnd win.HWND, msg uint32, wParam, lParam uintptr) uintptr {
+func (dlg *Dialog) WndProc(hwnd windows.HWND, msg uint32, wParam, lParam uintptr) uintptr {
 	switch msg {
 	case win.WM_COMMAND:
 		if win.HIWORD(uint32(wParam)) == 0 {

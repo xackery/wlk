@@ -7,7 +7,13 @@
 
 package cpl
 
-import "github.com/xackery/wlk/walk"
+import (
+	"fmt"
+
+	"github.com/xackery/wlk/walk"
+	"github.com/xackery/wlk/win"
+	"golang.org/x/sys/windows"
+)
 
 type MainWindow struct {
 	// Window
@@ -206,6 +212,12 @@ func (mw MainWindow) Run() (int, error) {
 		mw.AssignTo = &w
 	}
 
+	if IsDarkMode() {
+		err := win.DwmSetWindowAttribute(w.Handle(), windows.DWMWA_USE_IMMERSIVE_DARK_MODE, 1)
+		if err != nil {
+			return 0, fmt.Errorf("set dark mode title bar: %w", err)
+		}
+	}
 	if err := mw.Create(); err != nil {
 		return 0, err
 	}

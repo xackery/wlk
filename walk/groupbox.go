@@ -12,6 +12,7 @@ import (
 	"unsafe"
 
 	"github.com/xackery/wlk/win"
+	"golang.org/x/sys/windows"
 )
 
 const groupBoxWindowClass = `\o/ Walk_GroupBox_Class \o/`
@@ -24,7 +25,7 @@ func init() {
 
 type GroupBox struct {
 	WidgetBase
-	hWndGroupBox          win.HWND
+	hWndGroupBox          windows.HWND
 	checkBox              *CheckBox
 	composite             *Composite
 	headerHeight          int // in native pixels
@@ -309,7 +310,7 @@ func (gb *GroupBox) MouseUp() *MouseEvent {
 	return gb.composite.MouseUp()
 }
 
-func (gb *GroupBox) WndProc(hwnd win.HWND, msg uint32, wParam, lParam uintptr) uintptr {
+func (gb *GroupBox) WndProc(hwnd windows.HWND, msg uint32, wParam, lParam uintptr) uintptr {
 	if gb.composite != nil {
 		switch msg {
 		case win.WM_CTLCOLORSTATIC:

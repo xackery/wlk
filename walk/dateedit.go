@@ -14,6 +14,7 @@ import (
 	"unsafe"
 
 	"github.com/xackery/wlk/win"
+	"golang.org/x/sys/windows"
 )
 
 type DateEdit struct {
@@ -233,7 +234,7 @@ func (de *DateEdit) DateChanged() *Event {
 	return de.dateChangedPublisher.Event()
 }
 
-func (de *DateEdit) WndProc(hwnd win.HWND, msg uint32, wParam, lParam uintptr) uintptr {
+func (de *DateEdit) WndProc(hwnd windows.HWND, msg uint32, wParam, lParam uintptr) uintptr {
 	switch msg {
 	case win.WM_NOTIFY:
 		switch uint32(((*win.NMHDR)(unsafe.Pointer(lParam))).Code) {

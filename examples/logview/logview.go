@@ -10,6 +10,7 @@ import (
 
 	"github.com/xackery/wlk/walk"
 	"github.com/xackery/wlk/win"
+	"golang.org/x/sys/windows"
 )
 
 type LogView struct {
@@ -74,7 +75,7 @@ func (lv *LogView) Write(p []byte) (int, error) {
 	return len(p), nil
 }
 
-func (lv *LogView) WndProc(hwnd win.HWND, msg uint32, wParam, lParam uintptr) uintptr {
+func (lv *LogView) WndProc(hwnd windows.HWND, msg uint32, wParam, lParam uintptr) uintptr {
 	switch msg {
 	case win.WM_GETDLGCODE:
 		if wParam == win.VK_RETURN {

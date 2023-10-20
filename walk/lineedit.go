@@ -13,6 +13,7 @@ import (
 
 	"github.com/xackery/wlk/wcolor"
 	"github.com/xackery/wlk/win"
+	"golang.org/x/sys/windows"
 )
 
 type CaseMode uint32
@@ -303,7 +304,7 @@ func (*LineEdit) NeedsWmSize() bool {
 	return true
 }
 
-func (le *LineEdit) WndProc(hwnd win.HWND, msg uint32, wParam, lParam uintptr) uintptr {
+func (le *LineEdit) WndProc(hwnd windows.HWND, msg uint32, wParam, lParam uintptr) uintptr {
 	switch msg {
 	case win.WM_COMMAND:
 		switch win.HIWORD(uint32(wParam)) {

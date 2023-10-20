@@ -1,6 +1,8 @@
 package common
 
-import "github.com/xackery/wlk/wcolor"
+import (
+	"github.com/xackery/wlk/wcolor"
+)
 
 const (
 	DarkFormBG            = wcolor.Color(0x202020)

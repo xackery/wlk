@@ -11,6 +11,7 @@ import (
 	"strconv"
 
 	"github.com/xackery/wlk/win"
+	"golang.org/x/sys/windows"
 )
 
 type Slider struct {
@@ -154,7 +155,7 @@ func (sl *Slider) SetTracking(tracking bool) {
 	sl.tracking = tracking
 }
 
-func (sl *Slider) WndProc(hwnd win.HWND, msg uint32, wParam, lParam uintptr) uintptr {
+func (sl *Slider) WndProc(hwnd windows.HWND, msg uint32, wParam, lParam uintptr) uintptr {
 	switch msg {
 	case win.WM_HSCROLL, win.WM_VSCROLL:
 		switch win.LOWORD(uint32(wParam)) {

@@ -17,6 +17,7 @@ import (
 
 	"github.com/xackery/wlk/wcolor"
 	"github.com/xackery/wlk/win"
+	"golang.org/x/sys/windows"
 )
 
 type ListBox struct {
@@ -651,7 +652,7 @@ func (lb *ListBox) ItemActivated() *Event {
 	return lb.itemActivatedPublisher.Event()
 }
 
-func (lb *ListBox) WndProc(hwnd win.HWND, msg uint32, wParam, lParam uintptr) uintptr {
+func (lb *ListBox) WndProc(hwnd windows.HWND, msg uint32, wParam, lParam uintptr) uintptr {
 	switch msg {
 	case win.WM_MEASUREITEM:
 		if lb.styler == nil {

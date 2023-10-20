@@ -9,6 +9,7 @@ import (
 
 	"github.com/xackery/wlk/walk"
 	"github.com/xackery/wlk/wcolor"
+	"golang.org/x/sys/windows"
 
 	. "github.com/xackery/wlk/cpl"
 	"github.com/xackery/wlk/win"
@@ -94,7 +95,7 @@ func (li *myWidgetLayoutItem) IdealSize() walk.Size {
 	return li.idealSize
 }
 
-func (w *MyWidget) WndProc(hwnd win.HWND, msg uint32, wParam, lParam uintptr) uintptr {
+func (w *MyWidget) WndProc(hwnd windows.HWND, msg uint32, wParam, lParam uintptr) uintptr {
 	switch msg {
 	case win.WM_LBUTTONDOWN:
 		log.Printf("%s: WM_LBUTTONDOWN", w.Name())
@@ -122,7 +123,7 @@ func NewMyPushButton(parent walk.Container) (*MyPushButton, error) {
 	return mpb, nil
 }
 
-func (mpb *MyPushButton) WndProc(hwnd win.HWND, msg uint32, wParam, lParam uintptr) uintptr {
+func (mpb *MyPushButton) WndProc(hwnd windows.HWND, msg uint32, wParam, lParam uintptr) uintptr {
 	switch msg {
 	case win.WM_LBUTTONDOWN:
 		log.Printf("%s: WM_LBUTTONDOWN", mpb.Text())

@@ -12,6 +12,7 @@ import (
 	"unsafe"
 
 	"github.com/xackery/wlk/win"
+	"golang.org/x/sys/windows"
 )
 
 var webViewIOleInPlaceSiteVtbl *win.IOleInPlaceSiteVtbl
@@ -62,7 +63,7 @@ func webView_IOleInPlaceSite_Release(inPlaceSite *webViewIOleInPlaceSite) uintpt
 	return 1
 }
 
-func webView_IOleInPlaceSite_GetWindow(inPlaceSite *webViewIOleInPlaceSite, lphwnd *win.HWND) uintptr {
+func webView_IOleInPlaceSite_GetWindow(inPlaceSite *webViewIOleInPlaceSite, lphwnd *windows.HWND) uintptr {
 	*lphwnd = inPlaceSite.inPlaceFrame.webView.hWnd
 
 	return win.S_OK

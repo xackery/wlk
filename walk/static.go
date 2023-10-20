@@ -13,6 +13,7 @@ import (
 
 	"github.com/xackery/wlk/wcolor"
 	"github.com/xackery/wlk/win"
+	"golang.org/x/sys/windows"
 )
 
 const staticWindowClass = `\o/ Walk_Static_Class \o/`
@@ -28,7 +29,7 @@ func init() {
 
 type static struct {
 	WidgetBase
-	hwndStatic           win.HWND
+	hwndStatic           windows.HWND
 	origStaticWndProcPtr uintptr
 	textAlignment        Alignment2D
 	textColor            wcolor.Color
@@ -88,7 +89,7 @@ func (s *static) Dispose() {
 	s.WidgetBase.Dispose()
 }
 
-func (s *static) handleForToolTip() win.HWND {
+func (s *static) handleForToolTip() windows.HWND {
 	return s.hwndStatic
 }
 
@@ -258,7 +259,7 @@ func (s *static) updateStaticBounds() {
 	s.Invalidate()
 }
 
-func (s *static) WndProc(hwnd win.HWND, msg uint32, wp, lp uintptr) uintptr {
+func (s *static) WndProc(hwnd windows.HWND, msg uint32, wp, lp uintptr) uintptr {
 	switch msg {
 	case win.WM_CTLCOLORSTATIC:
 		if hBrush := s.handleWMCTLCOLOR(wp, uintptr(s.hWnd)); hBrush != 0 {
@@ -278,7 +279,7 @@ func (s *static) WndProc(hwnd win.HWND, msg uint32, wp, lp uintptr) uintptr {
 	return s.WidgetBase.WndProc(hwnd, msg, wp, lp)
 }
 
-func staticWndProc(hwnd win.HWND, msg uint32, wp, lp uintptr) uintptr {
+func staticWndProc(hwnd windows.HWND, msg uint32, wp, lp uintptr) uintptr {
 	as, ok := windowFromHandle(win.GetParent(hwnd)).(interface{ asStatic() *static })
 	if !ok {
 		return 0

@@ -510,7 +510,7 @@ type MARGINS struct {
 //sys BufferedPaintInit() (ret HRESULT) = uxtheme.BufferedPaintInit
 //sys CloseThemeData(hTheme HTHEME) (ret HRESULT) = uxtheme.CloseThemeData
 //sys DrawThemeBackground(hTheme HTHEME, hdc HDC, iPartId int32, iStateId int32, pRect *RECT, pClipRect *RECT) (ret HRESULT) = uxtheme.DrawThemeBackground
-//sys DrawThemeParentBackground(hWnd HWND, hdc HDC, prc *RECT) (ret HRESULT) = uxtheme.DrawThemeParentBackground
+//sys DrawThemeParentBackground(hWnd windows.HWND, hdc HDC, prc *RECT) (ret HRESULT) = uxtheme.DrawThemeParentBackground
 //sys DrawThemeTextEx(hTheme HTHEME, hdc HDC, iPartId int32, iStateId int32, pszText *uint16, iCharCount int32, dwFlags uint32, pRect *RECT, pOptions *DTTOPTS) (ret HRESULT) = uxtheme.DrawThemeTextEx
 //sys EndBufferedPaint(paintBuf HPAINTBUFFER, updateTarget bool) (ret HRESULT) = uxtheme.EndBufferedPaint
 //sys GetThemeColor(hTheme HTHEME, iPartId int32, iStateId int32, iPropId int32, pColor *COLORREF) (ret HRESULT) = uxtheme.GetThemeColor
@@ -524,5 +524,5 @@ type MARGINS struct {
 //sys GetThemeTextExtent(hTheme HTHEME, hdc HDC, iPartId int32, iStateId int32, pszText *uint16, iCharCount int32, dwTextFlags uint32, pBoundingRect *RECT, pExtentRect *RECT) (ret HRESULT) = uxtheme.GetThemeTextExtent
 //sys IsAppThemed() (ret bool) = uxtheme.IsAppThemed
 //sys IsThemeBackgroundPartiallyTransparent(hTheme HTHEME, iPartId int32, iStateId int32) (ret bool) = uxtheme.IsThemeBackgroundPartiallyTransparent
-//sys OpenThemeData(hwnd HWND, pszClassList *uint16) (ret HTHEME) = uxtheme.OpenThemeData
-//sys SetWindowTheme(hwnd HWND, pszSubAppName *uint16, pszSubIdList *uint16) (ret HRESULT) = uxtheme.SetWindowTheme
+//sys OpenThemeData(hwnd windows.HWND, pszClassList *uint16) (ret HTHEME) = uxtheme.OpenThemeData
+//sys SetWindowTheme(hwnd windows.HWND, pszSubAppName *uint16, pszSubIdList *uint16) (ret HRESULT) = uxtheme.SetWindowTheme

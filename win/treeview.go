@@ -211,7 +211,7 @@ type TVITEM struct {
 	lParam         LPARAM
 	iIntegral      int
 	uStateEx       UINT
-	hwnd           HWND
+	hwnd           windows.HWND
 	iExpandedImage int
 }*/
 

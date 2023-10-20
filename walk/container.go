@@ -13,6 +13,7 @@ import (
 	"unsafe"
 
 	"github.com/xackery/wlk/win"
+	"golang.org/x/sys/windows"
 )
 
 type Container interface {
@@ -270,7 +271,7 @@ func (cb *ContainerBase) doPaint() error {
 	return nil
 }
 
-func (cb *ContainerBase) WndProc(hwnd win.HWND, msg uint32, wParam, lParam uintptr) uintptr {
+func (cb *ContainerBase) WndProc(hwnd windows.HWND, msg uint32, wParam, lParam uintptr) uintptr {
 	switch msg {
 	case win.WM_CTLCOLOREDIT, win.WM_CTLCOLORSTATIC:
 		if hBrush := cb.handleWMCTLCOLOR(wParam, lParam); hBrush != 0 {
@@ -333,7 +334,7 @@ func (cb *ContainerBase) WndProc(hwnd win.HWND, msg uint32, wParam, lParam uintp
 			var toolBarOnly bool
 			if hwndSrc == 0 {
 				toolBarOnly = true
-				hwndSrc = win.HWND(lParam)
+				hwndSrc = windows.HWND(lParam)
 			}
 
 			if window := windowFromHandle(hwndSrc); window != nil {
@@ -368,7 +369,7 @@ func (cb *ContainerBase) WndProc(hwnd win.HWND, msg uint32, wParam, lParam uintp
 		}
 
 	case win.WM_HSCROLL, win.WM_VSCROLL:
-		if window := windowFromHandle(win.HWND(lParam)); window != nil {
+		if window := windowFromHandle(windows.HWND(lParam)); window != nil {
 			// The window that sent the notification shall handle it itself.
 			return window.WndProc(hwnd, msg, wParam, lParam)
 		}
@@ -465,7 +466,7 @@ func (cb *ContainerBase) focusFirstCandidateDescendant() {
 	}
 }
 
-func firstFocusableDescendantCallback(hwnd win.HWND, lParam uintptr) uintptr {
+func firstFocusableDescendantCallback(hwnd windows.HWND, lParam uintptr) uintptr {
 	if !win.IsWindowVisible(hwnd) || !win.IsWindowEnabled(hwnd) {
 		return 1
 	}
@@ -477,7 +478,7 @@ func firstFocusableDescendantCallback(hwnd win.HWND, lParam uintptr) uintptr {
 			}
 		}
 
-		hwndPtr := (*win.HWND)(unsafe.Pointer(lParam))
+		hwndPtr := (*windows.HWND)(unsafe.Pointer(lParam))
 		*hwndPtr = hwnd
 		return 0
 	}
@@ -494,7 +495,7 @@ func init() {
 }
 
 func firstFocusableDescendant(container Container) Window {
-	var hwnd win.HWND
+	var hwnd windows.HWND
 
 	win.EnumChildWindows(container.Handle(), firstFocusableDescendantCallbackPtr, uintptr(unsafe.Pointer(&hwnd)))
 

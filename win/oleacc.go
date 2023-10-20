@@ -10,6 +10,8 @@ package win
 import (
 	"syscall"
 	"unsafe"
+
+	"golang.org/x/sys/windows"
 )
 
 const MSAA_MENU_SIG = 0xAA0DF00D
@@ -228,7 +230,7 @@ func (obj *IAccPropServices) Release() uint32 {
 }
 
 // SetPropServer specifies a callback object to be used to annotate an array of properties for the accessible element. You can also specify whether the annotation is to be applied to this accessible element or to the element and its children. This method is used for server annotation.
-// If server developers know the HWND of the accessible element they want to annotate, they can use SetHwndPropServer.
+// If server developers know the windows.HWND of the accessible element they want to annotate, they can use SetHwndPropServer.
 func (obj *IAccPropServices) SetPropServer(idString []byte, idProps []MSAAPROPID, server *IAccPropServer, annoScope AnnoScope) HRESULT {
 	var idStringPtr unsafe.Pointer
 	idStringLen := len(idString)
@@ -254,7 +256,7 @@ func (obj *IAccPropServices) SetPropServer(idString []byte, idProps []MSAAPROPID
 }
 
 // ClearProps restores default values to properties of accessible elements that they had previously annotated.
-// If servers know the HWND of the object they want to clear, they can use ClearHwndProps.
+// If servers know the windows.HWND of the object they want to clear, they can use ClearHwndProps.
 func (obj *IAccPropServices) ClearProps(idString []byte, idProps []MSAAPROPID) HRESULT {
 	var idStringPtr unsafe.Pointer
 	idStringLen := len(idString)
@@ -276,8 +278,8 @@ func (obj *IAccPropServices) ClearProps(idString []byte, idProps []MSAAPROPID) H
 	return HRESULT(ret)
 }
 
-// SetHwndPropServer wraps SetPropServer, providing a convenient entry point for callers who are annotating HWND-based accessible elements.
-func (obj *IAccPropServices) SetHwndPropServer(hwnd HWND, idObject int32, idChild uint32, idProps []MSAAPROPID, server *IAccPropServer, annoScope AnnoScope) HRESULT {
+// SetHwndPropServer wraps SetPropServer, providing a convenient entry point for callers who are annotating windows.HWND-based accessible elements.
+func (obj *IAccPropServices) SetHwndPropServer(hwnd windows.HWND, idObject int32, idChild uint32, idProps []MSAAPROPID, server *IAccPropServer, annoScope AnnoScope) HRESULT {
 	var idPropsPtr unsafe.Pointer
 	idPropsLen := len(idProps)
 	if idPropsLen != 0 {
@@ -296,8 +298,8 @@ func (obj *IAccPropServices) SetHwndPropServer(hwnd HWND, idObject int32, idChil
 	return HRESULT(ret)
 }
 
-// ClearHwndProps wraps SetPropValue, SetPropServer, and ClearProps, and provides a convenient entry point for callers who are annotating HWND-based accessible elements.
-func (obj *IAccPropServices) ClearHwndProps(hwnd HWND, idObject int32, idChild uint32, idProps []MSAAPROPID) HRESULT {
+// ClearHwndProps wraps SetPropValue, SetPropServer, and ClearProps, and provides a convenient entry point for callers who are annotating windows.HWND-based accessible elements.
+func (obj *IAccPropServices) ClearHwndProps(hwnd windows.HWND, idObject int32, idChild uint32, idProps []MSAAPROPID) HRESULT {
 	var idPropsPtr unsafe.Pointer
 	idPropsLen := len(idProps)
 	if idPropsLen != 0 {
@@ -314,7 +316,7 @@ func (obj *IAccPropServices) ClearHwndProps(hwnd HWND, idObject int32, idChild u
 }
 
 // ComposeHwndIdentityString retrievs an identity string.
-func (obj *IAccPropServices) ComposeHwndIdentityString(hwnd HWND, idObject int32, idChild uint32) (hr HRESULT, idString []byte) {
+func (obj *IAccPropServices) ComposeHwndIdentityString(hwnd windows.HWND, idObject int32, idChild uint32) (hr HRESULT, idString []byte) {
 	var data *[1<<31 - 1]byte
 	var len uint32
 	ret, _, _ := syscall.Syscall6(obj.LpVtbl.ComposeHwndIdentityString, 6,
@@ -334,8 +336,8 @@ func (obj *IAccPropServices) ComposeHwndIdentityString(hwnd HWND, idObject int32
 	return
 }
 
-// DecomposeHwndIdentityString determines the HWND, object ID, and child ID for the accessible element identified by the identity string.
-func (obj *IAccPropServices) DecomposeHwndIdentityString(idString []byte) (hr HRESULT, hwnd HWND, idObject int32, idChild uint32) {
+// DecomposeHwndIdentityString determines the windows.HWND, object ID, and child ID for the accessible element identified by the identity string.
+func (obj *IAccPropServices) DecomposeHwndIdentityString(idString []byte) (hr HRESULT, hwnd windows.HWND, idObject int32, idChild uint32) {
 	var idStringPtr unsafe.Pointer
 	idStringLen := len(idString)
 	if idStringLen != 0 {

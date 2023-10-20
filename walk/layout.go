@@ -11,6 +11,7 @@ import (
 	"sync"
 
 	"github.com/xackery/wlk/win"
+	"golang.org/x/sys/windows"
 )
 
 func createLayoutItemForWidget(widget Widget) LayoutItem {
@@ -563,7 +564,7 @@ func (ctx *LayoutContext) DPI() int {
 	return ctx.dpi
 }
 
-func newLayoutContext(handle win.HWND) *LayoutContext {
+func newLayoutContext(handle windows.HWND) *LayoutContext {
 	return &LayoutContext{
 		layoutItem2MinSizeEffective: make(map[LayoutItem]Size),
 		dpi:                         int(win.GetDpiForWindow(handle)),
@@ -573,7 +574,7 @@ func newLayoutContext(handle win.HWND) *LayoutContext {
 type LayoutItem interface {
 	AsLayoutItemBase() *LayoutItemBase
 	Context() *LayoutContext
-	Handle() win.HWND
+	Handle() windows.HWND
 	Geometry() *Geometry
 	Parent() ContainerLayoutItem
 	Visible() bool
@@ -592,12 +593,12 @@ type ContainerLayoutItem interface {
 
 	PerformLayout() []LayoutResultItem
 	Children() []LayoutItem
-	containsHandle(handle win.HWND) bool
+	containsHandle(handle windows.HWND) bool
 }
 
 type LayoutItemBase struct {
 	ctx      *LayoutContext
-	handle   win.HWND
+	handle   windows.HWND
 	geometry Geometry
 	parent   ContainerLayoutItem
 	visible  bool
@@ -611,7 +612,7 @@ func (lib *LayoutItemBase) Context() *LayoutContext {
 	return lib.ctx
 }
 
-func (lib *LayoutItemBase) Handle() win.HWND {
+func (lib *LayoutItemBase) Handle() windows.HWND {
 	return lib.handle
 }
 
@@ -691,7 +692,7 @@ func (clib *ContainerLayoutItemBase) SetChildren(children []LayoutItem) {
 	clib.children = children
 }
 
-func (clib *ContainerLayoutItemBase) containsHandle(handle win.HWND) bool {
+func (clib *ContainerLayoutItemBase) containsHandle(handle windows.HWND) bool {
 	for _, item := range clib.children {
 		if item.Handle() == handle {
 			return true

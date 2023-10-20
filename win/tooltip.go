@@ -9,6 +9,8 @@ package win
 
 import (
 	"unsafe"
+
+	"golang.org/x/sys/windows"
 )
 
 // ToolTip styles
@@ -81,7 +83,7 @@ const (
 type TOOLINFO struct {
 	CbSize     uint32
 	UFlags     uint32
-	Hwnd       HWND
+	Hwnd       windows.HWND
 	UId        uintptr
 	Rect       RECT
 	Hinst      HINSTANCE

@@ -11,6 +11,7 @@ import (
 	"syscall"
 
 	"github.com/xackery/wlk/win"
+	"golang.org/x/sys/windows"
 )
 
 type dropFilesEventHandlerInfo struct {
@@ -21,7 +22,7 @@ type dropFilesEventHandlerInfo struct {
 type DropFilesEventHandler func([]string)
 
 type DropFilesEvent struct {
-	hWnd     win.HWND
+	hWnd     windows.HWND
 	handlers []dropFilesEventHandlerInfo
 }
 
@@ -65,7 +66,7 @@ type DropFilesEventPublisher struct {
 	event DropFilesEvent
 }
 
-func (p *DropFilesEventPublisher) Event(hWnd win.HWND) *DropFilesEvent {
+func (p *DropFilesEventPublisher) Event(hWnd windows.HWND) *DropFilesEvent {
 	p.event.hWnd = hWnd
 	return &p.event
 }

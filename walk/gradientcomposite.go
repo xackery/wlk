@@ -12,6 +12,7 @@ import (
 
 	"github.com/xackery/wlk/wcolor"
 	"github.com/xackery/wlk/win"
+	"golang.org/x/sys/windows"
 )
 
 type GradientComposite struct {
@@ -263,7 +264,7 @@ func (gc *GradientComposite) Dispose() {
 	gc.Composite.Dispose()
 }
 
-func (gc *GradientComposite) WndProc(hwnd win.HWND, msg uint32, wParam, lParam uintptr) uintptr {
+func (gc *GradientComposite) WndProc(hwnd windows.HWND, msg uint32, wParam, lParam uintptr) uintptr {
 	switch msg {
 	case win.WM_WINDOWPOSCHANGED:
 		wp := (*win.WINDOWPOS)(unsafe.Pointer(lParam))

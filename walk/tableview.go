@@ -18,6 +18,7 @@ import (
 
 	"github.com/xackery/wlk/wcolor"
 	"github.com/xackery/wlk/win"
+	"golang.org/x/sys/windows"
 )
 
 const tableViewWindowClass = `\o/ Walk_TableView_Class \o/`
@@ -56,12 +57,12 @@ type TableViewCfg struct {
 // amounts of data.
 type TableView struct {
 	WidgetBase
-	hwndFrozenLV                       win.HWND
-	hwndFrozenHdr                      win.HWND
+	hwndFrozenLV                       windows.HWND
+	hwndFrozenHdr                      windows.HWND
 	frozenLVOrigWndProcPtr             uintptr
 	frozenHdrOrigWndProcPtr            uintptr
-	hwndNormalLV                       win.HWND
-	hwndNormalHdr                      win.HWND
+	hwndNormalLV                       windows.HWND
+	hwndNormalHdr                      windows.HWND
 	normalLVOrigWndProcPtr             uintptr
 	normalHdrOrigWndProcPtr            uintptr
 	state                              *tableViewState
@@ -87,7 +88,7 @@ type TableView struct {
 	prevIndex                          int
 	currentIndex                       int
 	itemIndexOfLastMouseButtonDown     int
-	hwndItemChanged                    win.HWND
+	hwndItemChanged                    windows.HWND
 	currentIndexChangedPublisher       EventPublisher
 	selectedIndexesChangedPublisher    EventPublisher
 	itemActivatedPublisher             EventPublisher
@@ -201,7 +202,7 @@ func NewTableViewWithCfg(parent Container, cfg *TableViewCfg) (*TableView, error
 		return nil, lastError("SetWindowLongPtr")
 	}
 
-	tv.hwndFrozenHdr = win.HWND(win.SendMessage(tv.hwndFrozenLV, win.LVM_GETHEADER, 0, 0))
+	tv.hwndFrozenHdr = windows.HWND(win.SendMessage(tv.hwndFrozenLV, win.LVM_GETHEADER, 0, 0))
 	tv.frozenHdrOrigWndProcPtr = win.SetWindowLongPtr(tv.hwndFrozenHdr, win.GWLP_WNDPROC, tableViewHdrWndProcPtr)
 	if tv.frozenHdrOrigWndProcPtr == 0 {
 		return nil, lastError("SetWindowLongPtr")
@@ -229,7 +230,7 @@ func NewTableViewWithCfg(parent Container, cfg *TableViewCfg) (*TableView, error
 		return nil, lastError("SetWindowLongPtr")
 	}
 
-	tv.hwndNormalHdr = win.HWND(win.SendMessage(tv.hwndNormalLV, win.LVM_GETHEADER, 0, 0))
+	tv.hwndNormalHdr = windows.HWND(win.SendMessage(tv.hwndNormalLV, win.LVM_GETHEADER, 0, 0))
 	tv.normalHdrOrigWndProcPtr = win.SetWindowLongPtr(tv.hwndNormalHdr, win.GWLP_WNDPROC, tableViewHdrWndProcPtr)
 	if tv.normalHdrOrigWndProcPtr == 0 {
 		return nil, lastError("SetWindowLongPtr")
@@ -494,7 +495,7 @@ func (tv *TableView) ColumnsOrderable() bool {
 // SetColumnsOrderable sets if the user can reorder columns by dragging and
 // dropping column headers.
 func (tv *TableView) SetColumnsOrderable(enabled bool) {
-	var hwnd win.HWND
+	var hwnd windows.HWND
 	if tv.hasFrozenColumn {
 		hwnd = tv.hwndFrozenLV
 	} else {
@@ -524,7 +525,7 @@ func (tv *TableView) ColumnsSizable() bool {
 // SetColumnsSizable sets if the user can change column widths by dragging
 // dividers in the header.
 func (tv *TableView) SetColumnsSizable(b bool) error {
-	updateStyle := func(headerHWnd win.HWND) error {
+	updateStyle := func(headerHWnd windows.HWND) error {
 		style := win.GetWindowLong(headerHWnd, win.GWL_STYLE)
 
 		if b {
@@ -613,7 +614,7 @@ func (tv *TableView) Gridlines() bool {
 
 // SetGridlines sets if the rows are separated by grid lines.
 func (tv *TableView) SetGridlines(enabled bool) {
-	var hwnd win.HWND
+	var hwnd windows.HWND
 	if tv.hasFrozenColumn {
 		hwnd = tv.hwndFrozenLV
 	} else {
@@ -958,7 +959,7 @@ func (tv *TableView) setItemCount() error {
 
 // CheckBoxes returns if the *TableView has check boxes.
 func (tv *TableView) CheckBoxes() bool {
-	var hwnd win.HWND
+	var hwnd windows.HWND
 	if tv.hasFrozenColumn {
 		hwnd = tv.hwndFrozenLV
 	} else {
@@ -970,7 +971,7 @@ func (tv *TableView) CheckBoxes() bool {
 
 // SetCheckBoxes sets if the *TableView has check boxes.
 func (tv *TableView) SetCheckBoxes(checkBoxes bool) {
-	var hwnd, hwndOther win.HWND
+	var hwnd, hwndOther windows.HWND
 	if tv.hasFrozenColumn {
 		hwnd, hwndOther = tv.hwndFrozenLV, tv.hwndNormalLV
 	} else {
@@ -1089,7 +1090,7 @@ func (tv *TableView) setSortIcon(index int, order SortOrder) error {
 			Mask: win.HDI_FORMAT,
 		}
 
-		var headerHwnd win.HWND
+		var headerHwnd windows.HWND
 		var offset int
 		if col.frozen {
 			headerHwnd = tv.hwndFrozenHdr
@@ -1270,7 +1271,7 @@ func (tv *TableView) IndexAt(x, y int) int {
 		return -1
 	}
 
-	var hwnd win.HWND
+	var hwnd windows.HWND
 	if x < int(rc.Right-rc.Left) {
 		hwnd = tv.hwndFrozenLV
 	} else {
@@ -1429,7 +1430,7 @@ func (tv *TableView) updateSelectedIndexes() {
 	}
 }
 
-func (tv *TableView) copySelectedIndexes(hwndTo, hwndFrom win.HWND) error {
+func (tv *TableView) copySelectedIndexes(hwndTo, hwndFrom windows.HWND) error {
 	count := int(win.SendMessage(hwndFrom, win.LVM_GETSELECTEDCOUNT, 0, 0))
 
 	lvi := &win.LVITEM{StateMask: win.LVIS_FOCUSED | win.LVIS_SELECTED}
@@ -1528,7 +1529,7 @@ func (tv *TableView) StretchLastColumn() error {
 		return nil
 	}
 
-	var hwnd win.HWND
+	var hwnd windows.HWND
 	frozenColCount := tv.visibleFrozenColumnCount()
 	if colCount-frozenColCount == 0 {
 		hwnd = tv.hwndFrozenLV
@@ -1897,7 +1898,7 @@ func (tv *TableView) Focused() bool {
 	return focused == tv.hwndFrozenLV || focused == tv.hwndNormalLV
 }
 
-func (tv *TableView) maybePublishFocusChanged(hwnd win.HWND, msg uint32, wp uintptr) {
+func (tv *TableView) maybePublishFocusChanged(hwnd windows.HWND, msg uint32, wp uintptr) {
 	focused := msg == win.WM_SETFOCUS
 
 	if focused != tv.focused && wp != uintptr(tv.hwndFrozenLV) && wp != uintptr(tv.hwndNormalLV) {
@@ -1906,7 +1907,7 @@ func (tv *TableView) maybePublishFocusChanged(hwnd win.HWND, msg uint32, wp uint
 	}
 }
 
-func tableViewFrozenLVWndProc(hwnd win.HWND, msg uint32, wp, lp uintptr) uintptr {
+func tableViewFrozenLVWndProc(hwnd windows.HWND, msg uint32, wp, lp uintptr) uintptr {
 	tv := (*TableView)(unsafe.Pointer(windowFromHandle(win.GetParent(hwnd)).AsWindowBase()))
 
 	switch msg {
@@ -1927,7 +1928,7 @@ func tableViewFrozenLVWndProc(hwnd win.HWND, msg uint32, wp, lp uintptr) uintptr
 	return tv.lvWndProc(tv.frozenLVOrigWndProcPtr, hwnd, msg, wp, lp)
 }
 
-func tableViewNormalLVWndProc(hwnd win.HWND, msg uint32, wp, lp uintptr) uintptr {
+func tableViewNormalLVWndProc(hwnd windows.HWND, msg uint32, wp, lp uintptr) uintptr {
 	tv := (*TableView)(unsafe.Pointer(windowFromHandle(win.GetParent(hwnd)).AsWindowBase()))
 
 	switch msg {
@@ -1960,8 +1961,8 @@ func tableViewNormalLVWndProc(hwnd win.HWND, msg uint32, wp, lp uintptr) uintptr
 	return result
 }
 
-func (tv *TableView) lvWndProc(origWndProcPtr uintptr, hwnd win.HWND, msg uint32, wp, lp uintptr) uintptr {
-	var hwndOther win.HWND
+func (tv *TableView) lvWndProc(origWndProcPtr uintptr, hwnd windows.HWND, msg uint32, wp, lp uintptr) uintptr {
+	var hwndOther windows.HWND
 	if hwnd == tv.hwndFrozenLV {
 		hwndOther = tv.hwndNormalLV
 	} else {
@@ -2499,7 +2500,7 @@ func (tv *TableView) lvWndProc(origWndProcPtr uintptr, hwnd win.HWND, msg uint32
 	return win.CallWindowProc(origWndProcPtr, hwnd, msg, wp, lp)
 }
 
-func tableViewHdrWndProc(hwnd win.HWND, msg uint32, wp, lp uintptr) uintptr {
+func tableViewHdrWndProc(hwnd windows.HWND, msg uint32, wp, lp uintptr) uintptr {
 	tv := (*TableView)(unsafe.Pointer(windowFromHandle(win.GetParent(win.GetParent(hwnd))).AsWindowBase()))
 
 	var origWndProcPtr uintptr
@@ -2611,7 +2612,7 @@ func tableViewHdrWndProc(hwnd win.HWND, msg uint32, wp, lp uintptr) uintptr {
 	return win.CallWindowProc(origWndProcPtr, hwnd, msg, wp, lp)
 }
 
-func (tv *TableView) WndProc(hwnd win.HWND, msg uint32, wp, lp uintptr) uintptr {
+func (tv *TableView) WndProc(hwnd windows.HWND, msg uint32, wp, lp uintptr) uintptr {
 	switch msg {
 	case win.WM_NOTIFY:
 		nmh := (*win.NMHDR)(unsafe.Pointer(lp))

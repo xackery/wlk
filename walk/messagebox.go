@@ -12,6 +12,7 @@ import (
 	"syscall"
 
 	"github.com/xackery/wlk/win"
+	"golang.org/x/sys/windows"
 )
 
 type MsgBoxStyle uint
@@ -50,7 +51,7 @@ const (
 )
 
 func MsgBox(owner Form, title, message string, style MsgBoxStyle) int {
-	var ownerHWnd win.HWND
+	var ownerHWnd windows.HWND
 
 	if owner != nil {
 		ownerHWnd = owner.Handle()

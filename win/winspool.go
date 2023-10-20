@@ -66,7 +66,7 @@ func DeviceCapabilities(pDevice, pPort *uint16, fwCapability uint16, pOutput *ui
 	return uint32(ret)
 }
 
-func DocumentProperties(hWnd HWND, hPrinter HANDLE, pDeviceName *uint16, pDevModeOutput, pDevModeInput *DEVMODE, fMode uint32) int32 {
+func DocumentProperties(hWnd windows.HWND, hPrinter HANDLE, pDeviceName *uint16, pDevModeOutput, pDevModeInput *DEVMODE, fMode uint32) int32 {
 	ret, _, _ := syscall.Syscall6(documentProperties.Addr(), 6,
 		uintptr(hWnd),
 		uintptr(hPrinter),

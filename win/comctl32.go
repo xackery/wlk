@@ -513,7 +513,7 @@ const (
 // the SDK version is packed. Since Go cannot grok packed structs, we implement
 // a Pack method on this struct to encode its contents correctly for Windows.
 type TASKDIALOGCONFIG_UNPACKED struct {
-	HWNDParent           HWND
+	HWNDParent           windows.HWND
 	HInstance            HINSTANCE
 	Flags                TASKDIALOG_FLAGS
 	CommonButtons        TASKDIALOG_COMMON_BUTTON_FLAGS

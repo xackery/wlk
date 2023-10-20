@@ -290,7 +290,7 @@ const (
 
 type APPBARDATA struct {
 	CbSize           uint32
-	HWnd             HWND
+	HWnd             windows.HWND
 	UCallbackMessage uint32
 	UEdge            uint32
 	Rc               RECT
@@ -299,7 +299,7 @@ type APPBARDATA struct {
 
 type NOTIFYICONDATA struct {
 	CbSize           uint32
-	HWnd             HWND
+	HWnd             windows.HWND
 	UID              uint32
 	UFlags           uint32
 	UCallbackMessage uint32
@@ -317,7 +317,7 @@ type NOTIFYICONDATA struct {
 
 type NOTIFYICONIDENTIFIER struct {
 	CbSize   uint32
-	HWnd     HWND
+	HWnd     windows.HWND
 	UID      uint32
 	GuidItem syscall.GUID
 }
@@ -331,7 +331,7 @@ type SHFILEINFO struct {
 }
 
 type BROWSEINFO struct {
-	HwndOwner      HWND
+	HwndOwner      windows.HWND
 	PidlRoot       uintptr
 	PszDisplayName *uint16
 	LpszTitle      *uint16
@@ -393,7 +393,7 @@ func init() {
 	shParseDisplayName = libshell32.NewProc("SHParseDisplayName")
 }
 
-func DragAcceptFiles(hWnd HWND, fAccept bool) bool {
+func DragAcceptFiles(hWnd windows.HWND, fAccept bool) bool {
 	ret, _, _ := syscall.Syscall(dragAcceptFiles.Addr(), 2,
 		uintptr(hWnd),
 		uintptr(BoolToBOOL(fAccept)),
@@ -481,7 +481,7 @@ func SHGetPathFromIDList(pidl uintptr, pszPath *uint16) bool {
 	return ret != 0
 }
 
-func SHGetSpecialFolderPath(hwndOwner HWND, lpszPath *uint16, csidl CSIDL, fCreate bool) bool {
+func SHGetSpecialFolderPath(hwndOwner windows.HWND, lpszPath *uint16, csidl CSIDL, fCreate bool) bool {
 	ret, _, _ := syscall.Syscall6(shGetSpecialFolderPath.Addr(), 4,
 		uintptr(hwndOwner),
 		uintptr(unsafe.Pointer(lpszPath)),
@@ -520,7 +520,7 @@ func SHGetStockIconInfo(stockIconId int32, uFlags uint32, stockIcon *SHSTOCKICON
 	return HRESULT(ret)
 }
 
-func ShellExecute(hWnd HWND, verb *uint16, file *uint16, args *uint16, cwd *uint16, showCmd int) bool {
+func ShellExecute(hWnd windows.HWND, verb *uint16, file *uint16, args *uint16, cwd *uint16, showCmd int) bool {
 	ret, _, _ := syscall.Syscall6(shellExecute.Addr(), 6,
 		uintptr(hWnd),
 		uintptr(unsafe.Pointer(verb)),

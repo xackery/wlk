@@ -12,6 +12,7 @@ import (
 	"unsafe"
 
 	"github.com/xackery/wlk/win"
+	"golang.org/x/sys/windows"
 )
 
 type LinkLabel struct {
@@ -68,7 +69,7 @@ func (ll *LinkLabel) LinkActivated() *LinkLabelLinkEvent {
 	return ll.linkActivatedPublisher.Event()
 }
 
-func (ll *LinkLabel) WndProc(hwnd win.HWND, msg uint32, wParam, lParam uintptr) uintptr {
+func (ll *LinkLabel) WndProc(hwnd windows.HWND, msg uint32, wParam, lParam uintptr) uintptr {
 	switch msg {
 	case win.WM_NOTIFY:
 		nml := (*win.NMLINK)(unsafe.Pointer(lParam))

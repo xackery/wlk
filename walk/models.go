@@ -12,6 +12,7 @@ import (
 
 	"github.com/xackery/wlk/wcolor"
 	"github.com/xackery/wlk/win"
+	"golang.org/x/sys/windows"
 )
 
 // BindingValueProvider is the interface that a model must implement to support
@@ -405,7 +406,7 @@ type ListItemStyle struct {
 	bounds             Rectangle // in native pixels
 	state              uint32
 	hTheme             win.HTHEME
-	hwnd               win.HWND
+	hwnd               windows.HWND
 	hdc                win.HDC
 	dpi                int
 	canvas             *Canvas

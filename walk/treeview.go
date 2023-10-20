@@ -10,6 +10,7 @@ import (
 
 	"github.com/xackery/wlk/wcolor"
 	"github.com/xackery/wlk/win"
+	"golang.org/x/sys/windows"
 )
 
 type treeViewItemInfo struct {
@@ -559,7 +560,7 @@ func (tv *TreeView) ItemActivated() *Event {
 	return tv.itemActivatedPublisher.Event()
 }
 
-func (tv *TreeView) WndProc(hwnd win.HWND, msg uint32, wParam, lParam uintptr) uintptr {
+func (tv *TreeView) WndProc(hwnd windows.HWND, msg uint32, wParam, lParam uintptr) uintptr {
 	switch msg {
 	case win.WM_GETDLGCODE:
 		if wParam == win.VK_RETURN {

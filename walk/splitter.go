@@ -16,6 +16,7 @@ import (
 
 	"github.com/xackery/wlk/wcolor"
 	"github.com/xackery/wlk/win"
+	"golang.org/x/sys/windows"
 )
 
 const splitterWindowClass = `\o/ Walk_Splitter_Class \o/`
@@ -317,7 +318,7 @@ func (s *Splitter) SetFixed(widget Widget, fixed bool) error {
 	return nil
 }
 
-func (s *Splitter) WndProc(hwnd win.HWND, msg uint32, wParam, lParam uintptr) uintptr {
+func (s *Splitter) WndProc(hwnd windows.HWND, msg uint32, wParam, lParam uintptr) uintptr {
 	switch msg {
 	case win.WM_WINDOWPOSCHANGED:
 		wp := (*win.WINDOWPOS)(unsafe.Pointer(lParam))

@@ -18,6 +18,7 @@ import (
 
 	"github.com/xackery/wlk/wcolor"
 	"github.com/xackery/wlk/win"
+	"golang.org/x/sys/windows"
 )
 
 const numberEditWindowClass = `\o/ Walk_NumberEdit_Class \o/`
@@ -32,7 +33,7 @@ func init() {
 type NumberEdit struct {
 	WidgetBase
 	edit                     *numberLineEdit
-	hWndUpDown               win.HWND
+	hWndUpDown               windows.HWND
 	maxValueChangedPublisher EventPublisher
 	minValueChangedPublisher EventPublisher
 	prefixChangedPublisher   EventPublisher
@@ -426,7 +427,7 @@ func (*NumberEdit) NeedsWmSize() bool {
 //
 // When implementing your own WndProc to add or modify behavior, call the
 // WndProc of the embedded NumberEdit for messages you don't handle yourself.
-func (ne *NumberEdit) WndProc(hwnd win.HWND, msg uint32, wParam, lParam uintptr) uintptr {
+func (ne *NumberEdit) WndProc(hwnd windows.HWND, msg uint32, wParam, lParam uintptr) uintptr {
 	switch msg {
 	case win.WM_NOTIFY:
 		switch ((*win.NMHDR)(unsafe.Pointer(lParam))).Code {
@@ -696,7 +697,7 @@ func (nle *numberLineEdit) incrementValue(delta float64) {
 	nle.selectNumber()
 }
 
-func (nle *numberLineEdit) WndProc(hwnd win.HWND, msg uint32, wParam, lParam uintptr) uintptr {
+func (nle *numberLineEdit) WndProc(hwnd windows.HWND, msg uint32, wParam, lParam uintptr) uintptr {
 	switch msg {
 	case win.WM_CHAR:
 		if nle.ReadOnly() {

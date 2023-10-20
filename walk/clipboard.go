@@ -12,6 +12,7 @@ import (
 	"unsafe"
 
 	"github.com/xackery/wlk/win"
+	"golang.org/x/sys/windows"
 )
 
 const clipboardWindowClass = `\o/ Walk_Clipboard_Class \o/`
@@ -46,7 +47,7 @@ func init() {
 	})
 }
 
-func clipboardWndProc(hwnd win.HWND, msg uint32, wp, lp uintptr) uintptr {
+func clipboardWndProc(hwnd windows.HWND, msg uint32, wp, lp uintptr) uintptr {
 	switch msg {
 	case win.WM_CLIPBOARDUPDATE:
 		clipboard.contentsChangedPublisher.Publish()
@@ -65,7 +66,7 @@ func Clipboard() *ClipboardService {
 
 // ClipboardService provides access to the system clipboard.
 type ClipboardService struct {
-	hwnd                     win.HWND
+	hwnd                     windows.HWND
 	contentsChangedPublisher EventPublisher
 }
 

@@ -12,6 +12,7 @@ import (
 	"unsafe"
 
 	"github.com/xackery/wlk/win"
+	"golang.org/x/sys/windows"
 )
 
 // https://msdn.microsoft.com/en-us/library/windows/desktop/bb760416(v=vs.85).aspx says 80,
@@ -135,7 +136,7 @@ func (tt *ToolTip) track(tool Widget) error {
 
 	tt.SendMessage(win.TTM_TRACKPOSITION, 0, uintptr(win.MAKELONG(uint16(p.X), uint16(p.Y))))
 
-	var insertAfterHWND win.HWND
+	var insertAfterHWND windows.HWND
 	if form := tool.Form(); form != nil && win.GetForegroundWindow() == form.Handle() {
 		insertAfterHWND = win.HWND_TOP
 	} else {
@@ -165,7 +166,7 @@ func (tt *ToolTip) addTrackedTool(tool Widget) error {
 	return tt.addTool(tt.hwndForTool(tool), true)
 }
 
-func (tt *ToolTip) addTool(hwnd win.HWND, track bool) error {
+func (tt *ToolTip) addTool(hwnd windows.HWND, track bool) error {
 	if hwnd == 0 {
 		return nil
 	}
@@ -192,7 +193,7 @@ func (tt *ToolTip) RemoveTool(tool Widget) error {
 	return tt.removeTool(tt.hwndForTool(tool))
 }
 
-func (tt *ToolTip) removeTool(hwnd win.HWND) error {
+func (tt *ToolTip) removeTool(hwnd windows.HWND) error {
 	var ti win.TOOLINFO
 	ti.CbSize = uint32(unsafe.Sizeof(ti))
 	ti.Hwnd = hwnd
@@ -207,7 +208,7 @@ func (tt *ToolTip) Text(tool Widget) string {
 	return tt.text(tt.hwndForTool(tool))
 }
 
-func (tt *ToolTip) text(hwnd win.HWND) string {
+func (tt *ToolTip) text(hwnd windows.HWND) string {
 	ti := tt.toolInfo(hwnd)
 	if ti == nil {
 		return ""
@@ -220,7 +221,7 @@ func (tt *ToolTip) SetText(tool Widget, text string) error {
 	return tt.setText(tt.hwndForTool(tool), text)
 }
 
-func (tt *ToolTip) setText(hwnd win.HWND, text string) error {
+func (tt *ToolTip) setText(hwnd windows.HWND, text string) error {
 	ti := tt.toolInfo(hwnd)
 	if ti == nil {
 		return newError("unknown tool")
@@ -246,7 +247,7 @@ func (tt *ToolTip) setText(hwnd win.HWND, text string) error {
 	return nil
 }
 
-func (tt *ToolTip) toolInfo(hwnd win.HWND) *win.TOOLINFO {
+func (tt *ToolTip) toolInfo(hwnd windows.HWND) *win.TOOLINFO {
 	var ti win.TOOLINFO
 	var buf [maxToolTipTextLen]uint16
 
@@ -262,8 +263,8 @@ func (tt *ToolTip) toolInfo(hwnd win.HWND) *win.TOOLINFO {
 	return &ti
 }
 
-func (*ToolTip) hwndForTool(tool Widget) win.HWND {
-	if hftt, ok := tool.(interface{ handleForToolTip() win.HWND }); ok {
+func (*ToolTip) hwndForTool(tool Widget) windows.HWND {
+	if hftt, ok := tool.(interface{ handleForToolTip() windows.HWND }); ok {
 		return hftt.handleForToolTip()
 	}
 

@@ -14,6 +14,7 @@ import (
 	"unsafe"
 
 	"github.com/xackery/wlk/win"
+	"golang.org/x/sys/windows"
 )
 
 const msgWindowClassName = "Walk WindowGroup Message Window"
@@ -110,14 +111,14 @@ type WindowGroup struct {
 	activeForm      Form
 	oleInit         bool
 	accPropServices *win.IAccPropServices
-	msgWindow       win.HWND
+	msgWindow       windows.HWND
 
 	syncMutex           sync.Mutex
 	syncFuncs           []func()                   // Functions queued to run on the group's thread
 	layoutResultsByForm map[Form]*formLayoutResult // Layout computations queued for application on the group's thread
 }
 
-func msgWndProc(hwnd win.HWND, msg uint32, wParam, lParam uintptr) (result uintptr) {
+func msgWndProc(hwnd windows.HWND, msg uint32, wParam, lParam uintptr) (result uintptr) {
 	if msg == syncMsgId {
 		wg := wgm.Group(win.GetCurrentThreadId())
 		wg.RunSynchronized()
@@ -201,7 +202,7 @@ var accPropIds = []win.MSAAPROPID{
 }
 
 // accClearHwndProps clears all window properties for Dynamic Annotation to release resources.
-func (g *WindowGroup) accClearHwndProps(hwnd win.HWND) {
+func (g *WindowGroup) accClearHwndProps(hwnd windows.HWND) {
 	if g.accPropServices != nil {
 		g.accPropServices.ClearHwndProps(hwnd, win.OBJID_CLIENT, win.CHILDID_SELF, accPropIds)
 	}

@@ -14,6 +14,7 @@ import (
 
 	"github.com/xackery/wlk/wcolor"
 	"github.com/xackery/wlk/win"
+	"golang.org/x/sys/windows"
 )
 
 const tabWidgetWindowClass = `\o/ Walk_TabWidget_Class \o/`
@@ -27,7 +28,7 @@ func init() {
 
 type TabWidget struct {
 	WidgetBase
-	hWndTab                      win.HWND
+	hWndTab                      windows.HWND
 	tabOrigWndProcPtr            uintptr
 	imageList                    *ImageList
 	pages                        *TabPageList
@@ -300,8 +301,8 @@ func (tw *TabWidget) onSelChange() {
 		page.Invalidate()
 
 		var containsFocus bool
-		tw.forEachDescendantRaw(uintptr(win.GetFocus()), func(hwnd win.HWND, lParam uintptr) bool {
-			if hwnd == win.HWND(lParam) {
+		tw.forEachDescendantRaw(uintptr(win.GetFocus()), func(hwnd windows.HWND, lParam uintptr) bool {
+			if hwnd == windows.HWND(lParam) {
 				containsFocus = true
 			}
 			return !containsFocus
@@ -316,7 +317,7 @@ func (tw *TabWidget) onSelChange() {
 	tw.currentIndexChangedPublisher.Publish()
 }
 
-func (tw *TabWidget) WndProc(hwnd win.HWND, msg uint32, wParam, lParam uintptr) uintptr {
+func (tw *TabWidget) WndProc(hwnd windows.HWND, msg uint32, wParam, lParam uintptr) uintptr {
 	if tw.hWndTab != 0 {
 		switch msg {
 		case win.WM_ERASEBKGND:
@@ -346,7 +347,7 @@ func (tw *TabWidget) WndProc(hwnd win.HWND, msg uint32, wParam, lParam uintptr) 
 
 var tabWidgetTabWndProcPtr uintptr
 
-func tabWidgetTabWndProc(hwnd win.HWND, msg uint32, wParam, lParam uintptr) uintptr {
+func tabWidgetTabWndProc(hwnd windows.HWND, msg uint32, wParam, lParam uintptr) uintptr {
 	tw := (*TabWidget)(unsafe.Pointer(win.GetWindowLongPtr(hwnd, win.GWLP_USERDATA)))
 
 	switch msg {

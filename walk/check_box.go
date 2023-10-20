@@ -11,6 +11,7 @@ import (
 	"strconv"
 
 	"github.com/xackery/wlk/win"
+	"golang.org/x/sys/windows"
 )
 
 // CheckState specifies the state of a CheckBox.
@@ -130,7 +131,7 @@ func (cb *CheckBox) RestoreState() error {
 	return nil
 }
 
-func (cb *CheckBox) WndProc(hwnd win.HWND, msg uint32, wParam, lParam uintptr) uintptr {
+func (cb *CheckBox) WndProc(hwnd windows.HWND, msg uint32, wParam, lParam uintptr) uintptr {
 	switch msg {
 	case win.WM_COMMAND:
 		switch win.HIWORD(uint32(wParam)) {

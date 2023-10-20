@@ -235,13 +235,13 @@ func GetConsoleTitle(lpConsoleTitle *uint16, nSize uint32) uint32 {
 	return uint32(ret)
 }
 
-func GetConsoleWindow() HWND {
+func GetConsoleWindow() windows.HWND {
 	ret, _, _ := syscall.Syscall(getConsoleWindow.Addr(), 0,
 		0,
 		0,
 		0)
 
-	return HWND(ret)
+	return windows.HWND(ret)
 }
 
 func GetCurrentThreadId() uint32 {

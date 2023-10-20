@@ -324,8 +324,6 @@ func (eventData *WebViewWindowClosingEventData) IsChildWindow() bool {
 	bIsChildWindow := eventData.bIsChildWindow
 	if bIsChildWindow != win.VARIANT_FALSE {
 		return true
-	} else {
-		return false
 	}
 	return false
 }

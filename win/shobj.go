@@ -10,6 +10,8 @@ package win
 import (
 	"syscall"
 	"unsafe"
+
+	"golang.org/x/sys/windows"
 )
 
 var (
@@ -54,7 +56,7 @@ type ITaskbarList3 struct {
 	LpVtbl *ITaskbarList3Vtbl
 }
 
-func (obj *ITaskbarList3) SetProgressState(hwnd HWND, state int) HRESULT {
+func (obj *ITaskbarList3) SetProgressState(hwnd windows.HWND, state int) HRESULT {
 	ret, _, _ := syscall.Syscall(obj.LpVtbl.SetProgressState, 3,
 		uintptr(unsafe.Pointer(obj)),
 		uintptr(hwnd),
@@ -62,7 +64,7 @@ func (obj *ITaskbarList3) SetProgressState(hwnd HWND, state int) HRESULT {
 	return HRESULT(ret)
 }
 
-func (obj *ITaskbarList3) SetOverlayIcon(hwnd HWND, icon HICON, description *uint16) HRESULT {
+func (obj *ITaskbarList3) SetOverlayIcon(hwnd windows.HWND, icon HICON, description *uint16) HRESULT {
 	ret, _, _ := syscall.Syscall6(obj.LpVtbl.SetOverlayIcon, 4,
 		uintptr(unsafe.Pointer(obj)),
 		uintptr(hwnd),

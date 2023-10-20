@@ -14,6 +14,7 @@ import (
 	"unsafe"
 
 	"github.com/xackery/wlk/win"
+	"golang.org/x/sys/windows"
 )
 
 type FileDialog struct {
@@ -136,7 +137,7 @@ func pathFromPIDL(pidl uintptr) (string, error) {
 }
 
 // We use this callback to disable the OK button in case of "invalid" selections.
-func browseFolderCallback(hwnd win.HWND, msg uint32, lp, wp uintptr) uintptr {
+func browseFolderCallback(hwnd windows.HWND, msg uint32, lp, wp uintptr) uintptr {
 	const BFFM_SELCHANGED = 2
 	if msg == BFFM_SELCHANGED {
 		_, err := pathFromPIDL(lp)
@@ -168,7 +169,7 @@ func (dlg *FileDialog) ShowBrowseFolder(owner Form) (accepted bool, err error) {
 	}
 	defer win.OleUninitialize()
 
-	var ownerHwnd win.HWND
+	var ownerHwnd windows.HWND
 	if owner != nil {
 		ownerHwnd = owner.Handle()
 	}

@@ -17,6 +17,7 @@ import (
 	"unsafe"
 
 	"github.com/xackery/wlk/win"
+	"golang.org/x/sys/windows"
 )
 
 type ComboBox struct {
@@ -53,7 +54,7 @@ func init() {
 	})
 }
 
-func comboBoxEditWndProc(hwnd win.HWND, msg uint32, wParam, lParam uintptr) uintptr {
+func comboBoxEditWndProc(hwnd windows.HWND, msg uint32, wParam, lParam uintptr) uintptr {
 	cb := (*ComboBox)(unsafe.Pointer(win.GetWindowLongPtr(hwnd, win.GWLP_USERDATA)))
 
 	switch msg {
@@ -652,7 +653,7 @@ func (cb *ComboBox) RestoreState() error {
 	return nil
 }
 
-func (cb *ComboBox) WndProc(hwnd win.HWND, msg uint32, wParam, lParam uintptr) uintptr {
+func (cb *ComboBox) WndProc(hwnd windows.HWND, msg uint32, wParam, lParam uintptr) uintptr {
 	switch msg {
 	case win.WM_COMMAND:
 		code := win.HIWORD(uint32(wParam))

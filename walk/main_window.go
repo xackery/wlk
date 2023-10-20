@@ -12,6 +12,7 @@ import (
 
 	"github.com/xackery/wlk/common"
 	"github.com/xackery/wlk/win"
+	"golang.org/x/sys/windows"
 )
 
 const mainWindowWindowClass = `\o/ Wlk_MainWindow_Class \o/`
@@ -241,7 +242,7 @@ func (mw *MainWindow) SetFullscreen(fullscreen bool) error {
 }
 
 // WndProc returns a uintptr of the window process
-func (mw *MainWindow) WndProc(hwnd win.HWND, msg uint32, wParam, lParam uintptr) uintptr {
+func (mw *MainWindow) WndProc(hwnd windows.HWND, msg uint32, wParam, lParam uintptr) uintptr {
 	switch msg {
 	case win.WM_WINDOWPOSCHANGED, win.WM_SIZE:
 		if win.WM_WINDOWPOSCHANGED == msg {

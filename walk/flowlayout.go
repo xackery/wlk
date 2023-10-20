@@ -7,13 +7,11 @@
 
 package walk
 
-import (
-	"github.com/xackery/wlk/win"
-)
+import "golang.org/x/sys/windows"
 
 type FlowLayout struct {
 	LayoutBase
-	hwnd2StretchFactor map[win.HWND]int
+	hwnd2StretchFactor map[windows.HWND]int
 }
 
 func NewFlowLayout() *FlowLayout {
@@ -22,7 +20,7 @@ func NewFlowLayout() *FlowLayout {
 			margins96dpi: Margins{9, 9, 9, 9},
 			spacing96dpi: 6,
 		},
-		hwnd2StretchFactor: make(map[win.HWND]int),
+		hwnd2StretchFactor: make(map[windows.HWND]int),
 	}
 	l.layout = l
 
@@ -63,7 +61,7 @@ func (l *FlowLayout) SetStretchFactor(widget Widget, factor int) error {
 func (l *FlowLayout) CreateLayoutItem(ctx *LayoutContext) ContainerLayoutItem {
 	li := &flowLayoutItem{
 		size2MinSize:       make(map[Size]Size),
-		hwnd2StretchFactor: make(map[win.HWND]int),
+		hwnd2StretchFactor: make(map[windows.HWND]int),
 	}
 
 	for hwnd, sf := range l.hwnd2StretchFactor {
@@ -76,7 +74,7 @@ func (l *FlowLayout) CreateLayoutItem(ctx *LayoutContext) ContainerLayoutItem {
 type flowLayoutItem struct {
 	ContainerLayoutItemBase
 	size2MinSize       map[Size]Size // in native pixels
-	hwnd2StretchFactor map[win.HWND]int
+	hwnd2StretchFactor map[windows.HWND]int
 }
 
 type flowLayoutSection struct {

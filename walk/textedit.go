@@ -14,6 +14,7 @@ import (
 
 	"github.com/xackery/wlk/wcolor"
 	"github.com/xackery/wlk/win"
+	"golang.org/x/sys/windows"
 )
 
 type TextEdit struct {
@@ -292,7 +293,7 @@ func (*TextEdit) NeedsWmSize() bool {
 	return true
 }
 
-func (te *TextEdit) WndProc(hwnd win.HWND, msg uint32, wParam, lParam uintptr) uintptr {
+func (te *TextEdit) WndProc(hwnd windows.HWND, msg uint32, wParam, lParam uintptr) uintptr {
 	switch msg {
 	case win.WM_COMMAND:
 		switch win.HIWORD(uint32(wParam)) {

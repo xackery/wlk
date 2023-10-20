@@ -9,6 +9,7 @@ package walk
 
 import (
 	"github.com/xackery/wlk/win"
+	"golang.org/x/sys/windows"
 )
 
 const splitterHandleWindowClass = `\o/ Walk_SplitterHandle_Class \o/`
@@ -49,7 +50,7 @@ func newSplitterHandle(splitter *Splitter) (*splitterHandle, error) {
 	return sh, nil
 }
 
-func (sh *splitterHandle) WndProc(hwnd win.HWND, msg uint32, wParam, lParam uintptr) uintptr {
+func (sh *splitterHandle) WndProc(hwnd windows.HWND, msg uint32, wParam, lParam uintptr) uintptr {
 	switch msg {
 	case win.WM_ERASEBKGND:
 		if sh.Background() == nullBrushSingleton {

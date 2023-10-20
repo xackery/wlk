@@ -10,10 +10,12 @@ package win
 import (
 	"syscall"
 	"unsafe"
+
+	"golang.org/x/sys/windows"
 )
 
 // SetPropValue identifies the accessible element to be annotated, specify the property to be annotated, and provide a new value for that property.
-// If server developers know the HWND of the accessible element they want to annotate, they can use one of the following methods: SetHwndPropStr, SetHwndProp, or SetHwndPropServer
+// If server developers know the windows.HWND of the accessible element they want to annotate, they can use one of the following methods: SetHwndPropStr, SetHwndProp, or SetHwndPropServer
 func (obj *IAccPropServices) SetPropValue(idString []byte, idProp *MSAAPROPID, v *VARIANT) HRESULT {
 	var idStringPtr unsafe.Pointer
 	idStringLen := len(idString)
@@ -30,8 +32,8 @@ func (obj *IAccPropServices) SetPropValue(idString []byte, idProp *MSAAPROPID, v
 	return HRESULT(ret)
 }
 
-// SetHwndProp wraps SetPropValue, providing a convenient entry point for callers who are annotating HWND-based accessible elements. If the new value is a string, you can use SetHwndPropStr instead.
-func (obj *IAccPropServices) SetHwndProp(hwnd HWND, idObject int32, idChild uint32, idProp *MSAAPROPID, v *VARIANT) HRESULT {
+// SetHwndProp wraps SetPropValue, providing a convenient entry point for callers who are annotating windows.HWND-based accessible elements. If the new value is a string, you can use SetHwndPropStr instead.
+func (obj *IAccPropServices) SetHwndProp(hwnd windows.HWND, idObject int32, idChild uint32, idProp *MSAAPROPID, v *VARIANT) HRESULT {
 	ret, _, _ := syscall.Syscall6(obj.LpVtbl.SetHwndProp, 6,
 		uintptr(unsafe.Pointer(obj)),
 		uintptr(hwnd),
@@ -42,8 +44,8 @@ func (obj *IAccPropServices) SetHwndProp(hwnd HWND, idObject int32, idChild uint
 	return HRESULT(ret)
 }
 
-// SetHwndPropStr wraps SetPropValue, providing a more convenient entry point for callers who are annotating HWND-based accessible elements.
-func (obj *IAccPropServices) SetHwndPropStr(hwnd HWND, idObject int32, idChild uint32, idProp *MSAAPROPID, str string) HRESULT {
+// SetHwndPropStr wraps SetPropValue, providing a more convenient entry point for callers who are annotating windows.HWND-based accessible elements.
+func (obj *IAccPropServices) SetHwndPropStr(hwnd windows.HWND, idObject int32, idChild uint32, idProp *MSAAPROPID, str string) HRESULT {
 	str16, err := syscall.UTF16PtrFromString(str)
 	if err != nil {
 		return -((E_INVALIDARG ^ 0xFFFFFFFF) + 1)

@@ -7,9 +7,7 @@
 
 package walk
 
-import (
-	"github.com/xackery/wlk/win"
-)
+import "golang.org/x/sys/windows"
 
 type widgetListObserver interface {
 	onInsertingWidget(index int, widget Widget) error
@@ -79,7 +77,7 @@ func (l *WidgetList) Contains(item Widget) bool {
 	return l.Index(item) > -1
 }
 
-func (l *WidgetList) indexHandle(handle win.HWND) int {
+func (l *WidgetList) indexHandle(handle windows.HWND) int {
 	for i, widget := range l.items {
 		if widget.Handle() == handle {
 			return i
@@ -89,7 +87,7 @@ func (l *WidgetList) indexHandle(handle win.HWND) int {
 	return -1
 }
 
-func (l *WidgetList) containsHandle(handle win.HWND) bool {
+func (l *WidgetList) containsHandle(handle windows.HWND) bool {
 	return l.indexHandle(handle) > -1
 }
 

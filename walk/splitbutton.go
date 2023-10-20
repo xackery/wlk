@@ -11,6 +11,7 @@ import (
 	"unsafe"
 
 	"github.com/xackery/wlk/win"
+	"golang.org/x/sys/windows"
 )
 
 type SplitButton struct {
@@ -76,7 +77,7 @@ func (sb *SplitButton) Menu() *Menu {
 	return sb.menu
 }
 
-func (sb *SplitButton) WndProc(hwnd win.HWND, msg uint32, wParam, lParam uintptr) uintptr {
+func (sb *SplitButton) WndProc(hwnd windows.HWND, msg uint32, wParam, lParam uintptr) uintptr {
 	switch msg {
 	case win.WM_NOTIFY:
 		switch ((*win.NMHDR)(unsafe.Pointer(lParam))).Code {

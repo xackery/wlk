@@ -10,6 +10,8 @@ package win
 import (
 	"syscall"
 	"unsafe"
+
+	"golang.org/x/sys/windows"
 )
 
 const (
@@ -311,7 +313,7 @@ func (activeObj *IOleInPlaceActiveObject) Release() HRESULT {
 	return HRESULT(ret)
 }
 
-func (activeObj *IOleInPlaceActiveObject) GetWindow(hWndPtr *HWND) HRESULT {
+func (activeObj *IOleInPlaceActiveObject) GetWindow(hWndPtr *windows.HWND) HRESULT {
 	ret, _, _ := syscall.Syscall(activeObj.LpVtbl.GetWindow, 2,
 		uintptr(unsafe.Pointer(activeObj)),
 		uintptr(unsafe.Pointer(hWndPtr)),

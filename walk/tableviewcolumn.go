@@ -12,6 +12,7 @@ import (
 	"unsafe"
 
 	"github.com/xackery/wlk/win"
+	"golang.org/x/sys/windows"
 )
 
 // TableViewColumn represents a column in a TableView.
@@ -302,7 +303,7 @@ func (tvc *TableViewColumn) Width() int {
 	// We call win.SendMessage instead of tvc.sendMessage here, because some
 	// call inside the latter interferes with scrolling via scroll bar button
 	// when *TableViewColumn.Width is called from *TableView.StretchLastColumn.
-	var hwnd win.HWND
+	var hwnd windows.HWND
 	if tvc.frozen {
 		hwnd = tvc.tv.hwndFrozenLV
 	} else {
@@ -476,7 +477,7 @@ func (tvc *TableViewColumn) sendMessage(msg uint32, wp, lp uintptr) uintptr {
 	tvc.tv.SetCheckBoxes(tvc.tv.CheckBoxes())
 	tvc.tv.applyImageList()
 
-	var hwnd win.HWND
+	var hwnd windows.HWND
 	if tvc.frozen {
 		hwnd = tvc.tv.hwndFrozenLV
 	} else {

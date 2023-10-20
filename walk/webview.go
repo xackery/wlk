@@ -13,6 +13,7 @@ import (
 	"unsafe"
 
 	"github.com/xackery/wlk/win"
+	"golang.org/x/sys/windows"
 )
 
 const webViewWindowClass = `\o/ Walk_WebView_Class \o/`
@@ -476,7 +477,7 @@ func (wv *WebView) inPlaceActiveObjectSetFocus() win.HRESULT {
 	var ret win.HRESULT
 	ret = win.S_FALSE
 	wv.withInPlaceActiveObject(func(activeObject *win.IOleInPlaceActiveObject) error {
-		var hWndActive win.HWND
+		var hWndActive windows.HWND
 		hr := activeObject.GetWindow(&hWndActive)
 		if hr != win.S_OK {
 			return nil
@@ -489,7 +490,7 @@ func (wv *WebView) inPlaceActiveObjectSetFocus() win.HRESULT {
 	return ret
 }
 
-func (wv *WebView) WndProc(hwnd win.HWND, msg uint32, wParam, lParam uintptr) uintptr {
+func (wv *WebView) WndProc(hwnd windows.HWND, msg uint32, wParam, lParam uintptr) uintptr {
 	switch msg {
 	case win.WM_WINDOWPOSCHANGED:
 		wp := (*win.WINDOWPOS)(unsafe.Pointer(lParam))

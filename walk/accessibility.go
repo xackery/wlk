@@ -7,7 +7,10 @@
 
 package walk
 
-import "github.com/xackery/wlk/win"
+import (
+	"github.com/xackery/wlk/win"
+	"golang.org/x/sys/windows"
+)
 
 // AccState enum defines the state of the window/control
 type AccState int32
@@ -181,7 +184,7 @@ func (a *Accessibility) SetValueMap(valueMap string) error {
 }
 
 // accSetPropertyInt sets integer window property for Dynamic Annotation.
-func (a *Accessibility) accSetPropertyInt(hwnd win.HWND, idProp *win.MSAAPROPID, event uint32, value int32) error {
+func (a *Accessibility) accSetPropertyInt(hwnd windows.HWND, idProp *win.MSAAPROPID, event uint32, value int32) error {
 	accPropServices := a.wb.group.accessibilityServices()
 	if accPropServices == nil {
 		return newError("Dynamic Annotation not available")
@@ -199,7 +202,7 @@ func (a *Accessibility) accSetPropertyInt(hwnd win.HWND, idProp *win.MSAAPROPID,
 }
 
 // accSetPropertyStr sets string window property for Dynamic Annotation.
-func (a *Accessibility) accSetPropertyStr(hwnd win.HWND, idProp *win.MSAAPROPID, event uint32, value string) error {
+func (a *Accessibility) accSetPropertyStr(hwnd windows.HWND, idProp *win.MSAAPROPID, event uint32, value string) error {
 	accPropServices := a.wb.group.accessibilityServices()
 	if accPropServices == nil {
 		return newError("Dynamic Annotation not available")

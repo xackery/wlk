@@ -9,6 +9,7 @@ package walk
 
 import (
 	"github.com/xackery/wlk/win"
+	"golang.org/x/sys/windows"
 )
 
 type ToolButton struct {
@@ -35,7 +36,7 @@ func NewToolButton(parent Container) (*ToolButton, error) {
 	return tb, nil
 }
 
-func (tb *ToolButton) WndProc(hwnd win.HWND, msg uint32, wParam, lParam uintptr) uintptr {
+func (tb *ToolButton) WndProc(hwnd windows.HWND, msg uint32, wParam, lParam uintptr) uintptr {
 	switch msg {
 	case win.WM_GETDLGCODE:
 		return win.DLGC_BUTTON

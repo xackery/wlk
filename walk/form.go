@@ -14,6 +14,7 @@ import (
 	"unsafe"
 
 	"github.com/xackery/wlk/win"
+	"golang.org/x/sys/windows"
 )
 
 var (
@@ -77,7 +78,7 @@ type FormBase struct {
 	iconChangedPublisher        EventPublisher
 	progressIndicator           *ProgressIndicator
 	icon                        Image
-	prevFocusHWnd               win.HWND
+	prevFocusHWnd               windows.HWND
 	proposedSize                Size // in native pixels
 	closeReason                 byte
 	inSizingLoop                bool
@@ -358,8 +359,9 @@ func (fb *FormBase) Run() int {
 	fb.SetSuspended(false)
 
 	if IsDarkMode() {
-		win.DwmSetWindowAttribute(fb.hWnd, win.DWMWA_USE_IMMERSIVE_DARK_MODE, 1)
+		win.DwmSetWindowAttribute(fb.hWnd, windows.DWMWA_USE_IMMERSIVE_DARK_MODE, 1)
 	}
+
 	return fb.mainLoop()
 }
 
@@ -483,7 +485,7 @@ func (fb *FormBase) Owner() Form {
 func (fb *FormBase) SetOwner(value Form) error {
 	fb.owner = value
 
-	var ownerHWnd win.HWND
+	var ownerHWnd windows.HWND
 	if value != nil {
 		ownerHWnd = value.Handle()
 	}
@@ -693,7 +695,7 @@ func (fb *FormBase) startLayout() bool {
 	return true
 }
 
-func (fb *FormBase) WndProc(hwnd win.HWND, msg uint32, wParam, lParam uintptr) uintptr {
+func (fb *FormBase) WndProc(hwnd windows.HWND, msg uint32, wParam, lParam uintptr) uintptr {
 	switch msg {
 	case win.WM_ACTIVATE:
 		switch win.LOWORD(uint32(wParam)) {

@@ -12,10 +12,11 @@ import (
 	"unsafe"
 
 	"github.com/xackery/wlk/win"
+	"golang.org/x/sys/windows"
 )
 
 type ProgressIndicator struct {
-	hwnd                   win.HWND
+	hwnd                   windows.HWND
 	taskbarList3           *win.ITaskbarList3
 	completed              uint32
 	total                  uint32
@@ -35,7 +36,7 @@ const (
 )
 
 // newTaskbarList3 precondition: Windows version is at least 6.1 (yes, Win 7 is version 6.1).
-func newTaskbarList3(hwnd win.HWND) (*ProgressIndicator, error) {
+func newTaskbarList3(hwnd windows.HWND) (*ProgressIndicator, error) {
 	var classFactoryPtr unsafe.Pointer
 	if hr := win.CoGetClassObject(&win.CLSID_TaskbarList, win.CLSCTX_ALL, nil, &win.IID_IClassFactory, &classFactoryPtr); win.FAILED(hr) {
 		return nil, errorFromHRESULT("CoGetClassObject", hr)

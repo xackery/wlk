@@ -12,6 +12,7 @@ import (
 	"unsafe"
 
 	"github.com/xackery/wlk/win"
+	"golang.org/x/sys/windows"
 )
 
 // StatusBar is a widget that displays status messages.
@@ -103,7 +104,7 @@ func (sb *StatusBar) updateParts() error {
 	return nil
 }
 
-func (sb *StatusBar) WndProc(hwnd win.HWND, msg uint32, wParam, lParam uintptr) uintptr {
+func (sb *StatusBar) WndProc(hwnd windows.HWND, msg uint32, wParam, lParam uintptr) uintptr {
 	switch msg {
 	case win.WM_NOTIFY:
 		nmhdr := (*win.NMHDR)(unsafe.Pointer(lParam))

@@ -9,6 +9,7 @@ package walk
 
 import (
 	"github.com/xackery/wlk/win"
+	"golang.org/x/sys/windows"
 )
 
 type RadioButtonGroup struct {
@@ -114,7 +115,7 @@ func (rb *RadioButton) SetValue(value interface{}) {
 	rb.value = value
 }
 
-func (rb *RadioButton) WndProc(hwnd win.HWND, msg uint32, wParam, lParam uintptr) uintptr {
+func (rb *RadioButton) WndProc(hwnd windows.HWND, msg uint32, wParam, lParam uintptr) uintptr {
 	switch msg {
 	case win.WM_COMMAND:
 		switch win.HIWORD(uint32(wParam)) {

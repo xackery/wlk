@@ -11,6 +11,7 @@ import (
 	"unsafe"
 
 	"github.com/xackery/wlk/win"
+	"golang.org/x/sys/windows"
 )
 
 const customWidgetWindowClass = `\o/ Walk_CustomWidget_Class \o/`
@@ -111,7 +112,7 @@ func (cw *CustomWidget) SetPaintMode(value PaintMode) {
 	cw.paintMode = value
 }
 
-func (cw *CustomWidget) WndProc(hwnd win.HWND, msg uint32, wParam, lParam uintptr) uintptr {
+func (cw *CustomWidget) WndProc(hwnd windows.HWND, msg uint32, wParam, lParam uintptr) uintptr {
 	switch msg {
 	case win.WM_PAINT:
 		if cw.paint == nil && cw.paintPixels == nil {

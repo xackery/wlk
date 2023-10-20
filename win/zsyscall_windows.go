@@ -428,7 +428,7 @@ func DrawThemeBackground(hTheme HTHEME, hdc HDC, iPartId int32, iStateId int32, 
 	return
 }
 
-func DrawThemeParentBackground(hWnd HWND, hdc HDC, prc *RECT) (ret HRESULT) {
+func DrawThemeParentBackground(hWnd windows.HWND, hdc HDC, prc *RECT) (ret HRESULT) {
 	r0, _, _ := syscall.Syscall(procDrawThemeParentBackground.Addr(), 3, uintptr(hWnd), uintptr(hdc), uintptr(unsafe.Pointer(prc)))
 	ret = HRESULT(r0)
 	return
@@ -516,13 +516,13 @@ func IsThemeBackgroundPartiallyTransparent(hTheme HTHEME, iPartId int32, iStateI
 	return
 }
 
-func OpenThemeData(hwnd HWND, pszClassList *uint16) (ret HTHEME) {
+func OpenThemeData(hwnd windows.HWND, pszClassList *uint16) (ret HTHEME) {
 	r0, _, _ := syscall.Syscall(procOpenThemeData.Addr(), 2, uintptr(hwnd), uintptr(unsafe.Pointer(pszClassList)), 0)
 	ret = HTHEME(r0)
 	return
 }
 
-func SetWindowTheme(hwnd HWND, pszSubAppName *uint16, pszSubIdList *uint16) (ret HRESULT) {
+func SetWindowTheme(hwnd windows.HWND, pszSubAppName *uint16, pszSubIdList *uint16) (ret HRESULT) {
 	r0, _, _ := syscall.Syscall(procSetWindowTheme.Addr(), 3, uintptr(hwnd), uintptr(unsafe.Pointer(pszSubAppName)), uintptr(unsafe.Pointer(pszSubIdList)))
 	ret = HRESULT(r0)
 	return

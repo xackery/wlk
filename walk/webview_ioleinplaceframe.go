@@ -11,6 +11,7 @@ import (
 	"syscall"
 
 	"github.com/xackery/wlk/win"
+	"golang.org/x/sys/windows"
 )
 
 var webViewIOleInPlaceFrameVtbl *win.IOleInPlaceFrameVtbl
@@ -54,7 +55,7 @@ func webView_IOleInPlaceFrame_Release(inPlaceFrame *webViewIOleInPlaceFrame) uin
 	return 1
 }
 
-func webView_IOleInPlaceFrame_GetWindow(inPlaceFrame *webViewIOleInPlaceFrame, lphwnd *win.HWND) uintptr {
+func webView_IOleInPlaceFrame_GetWindow(inPlaceFrame *webViewIOleInPlaceFrame, lphwnd *windows.HWND) uintptr {
 	*lphwnd = inPlaceFrame.webView.hWnd
 
 	return win.S_OK
@@ -84,7 +85,7 @@ func webView_IOleInPlaceFrame_InsertMenus(inPlaceFrame *webViewIOleInPlaceFrame,
 	return win.E_NOTIMPL
 }
 
-func webView_IOleInPlaceFrame_SetMenu(inPlaceFrame *webViewIOleInPlaceFrame, hmenuShared win.HMENU, holemenu win.HMENU, hwndActiveObject win.HWND) uintptr {
+func webView_IOleInPlaceFrame_SetMenu(inPlaceFrame *webViewIOleInPlaceFrame, hmenuShared win.HMENU, holemenu win.HMENU, hwndActiveObject windows.HWND) uintptr {
 	return win.S_OK
 }
 

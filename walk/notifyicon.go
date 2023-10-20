@@ -43,7 +43,7 @@ func (niw *notifyIconWindow) Dispose() {
 	niw.WindowBase.Dispose()
 }
 
-func (niw *notifyIconWindow) WndProc(hwnd win.HWND, msg uint32, wParam, lParam uintptr) uintptr {
+func (niw *notifyIconWindow) WndProc(hwnd windows.HWND, msg uint32, wParam, lParam uintptr) uintptr {
 	switch msg {
 	case notifyIconMessageId:
 		lp32 := uint32(lParam)
@@ -83,7 +83,7 @@ func (niw *notifyIconWindow) forIcon(fn func(*NotifyIcon)) {
 	}
 }
 
-func (ni *NotifyIcon) wndProc(hwnd win.HWND, msg uint16, wParam uintptr) (result uintptr) {
+func (ni *NotifyIcon) wndProc(hwnd windows.HWND, msg uint16, wParam uintptr) (result uintptr) {
 	switch msg {
 	case win.WM_LBUTTONDOWN:
 		ni.mouseDownPublisher.Publish(int(win.GET_X_LPARAM(wParam)), int(win.GET_Y_LPARAM(wParam)), LeftButton)
@@ -117,7 +117,7 @@ func (ni *NotifyIcon) wndProc(hwnd win.HWND, msg uint16, wParam uintptr) (result
 	return 0
 }
 
-func (ni *NotifyIcon) doContextMenu(hwnd win.HWND, x, y int32) {
+func (ni *NotifyIcon) doContextMenu(hwnd windows.HWND, x, y int32) {
 	if !ni.showContextMenuPublisher.Publish() || !ni.contextMenu.Actions().HasVisible() {
 		return
 	}
@@ -164,7 +164,7 @@ func copyStringToSlice(dst []uint16, src string) error {
 }
 
 // notification icons are uniquely identified by the shell via one of two ways:
-// either a (win.HWND, uint32) pair, or a GUID. shellNotificationIcon supports
+// either a (windows.HWND, uint32) pair, or a GUID. shellNotificationIcon supports
 // both ID schemes.
 type shellNotificationIcon struct {
 	window *notifyIconWindow
@@ -232,7 +232,7 @@ func newShellNotificationIcon(guid *windows.GUID) (*shellNotificationIcon, error
 		if delCmd := shellIcon.newCmd(win.NIM_DELETE); delCmd != nil {
 			// The previous instance would have used a different, now-defunct HWND, so
 			// we can't use one here...
-			delCmd.nid.HWnd = win.HWND(0)
+			delCmd.nid.HWnd = windows.HWND(0)
 			// We expect delCmd.execute() to fail if there isn't a pre-existing icon,
 			// so no error checking for this call.
 			delCmd.execute()

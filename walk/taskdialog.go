@@ -29,7 +29,7 @@ var taskDialogCommonButtonIDs = []int32{
 	win.IDCLOSE,
 }
 
-func taskDialogCallbackWrapper(hwnd win.HWND, msg uint32, wParam uintptr, lParam uintptr, cbData uintptr) uintptr {
+func taskDialogCallbackWrapper(hwnd windows.HWND, msg uint32, wParam uintptr, lParam uintptr, cbData uintptr) uintptr {
 	td := (*taskDialog)(unsafe.Pointer(cbData))
 	if td == nil {
 		return win.E_UNEXPECTED
@@ -283,7 +283,7 @@ type TaskDialog interface {
 
 type taskDialog struct {
 	opts                *TaskDialogOpts
-	hwnd                win.HWND
+	hwnd                windows.HWND
 	created             EventPublisher
 	expandoClicked      ProceedWithArgEventPublisher[bool]
 	help                EventPublisher
@@ -309,7 +309,7 @@ func (td *taskDialog) Show(opts TaskDialogOpts) (result TaskDialogResult, err er
 	}()
 
 	var rtl bool
-	var ownerHWND win.HWND
+	var ownerHWND windows.HWND
 	if opts.Owner != nil {
 		ownerHWND = opts.Owner.Handle()
 		if opts.ForceRTLLayout == nil {
@@ -709,7 +709,7 @@ func (td *taskDialog) EnableRadioButton(index int, enable bool) {
 	win.SendMessage(td.hwnd, win.TDM_ENABLE_RADIO_BUTTON, wparam, lparam)
 }
 
-func (td *taskDialog) msgProc(hwnd win.HWND, msg uint32, wParam uintptr, lParam uintptr) win.HRESULT {
+func (td *taskDialog) msgProc(hwnd windows.HWND, msg uint32, wParam uintptr, lParam uintptr) win.HRESULT {
 	switch msg {
 	case win.TDN_CREATED:
 		td.hwnd = hwnd

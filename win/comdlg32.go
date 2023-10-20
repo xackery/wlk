@@ -46,8 +46,8 @@ const (
 
 type CHOOSECOLOR struct {
 	LStructSize    uint32
-	HwndOwner      HWND
-	HInstance      HWND
+	HwndOwner      windows.HWND
+	HInstance      windows.HWND
 	RgbResult      COLORREF
 	LpCustColors   *[16]COLORREF
 	Flags          uint32
@@ -172,7 +172,7 @@ type (
 
 type OPENFILENAME struct {
 	LStructSize       uint32
-	HwndOwner         HWND
+	HwndOwner         windows.HWND
 	HInstance         HINSTANCE
 	LpstrFilter       *uint16
 	LpstrCustomFilter *uint16
@@ -210,7 +210,7 @@ type DEVNAMES struct {
 
 type PRINTDLGEX struct {
 	LStructSize         uint32
-	HwndOwner           HWND
+	HwndOwner           windows.HWND
 	HDevMode            HGLOBAL
 	HDevNames           HGLOBAL
 	HDC                 HDC

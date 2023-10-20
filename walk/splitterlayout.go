@@ -10,14 +10,14 @@ package walk
 import (
 	"sort"
 
-	"github.com/xackery/wlk/win"
+	"golang.org/x/sys/windows"
 )
 
 type splitterLayout struct {
 	container    Container
 	orientation  Orientation
 	margins96dpi Margins
-	hwnd2Item    map[win.HWND]*splitterLayoutItem
+	hwnd2Item    map[windows.HWND]*splitterLayoutItem
 	resetNeeded  bool
 	suspended    bool
 }
@@ -36,7 +36,7 @@ type splitterLayoutItem struct {
 func newSplitterLayout(orientation Orientation) *splitterLayout {
 	return &splitterLayout{
 		orientation: orientation,
-		hwnd2Item:   make(map[win.HWND]*splitterLayoutItem),
+		hwnd2Item:   make(map[windows.HWND]*splitterLayoutItem),
 	}
 }
 
@@ -171,7 +171,7 @@ func (l *splitterLayout) spaceUnavailableToRegularWidgets() int {
 func (l *splitterLayout) CreateLayoutItem(ctx *LayoutContext) ContainerLayoutItem {
 	splitter := l.container.(*Splitter)
 
-	hwnd2Item := make(map[win.HWND]*splitterLayoutItem, len(l.hwnd2Item))
+	hwnd2Item := make(map[windows.HWND]*splitterLayoutItem, len(l.hwnd2Item))
 	for hwnd, sli := range l.hwnd2Item {
 		hwnd2Item[hwnd] = sli
 	}
@@ -193,7 +193,7 @@ func (l *splitterLayout) CreateLayoutItem(ctx *LayoutContext) ContainerLayoutIte
 type splitterContainerLayoutItem struct {
 	ContainerLayoutItemBase
 	orientation                    Orientation
-	hwnd2Item                      map[win.HWND]*splitterLayoutItem
+	hwnd2Item                      map[windows.HWND]*splitterLayoutItem
 	spaceUnavailableToRegularItems int // in native pixels
 	handleWidth96dpi               int
 	anyNonFixed                    bool

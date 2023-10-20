@@ -12,6 +12,7 @@ import (
 	"unsafe"
 
 	"github.com/xackery/wlk/win"
+	"golang.org/x/sys/windows"
 )
 
 type setCheckeder interface {
@@ -70,22 +71,6 @@ func (b *Button) init() {
 // ApplySysColors applies a theme to the widget.
 func (b *Button) ApplySysColors() {
 	b.WidgetBase.ApplySysColors()
-	if !IsDarkMode() {
-		return
-	}
-	// check font color to white
-	/* brush, err := NewSolidColorBrush(common.DarkTextFG)
-	if err != nil {
-		return
-	} */
-
-	//fmt.Println("Dark mode button")
-	//win.SetTextColor(win.GetDC(b.hWnd), win.COLORREF(common.DarkTextFG))
-	/*fmt.Println("applying button theme")
-	brush, err := NewSolidColorBrush(common.DarkButtonBG)
-	if err != nil {
-		return
-	}*/
 }
 
 func (b *Button) ApplyDPI(dpi int) {
@@ -215,7 +200,7 @@ func (b *Button) raiseClicked() {
 	b.clickedPublisher.Publish()
 }
 
-func (b *Button) WndProc(hwnd win.HWND, msg uint32, wParam, lParam uintptr) uintptr {
+func (b *Button) WndProc(hwnd windows.HWND, msg uint32, wParam, lParam uintptr) uintptr {
 	switch msg {
 	case win.WM_COMMAND:
 		hiWP := win.HIWORD(uint32(wParam))

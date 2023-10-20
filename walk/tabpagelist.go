@@ -7,9 +7,7 @@
 
 package walk
 
-import (
-	"github.com/xackery/wlk/win"
-)
+import "golang.org/x/sys/windows"
 
 type tabPageListObserver interface {
 	onInsertingPage(index int, page *TabPage) error
@@ -72,7 +70,7 @@ func (l *TabPageList) Contains(item *TabPage) bool {
 	return l.Index(item) > -1
 }
 
-func (l *TabPageList) indexHandle(handle win.HWND) int {
+func (l *TabPageList) indexHandle(handle windows.HWND) int {
 	for i, page := range l.items {
 		if page.Handle() == handle {
 			return i
@@ -82,7 +80,7 @@ func (l *TabPageList) indexHandle(handle win.HWND) int {
 	return -1
 }
 
-func (l *TabPageList) containsHandle(handle win.HWND) bool {
+func (l *TabPageList) containsHandle(handle windows.HWND) bool {
 	return l.indexHandle(handle) > -1
 }
 
