@@ -10,6 +10,7 @@ package cpl
 import (
 	"fmt"
 
+	"github.com/xackery/wlk/common"
 	"github.com/xackery/wlk/walk"
 	"github.com/xackery/wlk/win"
 )
@@ -100,6 +101,14 @@ func (lb ListBox) Create(builder *Builder) error {
 		}
 		w.SetFormat(lb.Format)
 		w.SetPrecision(lb.Precision)
+
+		if IsDarkMode() {
+			brush, err := walk.NewSolidColorBrush(common.DarkFormLighterBG)
+			if err != nil {
+				return fmt.Errorf("new solid color brush: %w", err)
+			}
+			w.SetBackground(brush)
+		}
 
 		if err := w.SetBindingMember(lb.BindingMember); err != nil {
 			return err

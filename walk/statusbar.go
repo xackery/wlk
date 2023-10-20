@@ -8,9 +8,11 @@
 package walk
 
 import (
+	"fmt"
 	"syscall"
 	"unsafe"
 
+	"github.com/xackery/wlk/common"
 	"github.com/xackery/wlk/win"
 	"golang.org/x/sys/windows"
 )
@@ -36,6 +38,14 @@ func NewStatusBar(parent Container) (*StatusBar, error) {
 
 	sb.items = newStatusBarItemList(sb)
 
+	if IsDarkMode() {
+		brush, err := NewSolidColorBrush(common.DarkFormLighterBG)
+		if err != nil {
+			return nil, fmt.Errorf("new solid color brush: %w", err)
+		}
+		sb.SetBackground(brush)
+		sb.ApplySysColors()
+	}
 	return sb, nil
 }
 

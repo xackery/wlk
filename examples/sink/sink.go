@@ -9,6 +9,7 @@ import (
 	"os"
 	"time"
 
+	"github.com/xackery/wlk/common"
 	"github.com/xackery/wlk/cpl"
 	"github.com/xackery/wlk/walk"
 )
@@ -23,13 +24,14 @@ func main() {
 
 func run() error {
 
+	common.SetDarkModeAllowed(true) // comment out to disable dark mode
 	var mw *walk.MainWindow
 	cmw := cpl.MainWindow{
 		Title:    "Kitchen Sink Example",
 		Name:     "sink",
 		AssignTo: &mw,
 		Size:     cpl.Size{Width: 365, Height: 371},
-		Layout:   cpl.VBox{},
+		Layout:   cpl.HBox{},
 		Children: []cpl.Widget{
 			cpl.Label{Text: "Label"},
 			cpl.LineEdit{Text: "LineEdit"},
@@ -162,6 +164,9 @@ func run() error {
 			},
 		},
 		Visible: false,
+		StatusBarItems: []cpl.StatusBarItem{
+			{Text: "Status Bar Item"},
+		},
 	}
 
 	err := cmw.Create()

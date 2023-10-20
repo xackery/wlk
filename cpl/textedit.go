@@ -8,6 +8,9 @@
 package cpl
 
 import (
+	"fmt"
+
+	"github.com/xackery/wlk/common"
 	"github.com/xackery/wlk/walk"
 	"github.com/xackery/wlk/wcolor"
 	"github.com/xackery/wlk/win"
@@ -83,6 +86,19 @@ func (te TextEdit) Create(builder *Builder) error {
 
 	return builder.InitWidget(te, w, func() error {
 		w.SetCompactHeight(te.CompactHeight)
+		if IsDarkMode() {
+			if te.TextColor == 0 {
+				te.TextColor = common.DarkTextFG
+			}
+
+			te.Background = SolidColorBrush{Color: common.DarkFormLighterBG}
+			brush, err := walk.NewSolidColorBrush(common.DarkFormLighterBG)
+			if err != nil {
+				return fmt.Errorf("new solid color brush: %w", err)
+			}
+			w.SetBackground(brush)
+		}
+
 		w.SetTextColor(te.TextColor)
 
 		if err := w.SetTextAlignment(walk.Alignment1D(te.TextAlignment)); err != nil {
