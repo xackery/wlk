@@ -38,3 +38,52 @@ This is work in progress.
 - [ ] Theme changing (Light Mode / Dark Mode) subscription/notification is not yet implemented
 - [ ] Overhaul all components to default to dark mode if enabled on initialization
 - [ ] Allow custom theming.
+
+
+## Breakdown of Components
+
+### Widgets
+
+A widget is a component that can be added to a container. It is a basic building block of a UI.
+
+- Checkbox
+- ComboBox
+- Composite
+- CustomWidget
+- DateEdit
+- DateLabel
+- Dialog
+- GradientComposite
+- GroupBox
+- ImageView
+- Label
+- LineEdit
+- LinkLabel
+- ListBox
+- MainWindow
+- NumberEdit
+- NumberLabel
+- ProgressBar
+- PushButton
+- RadioButton
+- RadioButtonGroupbox
+- ScrollView
+- Separator
+- Slider
+- SplitButton
+- TableView
+- TabPage
+- TextEdit
+- TextLabel
+- ToolBar
+- ToolButton
+- TreeView
+- WebView
+
+### Widget Containers
+
+A widget container typically has children and let's you group or contain widgets together.
+
+- Splitter
+- HSpacer
+- WSpacer

@@ -24,6 +24,11 @@ func main() {
 
 func run() error {
 
+	treeModel := NewTreeModel("root", nil)
+	root := treeModel.RootAdd("Item1")
+	root.ChildAdd("Child1")
+	root.ChildAdd("Child2").ChildAdd("Child2.1").ChildAdd("Child2.1.1")
+
 	common.SetDarkModeAllowed(true) // comment out to disable dark mode
 	var mw *walk.MainWindow
 	cmw := cpl.MainWindow{
@@ -142,23 +147,9 @@ func run() error {
 				},
 			},
 			cpl.TextLabel{Text: "TextLabel"},
-			/*cpl.TreeView{
-				Model: []cpl.TreeItem{
-					cpl.TreeNode{
-						Text: "TreeNode",
-						Items: []cpl.TreeItem{
-							cpl.TreeNode{
-								Text: "TreeNode",
-								Items: []cpl.TreeItem{
-									cpl.TreeNode{
-										Text: "TreeNode",
-									},
-								},
-							},
-						},
-					},
-				},
-			},*/
+			cpl.TreeView{
+				Model: treeModel,
+			},
 			cpl.WebView{
 				URL: "https://github.com",
 			},

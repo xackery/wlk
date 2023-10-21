@@ -57,6 +57,17 @@ func (d *Directory) ChildAt(index int) walk.TreeItem {
 	return d.children[index]
 }
 
+func (d *Directory) RemoveChild(child walk.TreeItem) {
+	childNode := child.(*Directory)
+
+	for i, c := range d.children {
+		if c == childNode {
+			d.children = append(d.children[:i], d.children[i+1:]...)
+			return
+		}
+	}
+}
+
 func (d *Directory) Image() interface{} {
 	return d.Path()
 }
@@ -232,8 +243,8 @@ func main() {
 	if err := (MainWindow{
 		AssignTo: &mainWindow,
 		Title:    "Walk File Browser Example",
-		MinSize:  Size{600, 400},
-		Size:     Size{1024, 640},
+		MinSize:  Size{Width: 600, Height: 400},
+		Size:     Size{Width: 1024, Height: 640},
 		Layout:   HBox{MarginsZero: true},
 		Children: []Widget{
 			HSplitter{

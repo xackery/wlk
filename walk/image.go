@@ -31,7 +31,6 @@ func ImageFrom(src interface{}) (img Image, err error) {
 	switch src := src.(type) {
 	case nil:
 		// nop
-
 	case Image:
 		img = src
 

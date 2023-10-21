@@ -623,6 +623,8 @@ type TreeItem interface {
 
 	// ChildAt returns the child at the specified index.
 	ChildAt(index int) TreeItem
+
+	RemoveChild(node TreeItem)
 }
 
 // HasChilder enables widgets like TreeView to determine if an item has any

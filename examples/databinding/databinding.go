@@ -128,7 +128,7 @@ func RunAnimalDialog(owner walk.Form, animal *Animal) (int, error) {
 			DataSource:     animal,
 			ErrorPresenter: cpl.ToolTipErrorPresenter{},
 		},
-		MinSize: cpl.Size{300, 300},
+		MinSize: cpl.Size{Width: 300, Height: 300},
 		Layout:  cpl.VBox{},
 		Children: []cpl.Widget{
 			cpl.Composite{
@@ -181,7 +181,7 @@ func RunAnimalDialog(owner walk.Form, animal *Animal) (int, error) {
 						Text: "Weight:",
 					},
 					cpl.NumberEdit{
-						Value:    cpl.Bind("Weight", cpl.Range{0.01, 9999.99}),
+						Value:    cpl.Bind("Weight", cpl.Range{Min: 0.01, Max: 9999.99}),
 						Suffix:   " kg",
 						Decimals: 2,
 					},
@@ -213,7 +213,7 @@ func RunAnimalDialog(owner walk.Form, animal *Animal) (int, error) {
 					},
 					cpl.TextEdit{
 						ColumnSpan: 2,
-						MinSize:    cpl.Size{100, 50},
+						MinSize:    cpl.Size{Width: 100, Height: 50},
 						Text:       cpl.Bind("Remarks"),
 					},
 
