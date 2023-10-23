@@ -256,6 +256,9 @@ func (l *ActionList) forEach(f func(*Action) bool) {
 // If f returns false, the iteration is aborted.
 func (l *ActionList) forEachVisible(f func(*Action) bool) {
 	for _, a := range l.actions {
+		if a == nil {
+			continue
+		}
 		if !a.Visible() {
 			continue
 		}
