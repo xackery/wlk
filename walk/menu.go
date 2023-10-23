@@ -427,6 +427,10 @@ func (m *Menu) onClearingActions() error {
 // by positional index.
 func (m *Menu) onMnemonic(key Key) (index, action uint16) {
 	m.actions.forEachVisible(func(a *Action) bool {
+		if a.ownerDrawInfo == nil {
+			index++
+			return true
+		}
 		if aKey := a.ownerDrawInfo.mnemonic; aKey != 0 && aKey == key {
 			action = win.MNC_EXECUTE
 			return false
