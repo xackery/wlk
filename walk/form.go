@@ -491,10 +491,10 @@ func (fb *FormBase) SetOwner(value Form) error {
 	}
 
 	win.SetLastError(0)
-	if 0 == win.SetWindowLong(
+	if win.SetWindowLong(
 		fb.hWnd,
 		win.GWL_HWNDPARENT,
-		int32(ownerHWnd)) && win.GetLastError() != 0 {
+		int32(ownerHWnd)) == 0 && win.GetLastError() != 0 {
 
 		return lastError("SetWindowLong")
 	}
