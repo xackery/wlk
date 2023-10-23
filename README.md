@@ -48,13 +48,11 @@ A widget is a component that can be added to a container. It is a basic building
 
 - Checkbox
 - ComboBox
-- Composite
 - CustomWidget
 - DateEdit
 - DateLabel
 - Dialog
 - GradientComposite
-- GroupBox
 - ImageView
 - Label
 - LineEdit
@@ -87,3 +85,5 @@ A widget container typically has children and let's you group or contain widgets
 - Splitter
 - HSpacer
 - WSpacer
+- Composite
+- GroupBox
