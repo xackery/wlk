@@ -51,7 +51,8 @@ func (err *Error) Stack() []byte {
 }
 
 func (err *Error) Error() string {
-	return fmt.Sprintf("%s\n\nStack:\n%s", err.Message(), err.stack)
+	return err.Message()
+	//return fmt.Sprintf("%s\n\nStack:\n%s", err.Message(), err.stack)
 }
 
 func processErrorNoPanic(err error) error {
