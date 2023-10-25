@@ -814,9 +814,12 @@ func anyVisibleItemInHierarchy(item LayoutItem) bool {
 
 // minSizeEffective returns minimum effective size in native pixels
 func minSizeEffective(item LayoutItem) Size {
+	var s Size
+	if item == nil {
+		return s
+	}
 	geometry := item.Geometry()
 
-	var s Size
 	if msh, ok := item.(MinSizer); ok {
 		s = msh.MinSize()
 	} else if is, ok := item.(IdealSizer); ok {
