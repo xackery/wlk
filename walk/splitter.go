@@ -499,8 +499,14 @@ func (s *Splitter) onInsertedWidget(index int, widget Widget) (err error) {
 
 						s.draggedHandle = nil
 						dragHandle.SetBackground(NullBrush())
-						prev.AsWidgetBase().invalidateBorderInParent()
-						next.AsWidgetBase().invalidateBorderInParent()
+						widget := prev.AsWidgetBase()
+						if widget != nil {
+							widget.invalidateBorderInParent()
+						}
+						widget = next.AsWidgetBase()
+						if widget != nil {
+							widget.invalidateBorderInParent()
+						}
 
 						prev.SetSuspended(true)
 						defer prev.Invalidate()

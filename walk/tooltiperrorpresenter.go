@@ -8,6 +8,8 @@
 package walk
 
 import (
+	"fmt"
+
 	"github.com/xackery/wlk/win"
 )
 
@@ -124,6 +126,7 @@ func (ttep *ToolTipErrorPresenter) track(widget Widget) {
 
 	wnd = widget
 
+	counter := 0
 	for wnd != nil {
 		handle := wnd.AsWindowBase().boundsChangedPublisher.event.Attach(func() {
 			ttep.toolTip.track(widget)
@@ -141,11 +144,16 @@ func (ttep *ToolTipErrorPresenter) track(widget Widget) {
 			})
 		}
 
-		if w, ok := wnd.(Widget); ok {
-			if parent := w.Parent(); parent != nil {
-				wnd = parent
-			}
-		} else {
+		w, ok := wnd.(Widget)
+		if !ok {
+			break
+		}
+		if parent := w.Parent(); parent != nil {
+			wnd = parent
+		}
+		counter++
+		if counter > 100 {
+			fmt.Println("counter > 100")
 			break
 		}
 	}

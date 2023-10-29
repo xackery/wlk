@@ -8,7 +8,12 @@
 package cpl
 
 import (
+	"fmt"
+	"syscall"
+
+	"github.com/xackery/wlk/common"
 	"github.com/xackery/wlk/walk"
+	"github.com/xackery/wlk/win"
 )
 
 type ProgressBar struct {
@@ -64,6 +69,21 @@ func (pb ProgressBar) Create(builder *Builder) error {
 
 	if pb.AssignTo != nil {
 		*pb.AssignTo = w
+	}
+
+	if IsDarkMode() {
+		brush, err := walk.NewSolidColorBrush(common.DarkFormLighterBG)
+		if err != nil {
+			return fmt.Errorf("new solid color brush: %w", err)
+		}
+		win.SetWindowTheme(w.Handle(), syscall.StringToUTF16Ptr(" "), nil)
+
+		// TODO: figure out why this isn't applying properly
+		bgColor := common.DarkFormBG
+		w.SendMessage(win.PBM_SETBKCOLOR, 0, uintptr(bgColor))
+		bgColor = common.DarkSelectHoverBG
+		w.SendMessage(win.PBM_SETBARCOLOR, 0, uintptr(bgColor))
+		w.SetBackground(brush)
 	}
 
 	return builder.InitWidget(pb, w, func() error {
