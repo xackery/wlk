@@ -8,6 +8,7 @@
 package walk
 
 import (
+	"fmt"
 	"image"
 	"path/filepath"
 	"syscall"
@@ -239,6 +240,9 @@ func (i *Icon) handleForDPI(dpi int) win.HICON {
 }
 
 func (i *Icon) handleForDPIWithError(dpi int) (win.HICON, error) {
+	if i == nil {
+		return 0, fmt.Errorf("icon is nil")
+	}
 	if i.dpi2hIcon == nil {
 		i.dpi2hIcon = make(map[int]win.HICON)
 	} else if handle, ok := i.dpi2hIcon[dpi]; ok {

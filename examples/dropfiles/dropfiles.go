@@ -15,7 +15,7 @@ func main() {
 	var textEdit *walk.TextEdit
 	MainWindow{
 		Title:   "Walk DropFiles Example",
-		MinSize: Size{320, 240},
+		MinSize: Size{Width: 320, Height: 240},
 		Layout:  VBox{},
 		OnDropFiles: func(files []string) {
 			textEdit.SetText(strings.Join(files, "\r\n"))
