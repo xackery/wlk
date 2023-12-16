@@ -1845,6 +1845,7 @@ var (
 	getWindowLongPtr            *windows.LazyProc
 	getWindowPlacement          *windows.LazyProc
 	getWindowRect               *windows.LazyProc
+	getWindowText               *windows.LazyProc
 	getWindowThreadProcessId    *windows.LazyProc
 	insertMenuItem              *windows.LazyProc
 	invalidateRect              *windows.LazyProc
@@ -2043,6 +2044,7 @@ func init() {
 	}
 	getWindowPlacement = libuser32.NewProc("GetWindowPlacement")
 	getWindowRect = libuser32.NewProc("GetWindowRect")
+	getWindowText = libuser32.NewProc("GetWindowTextW")
 	getWindowThreadProcessId = libuser32.NewProc("GetWindowThreadProcessId")
 	insertMenuItem = libuser32.NewProc("InsertMenuItemW")
 	invalidateRect = libuser32.NewProc("InvalidateRect")
@@ -2524,6 +2526,17 @@ func GetActiveWindow() windows.HWND {
 	return windows.HWND(ret)
 }
 
+func GetActiveWindowTitle() string {
+	hwnd := GetActiveWindow()
+	if hwnd == 0 {
+		return ""
+	}
+	const maxTitleLength = 256
+	var buffer [maxTitleLength]uint16
+	length := GetWindowText(hwnd, &buffer[0], int32(maxTitleLength))
+	return syscall.UTF16ToString(buffer[:length])
+}
+
 func GetAncestor(hWnd windows.HWND, gaFlags uint32) windows.HWND {
 	ret, _, _ := syscall.Syscall(getAncestor.Addr(), 2,
 		uintptr(hWnd),
@@ -2863,6 +2876,15 @@ func GetWindowRect(hWnd windows.HWND, rect *RECT) bool {
 		0)
 
 	return ret != 0
+}
+
+func GetWindowText(hWnd windows.HWND, buf *uint16, length int32) int32 {
+	ret, _, _ := syscall.Syscall(getWindowText.Addr(), 3,
+		uintptr(hWnd),
+		uintptr(unsafe.Pointer(buf)),
+		uintptr(length))
+
+	return int32(ret)
 }
 
 func InsertMenuItem(hMenu HMENU, uItem uint32, fByPosition bool, lpmii *MENUITEMINFO) bool {
