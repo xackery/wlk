@@ -9,6 +9,7 @@ package win
 
 import (
 	"syscall"
+	"time"
 	"unsafe"
 
 	"github.com/xackery/wlk/common"
@@ -620,6 +621,95 @@ const (
 	VK_NONAME              = 0xFC
 	VK_PA1                 = 0xFD
 	VK_OEM_CLEAR           = 0xFE
+)
+
+const (
+	VK_SP1  = 41
+	VK_SP2  = 12
+	VK_SP3  = 13
+	VK_SP4  = 26
+	VK_SP5  = 27
+	VK_SP6  = 39
+	VK_SP7  = 40
+	VK_SP8  = 43
+	VK_SP9  = 51
+	VK_SP10 = 52
+	VK_SP11 = 53
+	VK_SP12 = 86
+
+	VK_ESC        = 1
+	VK_1          = 2
+	VK_2          = 3
+	VK_3          = 4
+	VK_4          = 5
+	VK_5          = 6
+	VK_6          = 7
+	VK_7          = 8
+	VK_8          = 9
+	VK_9          = 10
+	VK_0          = 11
+	VK_Q          = 16
+	VK_W          = 17
+	VK_E          = 18
+	VK_R          = 19
+	VK_T          = 20
+	VK_Y          = 21
+	VK_U          = 22
+	VK_I          = 23
+	VK_O          = 24
+	VK_P          = 25
+	VK_A          = 30
+	VK_S          = 31
+	VK_D          = 32
+	VK_F          = 33
+	VK_G          = 34
+	VK_H          = 35
+	VK_J          = 36
+	VK_K          = 37
+	VK_L          = 38
+	VK_Z          = 44
+	VK_X          = 45
+	VK_C          = 46
+	VK_V          = 47
+	VK_B          = 48
+	VK_N          = 49
+	VK_M          = 50
+	VK_SCROLLLOCK = 70
+	VK_RESERVED   = 0
+	VK_MINUS      = 12
+	VK_EQUAL      = 13
+	VK_BACKSPACE  = 14
+	VK_LEFTBRACE  = 26
+	VK_RIGHTBRACE = 27
+	VK_ENTER      = 28
+	VK_SEMICOLON  = 39
+	VK_APOSTROPHE = 40
+	VK_GRAVE      = 41
+	VK_BACKSLASH  = 43
+	VK_COMMA      = 51
+	VK_DOT        = 52
+	VK_SLASH      = 53
+	VK_KPASTERISK = 55
+	VK_CAPSLOCK   = 58
+
+	VK_KP0     = 82
+	VK_KP1     = 79
+	VK_KP2     = 80
+	VK_KP3     = 81
+	VK_KP4     = 75
+	VK_KP5     = 76
+	VK_KP6     = 77
+	VK_KP7     = 71
+	VK_KP8     = 72
+	VK_KP9     = 73
+	VK_KPMINUS = 74
+	VK_KPPLUS  = 78
+	VK_KPDOT   = 83
+
+	// I add 0xFFF for all Virtual key
+	VK_HANGUEL  = 0x15 + 0xFFF
+	VK_PAGEUP   = 0x21 + 0xFFF
+	VK_PAGEDOWN = 0x22 + 0xFFF
 )
 
 // Window style constants
@@ -1857,6 +1947,7 @@ var (
 	isWindowVisible             *windows.LazyProc
 	isZoomed                    *windows.LazyProc
 	killTimer                   *windows.LazyProc
+	keybdEvent                  *windows.LazyProc
 	loadCursor                  *windows.LazyProc
 	loadIcon                    *windows.LazyProc
 	loadImage                   *windows.LazyProc
@@ -2056,6 +2147,7 @@ func init() {
 	isWindowVisible = libuser32.NewProc("IsWindowVisible")
 	isZoomed = libuser32.NewProc("IsZoomed")
 	killTimer = libuser32.NewProc("KillTimer")
+	keybdEvent = libuser32.NewProc("keybd_event")
 	loadCursor = libuser32.NewProc("LoadCursorW")
 	loadIcon = libuser32.NewProc("LoadIconW")
 	loadImage = libuser32.NewProc("LoadImageW")
@@ -2527,7 +2619,7 @@ func GetActiveWindow() windows.HWND {
 }
 
 func GetActiveWindowTitle() string {
-	hwnd := GetActiveWindow()
+	hwnd := GetForegroundWindow()
 	if hwnd == 0 {
 		return ""
 	}
@@ -2652,6 +2744,10 @@ func GetForegroundWindow() windows.HWND {
 		0)
 
 	return windows.HWND(ret)
+}
+
+func GetForegroundWindowTitle() string {
+	return GetActiveWindowTitle()
 }
 
 func GetIconInfo(hicon HICON, piconinfo *ICONINFO) bool {
@@ -2978,6 +3074,34 @@ func KillTimer(hWnd windows.HWND, uIDEvent uintptr) bool {
 		0)
 
 	return ret != 0
+}
+
+// KeybdEvent synthesizes a keystroke. The system can use such a synthesized keystroke to generate a WM_KEYUP or WM_KEYDOWN message.
+func KeybdEvent(bVk byte, bScan byte, dwFlags uint32, dwExtraInfo uintptr) {
+	syscall.Syscall6(keybdEvent.Addr(), 4,
+		uintptr(bVk),
+		uintptr(bScan),
+		uintptr(dwFlags),
+		dwExtraInfo,
+		0,
+		0)
+}
+
+// KeyPress simulates a key press. It presses the key, holds it for the specified delay, then releases it.
+func KeyPress(key uint16, delay time.Duration) {
+	KeyDown(key)
+	time.Sleep(delay)
+	KeyUp(key)
+}
+
+// KeyDown simulates a key down event.
+func KeyDown(key uint16) {
+	KeybdEvent(byte(key), 0, 0, 0)
+}
+
+// KeyUp simulates a key up event.
+func KeyUp(key uint16) {
+	KeybdEvent(byte(key), 0, KEYEVENTF_KEYUP, 0)
 }
 
 func LoadCursor(hInstance HINSTANCE, lpCursorName *uint16) HCURSOR {
