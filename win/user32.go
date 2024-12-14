@@ -1994,6 +1994,7 @@ var (
 	setWindowLong               *windows.LazyProc
 	setWindowLongPtr            *windows.LazyProc
 	setWindowPlacement          *windows.LazyProc
+	setLayeredWindowAttributes  *windows.LazyProc
 	setWindowPos                *windows.LazyProc
 	showWindow                  *windows.LazyProc
 	systemParametersInfo        *windows.LazyProc
@@ -2199,6 +2200,7 @@ func init() {
 		setWindowLongPtr = libuser32.NewProc("SetWindowLongW")
 	}
 	setWindowPlacement = libuser32.NewProc("SetWindowPlacement")
+	setLayeredWindowAttributes = libuser32.NewProc("SetLayeredWindowAttributes")
 	setWindowPos = libuser32.NewProc("SetWindowPos")
 	showWindow = libuser32.NewProc("ShowWindow")
 	systemParametersInfo = libuser32.NewProc("SystemParametersInfoW")
@@ -3594,6 +3596,14 @@ func SetWindowLongPtr(hWnd windows.HWND, index int, value uintptr) uintptr {
 		value)
 
 	return ret
+}
+
+func SetLayeredWindowAttributes(hwnd windows.HWND, crKey COLORREF, bAlpha byte, dwFlags uint32) error {
+	ret, _, err := setLayeredWindowAttributes.Call(uintptr(hwnd), uintptr(crKey), uintptr(bAlpha), uintptr(dwFlags))
+	if ret == 0 {
+		return err
+	}
+	return nil
 }
 
 func SetWindowPlacement(hWnd windows.HWND, lpwndpl *WINDOWPLACEMENT) bool {
