@@ -2678,13 +2678,22 @@ func GetClipboardData(uFormat uint32) HANDLE {
 	return HANDLE(ret)
 }
 
-func GetCursorPos(lpPoint *POINT) bool {
-	ret, _, _ := syscall.Syscall(getCursorPos.Addr(), 1,
+func GetCursorPos(lpPoint *POINT) error {
+	ret, _, err := getCaretPos.Call(
 		uintptr(unsafe.Pointer(lpPoint)),
 		0,
-		0)
+		0,
+	)
+	if ret != 0 {
+		return err
+	}
+	return nil
+}
 
-	return ret != 0
+func CursorPos() (int, int) {
+	var p POINT
+	GetCursorPos(&p)
+	return int(p.X), int(p.Y)
 }
 
 func GetDesktopWindow() windows.HWND {
