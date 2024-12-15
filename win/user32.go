@@ -2679,7 +2679,7 @@ func GetClipboardData(uFormat uint32) HANDLE {
 }
 
 func GetCursorPos(lpPoint *POINT) error {
-	ret, _, err := getCaretPos.Call(
+	ret, _, err := getCursorPos.Call(
 		uintptr(unsafe.Pointer(lpPoint)),
 		0,
 		0,
