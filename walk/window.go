@@ -794,7 +794,7 @@ func setAndClearWindowLongBits(hwnd windows.HWND, index int32, set, clear uint32
 		fmt.Println("Error getting window long for setAndClearWindowLongBits:", err)
 	}
 	if value == 0 {
-		return lastError("GetWindowLong")
+		return nil
 	}
 
 	if newValue := value&^clear | set; newValue != value {
