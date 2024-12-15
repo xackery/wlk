@@ -535,7 +535,10 @@ func (tw *TabWidget) onInsertedPage(index int, page *TabPage) (err error) {
 
 	page.SetVisible(false)
 
-	style := uint32(win.GetWindowLong(page.hWnd, win.GWL_STYLE))
+	style, err := win.GetWindowLong(page.hWnd, win.GWL_STYLE)
+	if err != nil {
+		return lastError("GetWindowLong: " + err.Error())
+	}
 	if style == 0 {
 		return lastError("GetWindowLong")
 	}
@@ -571,7 +574,10 @@ func (tw *TabWidget) onInsertedPage(index int, page *TabPage) (err error) {
 func (tw *TabWidget) removePage(page *TabPage) (err error) {
 	page.SetVisible(false)
 
-	style := uint32(win.GetWindowLong(page.hWnd, win.GWL_STYLE))
+	style, err := win.GetWindowLong(page.hWnd, win.GWL_STYLE)
+	if err != nil {
+		return lastError("GetWindowLong: " + err.Error())
+	}
 	if style == 0 {
 		return lastError("GetWindowLong")
 	}

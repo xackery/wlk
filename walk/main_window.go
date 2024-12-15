@@ -8,6 +8,7 @@
 package walk
 
 import (
+	"fmt"
 	"unsafe"
 
 	"github.com/xackery/wlk/common"
@@ -185,7 +186,11 @@ func (mw *MainWindow) applyFont(font *Font) {
 
 // IsFullscreen returns true when the main window is full screen mode, otherwise false
 func (mw *MainWindow) IsFullscreen() bool {
-	return win.GetWindowLong(mw.hWnd, win.GWL_STYLE)&win.WS_OVERLAPPEDWINDOW == 0
+	style, err := win.GetWindowLong(mw.hWnd, win.GWL_STYLE)
+	if err != nil {
+		fmt.Println("Error getting window long for IsFullscreen:", err)
+	}
+	return style&win.WS_OVERLAPPEDWINDOW == 0
 }
 
 // SetFullscreen sets the main window to full screen mode

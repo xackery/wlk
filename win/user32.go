@@ -2949,13 +2949,13 @@ func GetWindow(hWnd windows.HWND, uCmd uint32) windows.HWND {
 	return windows.HWND(ret)
 }
 
-func GetWindowLong(hWnd windows.HWND, index int32) int32 {
-	ret, _, _ := syscall.Syscall(getWindowLong.Addr(), 2,
-		uintptr(hWnd),
-		uintptr(index),
-		0)
-
-	return int32(ret)
+// GetWindowLong retrieves information about the window class to which the specified window belongs.
+func GetWindowLong(hWnd windows.HWND, index int32) (uint32, error) {
+	ret, _, err := getWindowLong.Call(2, uintptr(hWnd), uintptr(index))
+	if ret == 0 {
+		return 0, err
+	}
+	return uint32(ret), nil
 }
 
 func GetWindowLongPtr(hWnd windows.HWND, index int32) uintptr {

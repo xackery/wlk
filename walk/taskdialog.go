@@ -820,16 +820,20 @@ func (td *taskDialog) maybeHideTitleBarIcon() {
 
 	// Get window style bits.
 	win.SetLastError(win.ERROR_SUCCESS)
-	style := win.GetWindowLong(td.hwnd, win.GWL_STYLE)
+	style, err := win.GetWindowLong(td.hwnd, win.GWL_STYLE)
+	if err != nil {
+		// TODO: log error
+		return
+	}
 	if style == 0 && win.GetLastError() != win.ERROR_SUCCESS {
 		return
 	}
 
-	style &= ^int32(win.WS_SYSMENU)
+	style &= ^uint32(win.WS_SYSMENU)
 
 	// Set window style bits.
 	win.SetLastError(win.ERROR_SUCCESS)
-	if win.SetWindowLong(td.hwnd, win.GWL_STYLE, style) == 0 && win.GetLastError() != win.ERROR_SUCCESS {
+	if win.SetWindowLong(td.hwnd, win.GWL_STYLE, int32(style)) == 0 && win.GetLastError() != win.ERROR_SUCCESS {
 		return
 	}
 

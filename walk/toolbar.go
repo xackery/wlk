@@ -135,7 +135,10 @@ func (tb *ToolBar) ApplyDPI(dpi int) {
 }
 
 func (tb *ToolBar) Orientation() Orientation {
-	style := win.GetWindowLong(tb.hWnd, win.GWL_STYLE)
+	style, err := win.GetWindowLong(tb.hWnd, win.GWL_STYLE)
+	if err != nil {
+		// FIXME: Log error
+	}
 
 	if style&win.CCS_VERT > 0 {
 		return Vertical

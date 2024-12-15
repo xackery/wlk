@@ -302,7 +302,10 @@ func (wb *WidgetBase) SetParent(parent Container) (err error) {
 		return nil
 	}
 
-	style := uint32(win.GetWindowLong(wb.hWnd, win.GWL_STYLE))
+	style, err := win.GetWindowLong(wb.hWnd, win.GWL_STYLE)
+	if err != nil {
+		// TODO: Should we return an error here?
+	}
 	if style == 0 {
 		return lastError("GetWindowLong")
 	}

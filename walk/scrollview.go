@@ -189,7 +189,11 @@ func (sv *ScrollView) WndProc(hwnd windows.HWND, msg uint32, wParam, lParam uint
 			}
 
 		case win.WM_MOUSEWHEEL:
-			if win.GetWindowLong(sv.hWnd, win.GWL_STYLE)&win.WS_VSCROLL == 0 {
+			style, err := win.GetWindowLong(sv.hWnd, win.GWL_STYLE)
+			if err != nil {
+				// TODO: add error handling
+			}
+			if style&win.WS_VSCROLL == 0 {
 				break
 			}
 

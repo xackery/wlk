@@ -772,7 +772,10 @@ func (wb *WindowBase) hasExtendedStyleBits(bits uint32) bool {
 }
 
 func hasWindowLongBits(hwnd windows.HWND, index int32, bits uint32) bool {
-	value := uint32(win.GetWindowLong(hwnd, index))
+	value, err := win.GetWindowLong(hwnd, index)
+	if err != nil {
+		fmt.Println("Error getting window long for hasWindowLongBits:", err)
+	}
 
 	return value&bits == bits
 }
@@ -786,7 +789,10 @@ func (wb *WindowBase) setAndClearExtendedStyleBits(set, clear uint32) error {
 }
 
 func setAndClearWindowLongBits(hwnd windows.HWND, index int32, set, clear uint32) error {
-	value := uint32(win.GetWindowLong(hwnd, index))
+	value, err := win.GetWindowLong(hwnd, index)
+	if err != nil {
+		fmt.Println("Error getting window long for setAndClearWindowLongBits:", err)
+	}
 	if value == 0 {
 		return lastError("GetWindowLong")
 	}

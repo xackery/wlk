@@ -181,7 +181,11 @@ func (te *TextEdit) SetCompactHeight(enabled bool) {
 }
 
 func (te *TextEdit) TextAlignment() Alignment1D {
-	switch win.GetWindowLong(te.hWnd, win.GWL_STYLE) & (win.ES_LEFT | win.ES_CENTER | win.ES_RIGHT) {
+	style, err := win.GetWindowLong(te.hWnd, win.GWL_STYLE)
+	if err != nil {
+		// TODO: return error
+	}
+	switch style & (win.ES_LEFT | win.ES_CENTER | win.ES_RIGHT) {
 	case win.ES_CENTER:
 		return AlignCenter
 

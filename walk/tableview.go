@@ -516,7 +516,10 @@ func (tv *TableView) SetColumnsOrderable(enabled bool) {
 // ColumnsSizable returns if the user can change column widths by dragging
 // dividers in the header.
 func (tv *TableView) ColumnsSizable() bool {
-	style := win.GetWindowLong(tv.hwndNormalHdr, win.GWL_STYLE)
+	style, err := win.GetWindowLong(tv.hwndNormalHdr, win.GWL_STYLE)
+	if err != nil {
+		// TODO: Log error.
+	}
 
 	return style&win.HDS_NOSIZING == 0
 }
@@ -525,7 +528,10 @@ func (tv *TableView) ColumnsSizable() bool {
 // dividers in the header.
 func (tv *TableView) SetColumnsSizable(b bool) error {
 	updateStyle := func(headerHWnd windows.HWND) error {
-		style := win.GetWindowLong(headerHWnd, win.GWL_STYLE)
+		style, err := win.GetWindowLong(headerHWnd, win.GWL_STYLE)
+		if err != nil {
+			// TODO: Log error.
+		}
 
 		if b {
 			style &^= win.HDS_NOSIZING
@@ -533,7 +539,7 @@ func (tv *TableView) SetColumnsSizable(b bool) error {
 			style |= win.HDS_NOSIZING
 		}
 
-		if win.SetWindowLong(headerHWnd, win.GWL_STYLE, style) == 0 {
+		if win.SetWindowLong(headerHWnd, win.GWL_STYLE, int32(style)) == 0 {
 			return lastError("SetWindowLong(GWL_STYLE)")
 		}
 
@@ -579,7 +585,10 @@ func (tv *TableView) SortableByHeaderClick() bool {
 
 // HeaderHidden returns whether the column header is hidden.
 func (tv *TableView) HeaderHidden() bool {
-	style := win.GetWindowLong(tv.hwndNormalLV, win.GWL_STYLE)
+	style, err := win.GetWindowLong(tv.hwndNormalLV, win.GWL_STYLE)
+	if err != nil {
+		// TODO: Log error.
+	}
 
 	return style&win.LVS_NOCOLUMNHEADER != 0
 }
@@ -1298,7 +1307,10 @@ func (tv *TableView) EnsureItemVisible(index int) {
 // SelectionHiddenWithoutFocus returns whether selection indicators are hidden
 // when the TableView does not have the keyboard input focus.
 func (tv *TableView) SelectionHiddenWithoutFocus() bool {
-	style := uint(win.GetWindowLong(tv.hwndNormalLV, win.GWL_STYLE))
+	style, err := win.GetWindowLong(tv.hwndNormalLV, win.GWL_STYLE)
+	if err != nil {
+		lastError("GetWindowLong:" + err.Error())
+	}
 	if style == 0 {
 		lastError("GetWindowLong")
 		return false
@@ -1320,7 +1332,10 @@ func (tv *TableView) SetSelectionHiddenWithoutFocus(hidden bool) error {
 //
 // By default only a single item can be selected at once.
 func (tv *TableView) MultiSelection() bool {
-	style := uint(win.GetWindowLong(tv.hwndNormalLV, win.GWL_STYLE))
+	style, err := win.GetWindowLong(tv.hwndNormalLV, win.GWL_STYLE)
+	if err != nil {
+		lastError("GetWindowLong:" + err.Error())
+	}
 	if style == 0 {
 		lastError("GetWindowLong")
 		return false

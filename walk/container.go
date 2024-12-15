@@ -471,7 +471,12 @@ func firstFocusableDescendantCallback(hwnd windows.HWND, lParam uintptr) uintptr
 		return 1
 	}
 
-	if win.GetWindowLong(hwnd, win.GWL_STYLE)&win.WS_TABSTOP > 0 {
+	style, err := win.GetWindowLong(hwnd, win.GWL_STYLE)
+	if err != nil {
+		return 1
+	}
+
+	if style&win.WS_TABSTOP > 0 {
 		if rb, ok := windowFromHandle(hwnd).(radioButtonish); ok {
 			if !rb.radioButton().Checked() {
 				return 1
