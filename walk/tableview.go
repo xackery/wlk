@@ -1312,7 +1312,6 @@ func (tv *TableView) SelectionHiddenWithoutFocus() bool {
 		lastError("GetWindowLong:" + err.Error())
 	}
 	if style == 0 {
-		lastError("GetWindowLong")
 		return false
 	}
 
@@ -1337,7 +1336,6 @@ func (tv *TableView) MultiSelection() bool {
 		lastError("GetWindowLong:" + err.Error())
 	}
 	if style == 0 {
-		lastError("GetWindowLong")
 		return false
 	}
 

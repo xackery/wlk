@@ -306,9 +306,6 @@ func (wb *WidgetBase) SetParent(parent Container) (err error) {
 	if err != nil {
 		// TODO: Should we return an error here?
 	}
-	if style == 0 {
-		return lastError("GetWindowLong")
-	}
 
 	if parent == nil {
 		wb.SetVisible(false)

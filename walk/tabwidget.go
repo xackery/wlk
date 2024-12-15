@@ -539,9 +539,6 @@ func (tw *TabWidget) onInsertedPage(index int, page *TabPage) (err error) {
 	if err != nil {
 		return lastError("GetWindowLong: " + err.Error())
 	}
-	if style == 0 {
-		return lastError("GetWindowLong")
-	}
 
 	style |= win.WS_CHILD
 	style &^= win.WS_POPUP
@@ -577,9 +574,6 @@ func (tw *TabWidget) removePage(page *TabPage) (err error) {
 	style, err := win.GetWindowLong(page.hWnd, win.GWL_STYLE)
 	if err != nil {
 		return lastError("GetWindowLong: " + err.Error())
-	}
-	if style == 0 {
-		return lastError("GetWindowLong")
 	}
 
 	style &^= win.WS_CHILD
