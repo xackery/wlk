@@ -8,7 +8,6 @@
 package walk
 
 import (
-	"fmt"
 	"unsafe"
 
 	"github.com/xackery/wlk/common"
@@ -188,7 +187,7 @@ func (mw *MainWindow) applyFont(font *Font) {
 func (mw *MainWindow) IsFullscreen() bool {
 	style, err := win.GetWindowLong(mw.hWnd, win.GWL_STYLE)
 	if err != nil {
-		fmt.Println("Error getting window long for IsFullscreen:", err)
+		//fmt.Println("Error getting window long for IsFullscreen:", err)
 	}
 	return style&win.WS_OVERLAPPEDWINDOW == 0
 }

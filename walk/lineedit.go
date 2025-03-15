@@ -8,7 +8,6 @@
 package walk
 
 import (
-	"fmt"
 	"syscall"
 	"unsafe"
 
@@ -149,7 +148,7 @@ func (le *LineEdit) SetTextSelection(start, end int) {
 func (le *LineEdit) TextAlignment() Alignment1D {
 	style, err := win.GetWindowLong(le.hWnd, win.GWL_STYLE)
 	if err != nil {
-		fmt.Println("Error getting window long for TextAlignment:", err)
+		//fmt.Println("Error getting window long for TextAlignment:", err)
 	}
 
 	switch style & (win.ES_LEFT | win.ES_CENTER | win.ES_RIGHT) {
@@ -187,7 +186,7 @@ func (le *LineEdit) SetTextAlignment(alignment Alignment1D) error {
 func (le *LineEdit) CaseMode() CaseMode {
 	style, err := win.GetWindowLong(le.hWnd, win.GWL_STYLE)
 	if err != nil {
-		fmt.Println("Error getting window long for CaseMode:", err)
+		//fmt.Println("Error getting window long for CaseMode:", err)
 	}
 
 	if style&win.ES_UPPERCASE != 0 {

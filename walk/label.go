@@ -8,8 +8,6 @@
 package walk
 
 import (
-	"fmt"
-
 	"github.com/xackery/wlk/win"
 )
 
@@ -58,7 +56,7 @@ func (l *Label) asStatic() *static {
 func (l *Label) EllipsisMode() EllipsisMode {
 	style, err := win.GetWindowLong(l.hwndStatic, win.GWL_STYLE)
 	if err != nil {
-		fmt.Println("Error getting window long:", err)
+		//	fmt.Println("Error getting window long:", err)
 	}
 
 	return EllipsisMode(style & (win.SS_ENDELLIPSIS | win.SS_PATHELLIPSIS))
